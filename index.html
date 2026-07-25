@@ -35,25 +35,25 @@ mountV2.id='framed-scene-v2';
 heroV2.append(mountV2);
 const sceneV2=new THREE.Scene();
 const cameraV2=new THREE.PerspectiveCamera(30,1,.1,100);
-cameraV2.position.set(0,-.03,5.15);
+cameraV2.position.set(0,-.03,4.2);
 const rendererV2=new THREE.WebGLRenderer({antialias:true,alpha:true});
 rendererV2.setPixelRatio(Math.min(window.devicePixelRatio,2));
 rendererV2.outputColorSpace=THREE.SRGBColorSpace;
 rendererV2.toneMapping=THREE.ACESFilmicToneMapping;
-rendererV2.toneMappingExposure=1.02;
+rendererV2.toneMappingExposure=.86;
 mountV2.append(rendererV2.domElement);
 
 /* Neutral studio light retains the rosy hair and yellow knit without tinting skin orange. */
-sceneV2.add(new THREE.HemisphereLight(0xf5f7ff,0x080808,1.8));
-const keyV2=new THREE.DirectionalLight(0xffffff,3.1); keyV2.position.set(3,4,5); sceneV2.add(keyV2);
-const fillV2=new THREE.DirectionalLight(0xffe0e8,1.15); fillV2.position.set(-3,1.5,4); sceneV2.add(fillV2);
-const rimV2=new THREE.PointLight(0xe4edff,1.35,8); rimV2.position.set(-2,3,3); sceneV2.add(rimV2);
+sceneV2.add(new THREE.HemisphereLight(0xf4f6ff,0x080808,1.25));
+const keyV2=new THREE.DirectionalLight(0xfff8f5,1.95); keyV2.position.set(3,4,5); sceneV2.add(keyV2);
+const fillV2=new THREE.DirectionalLight(0xf7dce3,.48); fillV2.position.set(-3,1.5,4); sceneV2.add(fillV2);
+const rimV2=new THREE.PointLight(0xdce8ff,.52,8); rimV2.position.set(-2,3,3); sceneV2.add(rimV2);
 const controlsV2=new OrbitControls(cameraV2,rendererV2.domElement);
-controlsV2.enableDamping=true; controlsV2.enablePan=false; controlsV2.minDistance=4.7; controlsV2.maxDistance=6.2;
-controlsV2.target.set(0,-.48,0); controlsV2.update();
+controlsV2.enableDamping=true; controlsV2.enablePan=false; controlsV2.minDistance=3.9; controlsV2.maxDistance=5.2;
+controlsV2.target.set(0,-.24,0); controlsV2.update();
 new GLTFLoader().load('assets/Meshy_AI_Rosy_Wave_Portrait_0724135627_texture.glb',g=>{
   const avatarV2=g.scene;
-  avatarV2.scale.setScalar(1.12); avatarV2.position.set(0,-1.04,0); avatarV2.rotation.y=-.15;
+  avatarV2.scale.setScalar(1.24); avatarV2.position.set(0,-.77,0); avatarV2.rotation.y=-.15;
   avatarV2.traverse(n=>{if(n.isMesh){n.castShadow=true;n.receiveShadow=true;if(n.material){n.material.metalness=0;n.material.needsUpdate=true;}}});
   sceneV2.add(avatarV2);
 });
