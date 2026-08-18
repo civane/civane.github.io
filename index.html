@@ -247,3 +247,10 @@ body.is-revealed:after{opacity:0!important;visibility:hidden!important}
 <script>
 (()=>{const spot=document.getElementById('golden-spotlight');if(!spot||spot.dataset.cursorControl)return;spot.dataset.cursorControl='1';let px=innerWidth*.5,py=innerHeight*.48;const place=(x,y)=>{px=x;py=y;const half=spot.offsetWidth/2;spot.style.transform='translate3d('+(x-half)+'px,'+(y-half)+'px,0)';spot.style.setProperty('--spot-transform',spot.style.transform)};const move=e=>place(e.clientX,e.clientY);document.addEventListener('mousemove',move,{passive:true});document.addEventListener('pointermove',move,{passive:true});document.querySelector('.hero')?.addEventListener('click',()=>{requestAnimationFrame(()=>place(px,py));setTimeout(()=>place(px,py),2100)},{once:true});window.addEventListener('resize',()=>place(px,py),{passive:true})})();
 </script>
+
+<!-- DIAGONAL NODE BEAMS + FADE INTRO SPOT -->
+<style>
+.timeline-card:after{left:-24px!important;top:20px!important;width:calc(100% + 64px)!important;height:405px!important;opacity:.44!important;filter:blur(7px)!important;background:linear-gradient(135deg,rgba(255,246,218,.34) 0%,rgba(232,196,124,.16) 38%,rgba(201,154,82,0) 86%)!important;clip-path:polygon(6% 0,9% 0,100% 100%,39% 100%)!important}
+.timeline-card:nth-child(2):after{top:40px!important}.timeline-card:hover:after{opacity:.78!important;filter:blur(5px)!important}
+body.is-revealed #golden-spotlight{animation:none!important;width:58vmax!important;height:58vmax!important;opacity:0!important;filter:none!important;box-shadow:none!important;transition:opacity 1.8s cubic-bezier(.2,.72,.2,1)!important}
+</style>
