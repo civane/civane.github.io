@@ -183,3 +183,18 @@ body.is-revealed:before{animation:goldenReveal 2.25s cubic-bezier(.16,.75,.2,1) 
 #framed-scene-v2{filter:contrast(1.02) saturate(.94) brightness(.88)!important;mix-blend-mode:normal!important;opacity:.92!important}
 .manifesto{background:#0b0b09!important}.journey{background:#151512!important}.work{background:#080807!important}.work-entry{background:#151511!important}.work-entry:hover{background:#1e1d17!important}.stamp{background:#181710!important}
 </style>
+
+<!-- ROBUST MOUSE SPOTLIGHT + UNFILTERED AVATAR -->
+<style>
+body:before{z-index:9998!important;background:#000!important;animation:none!important;opacity:1!important;visibility:visible!important;transform:none!important}
+#golden-spotlight{position:fixed;z-index:9999;left:0;top:0;width:58vmax;height:58vmax;pointer-events:none;will-change:transform,opacity;background:radial-gradient(circle,rgba(255,251,224,.97) 0%,rgba(242,208,130,.86) 4%,rgba(201,154,82,.52) 14%,rgba(92,64,23,.14) 31%,transparent 63%);transform:translate3d(calc(50vw - 29vmax),calc(48vh - 29vmax),0)}
+body:after{z-index:10000!important}
+body.is-revealed:before{animation:stageFade 4.8s cubic-bezier(.16,.75,.2,1) forwards!important}
+body.is-revealed #golden-spotlight{animation:spotOpen 4.8s cubic-bezier(.16,.75,.2,1) forwards}
+body.is-revealed:after{animation:hintOut .8s .35s both!important}
+#framed-scene-v2{filter:none!important;mix-blend-mode:normal!important;opacity:1!important}
+@keyframes stageFade{0%,18%{opacity:1}100%{opacity:0;visibility:hidden}}@keyframes spotOpen{0%,25%{opacity:1;transform:var(--spot-transform) scale(1)}100%{opacity:0;transform:var(--spot-transform) scale(5.4)}}@media(prefers-reduced-motion:reduce){#golden-spotlight{display:none}}
+</style>
+<script>
+(()=>{if(document.getElementById('golden-spotlight'))return;const spot=document.createElement('div');spot.id='golden-spotlight';document.body.append(spot);let x=innerWidth*.5,y=innerHeight*.48;const place=(px,py)=>{x=px;y=py;const t='translate3d('+(x-innerWidth*.29)+'px,'+(y-innerWidth*.29)+'px,0)';spot.style.transform=t;spot.style.setProperty('--spot-transform',t)};place(x,y);const move=e=>place(e.clientX,e.clientY);document.addEventListener('mousemove',move,{passive:true});document.addEventListener('pointermove',move,{passive:true});document.addEventListener('touchmove',e=>{const t=e.touches[0];if(t)place(t.clientX,t.clientY)},{passive:true});addEventListener('resize',()=>place(x,y),{passive:true})})();
+</script>
