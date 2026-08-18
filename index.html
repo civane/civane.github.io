@@ -224,3 +224,10 @@ body.is-revealed:after{animation:none!important;opacity:0!important;visibility:h
 <script>
 (()=>{const journey=document.querySelector('.journey');if(!journey||journey.dataset.orbit)return;journey.dataset.orbit='1';const labels=['NOW · EXPLORE','BUILD · SHIP','BEGIN · LEARN'];journey.querySelectorAll('.timeline-card').forEach((card,i)=>{const tag=document.createElement('span');tag.className='orbit-label';tag.textContent=labels[i];card.prepend(tag)});const caption=document.createElement('div');caption.className='journey-orbit-caption';caption.textContent='THREE ORBITS · ONE DIRECTION';journey.append(caption)})();
 </script>
+
+<!-- SOFT BEAMS FROM ORBIT NODES -->
+<style>
+.timeline-card{background:transparent!important;overflow:visible!important}.timeline-card:hover{background:transparent!important;transform:translateY(-5px)!important}
+.timeline-card>*{position:relative;z-index:2}.timeline-card:after{content:"";position:absolute;z-index:0;left:-34px;top:19px;width:calc(100% + 68px);height:330px;pointer-events:none;opacity:.42;filter:blur(8px);background:linear-gradient(180deg,rgba(232,196,124,.25) 0%,rgba(201,154,82,.11) 33%,rgba(201,154,82,0) 88%);clip-path:polygon(47% 0,53% 0,100% 100%,0 100%);transition:opacity .4s ease,filter .4s ease}
+.timeline-card:nth-child(2):after{top:39px}.timeline-card:hover:after{opacity:.86;filter:blur(5px)}.timeline:has(.timeline-card:hover) .timeline-card:not(:hover):after{opacity:.18}
+</style>
