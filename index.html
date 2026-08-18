@@ -198,3 +198,11 @@ body.is-revealed:after{animation:hintOut .8s .35s both!important}
 <script>
 (()=>{if(document.getElementById('golden-spotlight'))return;const spot=document.createElement('div');spot.id='golden-spotlight';document.body.append(spot);let x=innerWidth*.5,y=innerHeight*.48;const place=(px,py)=>{x=px;y=py;const t='translate3d('+(x-innerWidth*.29)+'px,'+(y-innerWidth*.29)+'px,0)';spot.style.transform=t;spot.style.setProperty('--spot-transform',t)};place(x,y);const move=e=>place(e.clientX,e.clientY);document.addEventListener('mousemove',move,{passive:true});document.addEventListener('pointermove',move,{passive:true});document.addEventListener('touchmove',e=>{const t=e.touches[0];if(t)place(t.clientX,t.clientY)},{passive:true});addEventListener('resize',()=>place(x,y),{passive:true})})();
 </script>
+
+<!-- FIX: RELEASE BLACK STAGE AFTER CLICK -->
+<style>
+body:before{transition:opacity 4.8s cubic-bezier(.16,.75,.2,1),visibility 0s linear 4.8s!important}
+body:after{transition:opacity .8s ease,visibility 0s linear .8s!important}
+body.is-revealed:before{animation:none!important;opacity:0!important;visibility:hidden!important}
+body.is-revealed:after{animation:none!important;opacity:0!important;visibility:hidden!important}
+</style>
