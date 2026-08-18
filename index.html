@@ -97,3 +97,37 @@ function renderV2(time){if(avatarV2){avatarV2.rotation.y+=(targetYawV2-avatarV2.
 <script type="module">
 const p=[['assets/HeGZO.png','HeGZO','Diffusion Optimization','Heterogeneous zeroth-order optimization for diffusion models — 27.4% less SD3 memory.','面向扩散模型的异构零阶优化，在 SD3 上降低 27.4% 峰值显存。'],['assets/LifeMem.png','LifeMem','LLM Agents','A hippocampal-inspired memory architecture for grounded long-context retrieval.','受海马体启发的长上下文记忆架构，实现可靠的原始对话检索。'],['assets/AIGC.png','On-device AIGC','Mobile Imaging','Compressed SD 1.5 with LoRA adaptation, adversarial detail recovery and on-device deployment.','压缩 SD 1.5，结合 LoRA、对抗细节恢复与端侧部署。'],['assets/云相机.png','RAW Reconstruction','Computational Photography','Staggered HDR and RAW-domain diffusion for high-quality mobile imaging.','面向高质量移动影像的交错 HDR 与 RAW 域扩散重建。'],['assets/微距deblur.png','Macro Deblurring','Mobile NPU','Hybrid U-Net and LSTM for real-time defocus and motion deblurring.','基于 Hybrid U-Net 与 LSTM 的实时散焦和运动去模糊。'],['assets/正在施工2.png','More in progress','Experiment','A place for curious work that is still taking shape.','为仍在生长的好奇实验预留的位置。']];let l='en',grid=document.querySelector('#project-grid');function cards(){grid.innerHTML=p.map((x,i)=>`<button class="project" data-i="${i}"><img src="${x[0]}" alt="${x[1]}"><span class="project-number">0${i+1}</span><div><p>${x[2]}</p><h3>${x[1]}</h3><span>${l==='en'?'View project':'查看项目'} ↗</span></div></button>`).join('');document.querySelectorAll('.project').forEach(b=>b.onclick=()=>modal(p[b.dataset.i]))}function modal(x){let m=document.createElement('div');m.className='modal-backdrop';m.innerHTML=`<article class="project-modal"><button>×</button><img src="${x[0]}"><p>${x[2]}</p><h2>${x[1]}</h2><p class="modal-description">${x[l==='en'?3:4]}</p></article>`;m.onclick=e=>{if(e.target===m||e.target.tagName==='BUTTON')m.remove()};document.body.append(m)}cards();document.querySelector('#language').onclick=()=>{l=l==='en'?'zh':'en';document.documentElement.lang=l;document.querySelector('#language').textContent=l==='en'?'中文':'EN';document.querySelectorAll('[data-en]').forEach(e=>e.textContent=e.dataset[l]);cards()};
 </script></body></html>
+
+<!-- CINEMATIC SURREAL VISUAL LAYER -->
+<style>
+:root{--ink:#080506;--cream:#f1e9dc;--lime:#ff4739;--peach:#ffad96;--muted:#a99b98}
+body{background:var(--ink);color:var(--cream);overflow-x:hidden}
+.hero{isolation:isolate;background:radial-gradient(ellipse 64% 90% at 82% 42%,rgba(153,15,36,.42),transparent 62%),radial-gradient(circle at 30% 85%,rgba(255,58,39,.18),transparent 38%),#080506!important}
+.hero:after{content:"";position:absolute;z-index:1;inset:-30%;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 4px),radial-gradient(circle at 62% 37%,rgba(255,72,57,.18),transparent 22%);mix-blend-mode:screen;opacity:.68;animation:filmDrift 16s linear infinite}
+.grain{display:block!important;z-index:4;opacity:.24!important;mix-blend-mode:screen}
+.topbar{background:linear-gradient(180deg,rgba(8,5,6,.8),transparent);border-bottom-color:rgba(255,130,111,.24);backdrop-filter:blur(8px)}
+.wordmark span,.eyebrow,.section-kicker,.project p{color:#ff4739!important}
+.topbar nav a:hover,.hero-contact a:hover{color:#ffad96!important}
+.language{border-color:rgba(255,173,150,.48);color:#ffad96;background:rgba(20,4,8,.38)}
+.hero-copy{z-index:5;max-width:540px}
+.hero h1{font-family:"Playfair Display",serif;font-weight:700;letter-spacing:-.09em;text-shadow:0 0 42px rgba(255,59,45,.2)}
+.hero h1 em{color:#ffad96;text-shadow:0 0 26px rgba(255,132,106,.24)}
+.intro{color:#e7d8d2;font-size:16px;max-width:410px}
+.hero-location{color:#d3bbb5}.location-pin{border-color:#ff4739}.location-pin:after{background:#ff4739}
+.hero-contact a{color:#e0c7c2;border-bottom-color:rgba(255,173,150,.32)}
+.cta{border-color:#ff4739!important;color:#fff5ee}.cta b{color:#ff4739!important}
+#framed-scene-v2{filter:contrast(1.08) saturate(.78) sepia(.1);mix-blend-mode:lighten;opacity:.82!important}
+.hero:before{background:radial-gradient(circle,rgba(255,67,46,.3),rgba(99,5,23,.1) 43%,transparent 70%)!important;filter:blur(20px)!important;animation:heroHalo 8s ease-in-out infinite alternate}
+.portrait-loading{color:#ffad96}.corner,.scroll-indicator{color:#d1b8b2}.scroll-indicator i{border-color:#ff4739!important}
+.manifesto{position:relative;overflow:hidden;background:linear-gradient(135deg,#eee3d7 0%,#e4d4ca 55%,#b43838 170%);color:#160b0c}
+.manifesto:after{content:"";position:absolute;right:-16vw;bottom:-22vw;width:55vw;height:55vw;border-radius:50%;background:radial-gradient(circle,rgba(203,32,42,.52),transparent 68%);filter:blur(18px);pointer-events:none}
+.manifesto>*{position:relative;z-index:1}.manifesto .section-kicker{color:#a51720!important}.stamp{background:#ff9f86;border-color:#2d080c;box-shadow:10px 12px 0 rgba(80,10,18,.24)}
+.journey{position:relative;overflow:hidden;background:linear-gradient(115deg,#12080c,#250a13 60%,#090506)}
+.journey:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent 49.5%,rgba(255,88,75,.16) 50%,transparent 50.5%),radial-gradient(circle at 80% 15%,rgba(255,53,48,.23),transparent 28%);background-size:240px 100%,auto;opacity:.85}
+.journey>*{position:relative;z-index:1}.timeline{border-color:rgba(255,165,145,.28)}.timeline-card{border-color:rgba(255,165,145,.28)}.index{color:#ff4739}.year{color:#ffad96}.timeline-card h4{color:#ead6d2}.timeline-card p:last-child{color:#c1aaa9}
+.work{background:#080506!important}.work-entry{position:relative;overflow:hidden;background:#0d0709!important;border-color:rgba(255,104,89,.58);transition:transform .45s ease,background .45s ease!important}.work-entry:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--x,50%) var(--y,50%),rgba(210,24,53,.36),transparent 37%);opacity:0;transition:opacity .4s}.work-entry:hover{background:#1a080d!important;transform:scale(1.008)}.work-entry:hover:before{opacity:1}.work-entry .entry-label,.work-entry .entry-arrow{color:#ff4739!important}.work-entry h2{font-family:"Playfair Display",serif;letter-spacing:-.065em;text-shadow:0 0 28px rgba(255,50,45,.16)}
+footer{background:linear-gradient(130deg,#3a0810,#c42b31 65%,#ff715e);color:#fff4ec}footer>a{border-color:#fff4ec}footer div{color:#fff4ec}
+@keyframes filmDrift{0%{transform:translate3d(-1%,-1%,0)}50%{transform:translate3d(1%,.5%,0)}100%{transform:translate3d(-1%,-1%,0)}}
+@media(max-width:800px){.hero-copy{padding-top:58px}.hero h1{font-size:clamp(54px,16vw,84px)}.manifesto{padding-top:100px}.work-entry h2{font-family:"Playfair Display",serif}}
+@media(prefers-reduced-motion:reduce){.hero:after{animation:none}}
+</style>
