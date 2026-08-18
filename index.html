@@ -261,3 +261,11 @@ body.is-revealed #golden-spotlight{animation:none!important;width:58vmax!importa
 .timeline-card:nth-child(2):after{top:40px!important}.timeline-card:hover:after{opacity:.86!important;filter:blur(18px)!important}
 body.is-revealed #golden-spotlight{width:58vmax!important;height:58vmax!important;transform:var(--spot-transform)!important;opacity:0!important;transition:opacity 2.35s cubic-bezier(.2,.72,.2,1)!important}
 </style>
+
+<!-- FEATHERED SVG STAGE LIGHTS -->
+<style>
+.timeline-card:after{display:none!important}.timeline-card{isolation:isolate;overflow:visible!important}.timeline-card>*:not(.stage-beam){position:relative;z-index:2}.stage-beam{position:absolute;z-index:0;left:-36px;top:11px;width:480px;height:470px;overflow:visible;pointer-events:none;opacity:.34;transition:opacity .55s ease}.timeline-card:nth-child(2) .stage-beam{top:31px}.stage-beam path{filter:url(#beam-soft);}.timeline-card:hover .stage-beam{opacity:.7}.timeline:has(.timeline-card:hover) .timeline-card:not(:hover) .stage-beam{opacity:.14}
+</style>
+<script>
+(()=>{const ns='http://www.w3.org/2000/svg';const cards=document.querySelectorAll('.timeline-card');if(!cards.length||document.querySelector('.stage-beam'))return;cards.forEach((card,i)=>{const svg=document.createElementNS(ns,'svg');svg.setAttribute('class','stage-beam');svg.setAttribute('viewBox','0 0 480 470');svg.setAttribute('aria-hidden','true');const id='beam-grad-'+i,filter='beam-soft-'+i;svg.innerHTML='<defs><linearGradient id="'+id+'" x1="0" y1="0" x2=".92" y2="1"><stop offset="0" stop-color="#fff3d0" stop-opacity=".36"/><stop offset=".3" stop-color="#e8c47c" stop-opacity=".16"/><stop offset="1" stop-color="#c99a52" stop-opacity="0"/></linearGradient><filter id="'+filter+'" x="-30%" y="-20%" width="170%" height="160%"><feGaussianBlur stdDeviation="18"/></filter></defs><path d="M 42 9 C 100 88, 250 226, 470 452 L 245 452 C 175 280, 95 110, 42 9 Z" fill="url(#'+id+')" filter="url(#'+filter+')"/>';card.prepend(svg)})})();
+</script>
