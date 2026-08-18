@@ -131,3 +131,22 @@ footer{background:linear-gradient(130deg,#3a0810,#c42b31 65%,#ff715e);color:#fff
 @media(max-width:800px){.hero-copy{padding-top:58px}.hero h1{font-size:clamp(54px,16vw,84px)}.manifesto{padding-top:100px}.work-entry h2{font-family:"Playfair Display",serif}}
 @media(prefers-reduced-motion:reduce){.hero:after{animation:none}}
 </style>
+
+<!-- NIGHT WINDOW CINEMATIC OVERRIDE -->
+<style>
+:root{--ink:#050708;--cream:#e8e4dc;--lime:#d9d1bb;--peach:#e9d7ae;--muted:#849196}
+body{background:#050708;color:var(--cream)}
+body:before{content:"";position:fixed;z-index:9999;inset:0;pointer-events:none;background:radial-gradient(ellipse 2% 3% at 50% 47%,#fff9e9 0%,#d8d2b8 18%,rgba(139,159,163,.42) 35%,rgba(6,9,10,.96) 66%,#020304 100%);animation:openingLight 2.55s cubic-bezier(.19,.76,.25,1) both,openingFade .55s 2.45s ease forwards}
+.hero{background:radial-gradient(ellipse 70% 88% at 75% 42%,rgba(18,45,57,.36),transparent 59%),radial-gradient(ellipse 35% 58% at 50% 48%,rgba(214,194,149,.10),transparent 58%),#050708!important}
+.hero:after{background:repeating-linear-gradient(0deg,rgba(213,229,233,.018) 0 1px,transparent 1px 4px),radial-gradient(ellipse 19% 36% at 50% 47%,rgba(238,225,188,.11),rgba(39,63,72,.055) 37%,transparent 72%)!important;mix-blend-mode:screen;opacity:.62}
+.hero:before{right:15%;top:12%;background:radial-gradient(ellipse,rgba(173,195,200,.12),rgba(12,29,37,.10) 43%,transparent 72%)!important;filter:blur(24px)!important}
+.grain{opacity:.16!important;mix-blend-mode:soft-light}.topbar{background:linear-gradient(180deg,rgba(3,5,6,.94),rgba(3,5,6,.22));border-bottom-color:rgba(190,207,209,.16)}
+.wordmark span,.eyebrow,.section-kicker,.project p{color:#d9d1bb!important}.language{color:#ded6c5;border-color:rgba(217,209,187,.4);background:rgba(9,15,17,.42)}
+.hero h1{color:#e9e8e3;text-shadow:0 10px 45px rgba(0,0,0,.85)}.hero h1 em{color:#e7d9b8;text-shadow:0 0 24px rgba(230,218,185,.14)}.intro{color:#bfc8c8}.hero-location{color:#9eafb2}.location-pin{border-color:#e2d3ad}.location-pin:after{background:#e2d3ad}.hero-contact a{color:#c4cecf;border-bottom-color:rgba(197,207,208,.26)}.hero-contact a:hover,.topbar nav a:hover{color:#eee3c8!important}.cta{border-color:#d9d1bb!important}.cta b{color:#e2d3ad!important}
+#framed-scene-v2{filter:contrast(1.02) saturate(.45) brightness(.76) hue-rotate(3deg);mix-blend-mode:screen;opacity:.70!important}.portrait-loading{color:#c9c4b5}.corner,.scroll-indicator{color:#7c9094}.scroll-indicator i{border-color:#d9d1bb!important}
+.manifesto{background:linear-gradient(135deg,#080d0e,#111a1c 55%,#0a0c0c)!important;color:#e3e2dc}.manifesto:after{right:-16vw;bottom:-22vw;background:radial-gradient(circle,rgba(161,183,183,.14),transparent 68%)}.manifesto .section-kicker{color:#d7cfba!important}.stamp{background:#152022;border-color:#8d9b97;box-shadow:10px 12px 0 rgba(0,0,0,.34)}
+.journey{background:linear-gradient(115deg,#050708,#0a1215 60%,#030405)!important}.journey:before{background:linear-gradient(90deg,transparent 49.5%,rgba(187,205,206,.10) 50%,transparent 50.5%),radial-gradient(circle at 80% 15%,rgba(68,101,112,.16),transparent 28%)}.timeline{border-color:rgba(178,197,197,.22)}.timeline-card{border-color:rgba(178,197,197,.22)}.index{color:#d9d1bb}.year{color:#d9d1bb}.timeline-card h4{color:#cbd3d1}.timeline-card p:last-child{color:#8fa0a1}
+.work{background:#030506!important}.work-entry{background:#080c0d!important;border-color:rgba(183,196,193,.24)}.work-entry:hover{background:#10191b!important;transform:scale(1.004)}.work-entry:before{background:radial-gradient(circle at var(--x,50%) var(--y,50%),rgba(155,179,180,.13),transparent 40%)}.work-entry .entry-label,.work-entry .entry-arrow{color:#d9d1bb!important}.work-entry h2{font-family:"Playfair Display",serif;color:#e4e5e2;text-shadow:0 0 28px rgba(178,198,197,.10)}
+footer{background:linear-gradient(135deg,#070a0b,#11191b)!important;color:#e0e0da}footer>a{border-color:#b8c2bf}footer div{color:#bfc8c5}
+@keyframes openingLight{0%{background-size:100% 100%;opacity:1}62%{background:radial-gradient(ellipse 30% 46% at 50% 47%,#fff8e2 0%,#cdc8b4 7%,rgba(120,148,157,.28) 26%,rgba(4,7,8,.86) 60%,#020304 100%);opacity:1}100%{background:radial-gradient(ellipse 75% 115% at 50% 47%,rgba(238,230,205,.14),rgba(33,55,62,.09) 34%,rgba(3,5,6,.58) 72%,#020304 100%);opacity:1}}@keyframes openingFade{to{opacity:0;visibility:hidden}}@media(prefers-reduced-motion:reduce){body:before{display:none}}
+</style>
