@@ -393,3 +393,10 @@ body.is-revealed #golden-spotlight{width:58vmax!important;height:58vmax!importan
  .timeline-card{grid-template-rows:30px 58px 24px 58px 27px minmax(62px,1fr)!important;min-height:390px!important}
 }
 </style>
+
+<style>
+/* Align every Journey node with the shared card baseline and copy inset. */
+.timeline-card:before{top:9px!important;left:30px!important}
+.timeline-card:not(:first-child):before{left:28px!important}
+@media(max-width:800px){.timeline-card:before,.timeline-card:not(:first-child):before{top:9px!important;left:0!important}}
+</style>
