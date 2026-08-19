@@ -302,3 +302,29 @@ body.is-revealed #golden-spotlight{width:58vmax!important;height:58vmax!importan
   background-position:left -22px!important;
 }
 </style>
+
+<style>
+/* Remove the visible rectangular texture boundaries: keep only feathered light. */
+.timeline-card{background:transparent!important;overflow:visible!important}
+.timeline-card:after{
+  inset:-28% -34% -32% -34%!important;
+  opacity:.10!important;
+  background-color:transparent!important;
+  background-size:178% auto!important;
+  background-position:left top!important;
+  -webkit-mask-image:radial-gradient(ellipse 78% 86% at 16% 8%,#000 0%,rgba(0,0,0,.9) 32%,rgba(0,0,0,.46) 57%,transparent 84%)!important;
+  mask-image:radial-gradient(ellipse 78% 86% at 16% 8%,#000 0%,rgba(0,0,0,.9) 32%,rgba(0,0,0,.46) 57%,transparent 84%)!important;
+}
+.timeline-card:hover:after{opacity:.61!important}
+.timeline-card:nth-child(2):after{
+  inset:-32% -38% -34% -36%!important;
+  background-size:195% auto!important;
+  background-position:left -24px!important;
+  -webkit-mask-image:radial-gradient(ellipse 86% 94% at 17% 7%,#000 0%,rgba(0,0,0,.92) 34%,rgba(0,0,0,.48) 60%,transparent 87%)!important;
+  mask-image:radial-gradient(ellipse 86% 94% at 17% 7%,#000 0%,rgba(0,0,0,.92) 34%,rgba(0,0,0,.48) 60%,transparent 87%)!important;
+}
+.timeline-card:nth-child(3):after{
+  -webkit-mask-image:radial-gradient(ellipse 78% 86% at 15% 8%,#000 0%,rgba(0,0,0,.9) 32%,rgba(0,0,0,.46) 57%,transparent 84%)!important;
+  mask-image:radial-gradient(ellipse 78% 86% at 15% 8%,#000 0%,rgba(0,0,0,.9) 32%,rgba(0,0,0,.46) 57%,transparent 84%)!important;
+}
+</style>
