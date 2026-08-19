@@ -278,3 +278,27 @@ body.is-revealed #golden-spotlight{width:58vmax!important;height:58vmax!importan
 .timeline-card>*{position:relative;z-index:1}.timeline-card:hover:after{opacity:.58!important;transform:translate3d(7px,5px,0) scale(1.025)!important}
 @media(max-width:800px){.timeline-card:after{background-size:210% auto!important;opacity:.32!important}}
 </style>
+
+<style>
+/* Journey: dim, diffused ambient light until the card is explored. */
+.timeline-card:after{
+  opacity:.11!important;
+  filter:saturate(.62) brightness(.72) contrast(.78) blur(7px)!important;
+  transform:translate3d(0,4px,0) scale(.985)!important;
+  transition:opacity .65s ease,filter .75s ease,transform .9s cubic-bezier(.2,.75,.2,1)!important;
+}
+.timeline-card:hover:after{
+  opacity:.68!important;
+  filter:saturate(1.05) brightness(1.14) contrast(1) blur(.45px)!important;
+  transform:translate3d(4px,0,0) scale(1.02)!important;
+}
+.timeline:has(.timeline-card:hover) .timeline-card:not(:hover):after{
+  opacity:.055!important;
+  filter:saturate(.45) brightness(.58) blur(9px)!important;
+}
+.timeline-card:nth-child(2):after{
+  inset:-24% -20% -19% -18%!important;
+  background-size:188% auto!important;
+  background-position:left -22px!important;
+}
+</style>
