@@ -357,3 +357,39 @@ body.is-revealed #golden-spotlight{width:58vmax!important;height:58vmax!importan
   transform:translate3d(1px,0,0) scale(1.005)!important;
 }
 </style>
+
+<style>
+/* Align all Journey cards to the same rhythm and dissolve the light texture at every edge. */
+.timeline-card{
+  display:grid!important;
+  grid-template-rows:30px 58px 24px 58px 27px minmax(62px,1fr)!important;
+  align-content:start!important;
+  min-height:360px!important;
+}
+.timeline-card .stage-beam{display:none!important}
+.timeline-card .orbit-label{grid-row:1!important;align-self:start!important}
+.timeline-card .index{display:none!important}
+.timeline-card .year{grid-row:3!important;margin:0!important;align-self:start!important}
+.timeline-card h3{grid-row:4!important;margin:0!important;align-self:start!important}
+.timeline-card h4{grid-row:5!important;margin:0!important;align-self:start!important}
+.timeline-card p:last-child{grid-row:6!important;margin:0!important;align-self:start!important}
+.timeline-card:after,
+.timeline-card:nth-child(2):after,
+.timeline-card:nth-child(3):after{
+  inset:-10% -12% -14% -12%!important;
+  background-size:108% auto!important;
+  background-position:left top!important;
+  opacity:.08!important;
+  filter:saturate(.55) brightness(.66) contrast(.9) blur(8px)!important;
+  -webkit-mask-image:radial-gradient(ellipse 62% 60% at 18% 7%,#000 0%,rgba(0,0,0,.86) 25%,rgba(0,0,0,.42) 48%,transparent 80%)!important;
+  mask-image:radial-gradient(ellipse 62% 60% at 18% 7%,#000 0%,rgba(0,0,0,.86) 25%,rgba(0,0,0,.42) 48%,transparent 80%)!important;
+}
+.timeline-card:hover:after{
+  opacity:.44!important;
+  filter:saturate(.78) brightness(.88) contrast(1.15) blur(10px)!important;
+  transform:none!important;
+}
+@media(max-width:800px){
+ .timeline-card{grid-template-rows:30px 58px 24px 58px 27px minmax(62px,1fr)!important;min-height:390px!important}
+}
+</style>
