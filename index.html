@@ -339,3 +339,21 @@ body.is-revealed #golden-spotlight{width:58vmax!important;height:58vmax!importan
   mask-image:radial-gradient(ellipse 88% 78% at 16% 4%,#000 0%,rgba(0,0,0,.9) 30%,rgba(0,0,0,.46) 55%,transparent 84%)!important;
 }
 </style>
+
+<style>
+/* One identical, wider soft-focus light treatment for all Journey cards. */
+.timeline-card:after,
+.timeline-card:nth-child(2):after,
+.timeline-card:nth-child(3):after{
+  inset:0 -5% -6% -5%!important;
+  background-size:112% auto!important;
+  background-position:left top!important;
+  -webkit-mask-image:radial-gradient(ellipse 88% 78% at 16% 4%,#000 0%,rgba(0,0,0,.9) 30%,rgba(0,0,0,.46) 55%,transparent 84%)!important;
+  mask-image:radial-gradient(ellipse 88% 78% at 16% 4%,#000 0%,rgba(0,0,0,.9) 30%,rgba(0,0,0,.46) 55%,transparent 84%)!important;
+}
+.timeline-card:hover:after{
+  opacity:.43!important;
+  filter:saturate(.78) brightness(.92) contrast(.84) blur(8px)!important;
+  transform:translate3d(1px,0,0) scale(1.005)!important;
+}
+</style>
