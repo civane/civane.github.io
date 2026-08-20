@@ -450,3 +450,9 @@ body:not(.is-revealed):before{
 body.is-revealed:before{animation:none!important;opacity:0!important;visibility:hidden!important;transform:none!important}
 body.is-revealed #golden-spotlight{animation:none!important;width:58vmax!important;height:58vmax!important;transform:var(--spot-transform)!important;opacity:0!important;transition:opacity 1.8s cubic-bezier(.2,.72,.2,1)!important}
 </style>
+
+<style>/* A smaller, softer viewing window keeps the unopened page mysterious. */
+body:not(.is-revealed):before{
+  background:radial-gradient(circle 20vmax at var(--spot-x) var(--spot-y),rgba(5,4,3,.18) 0%,rgba(5,4,3,.32) 24%,rgba(5,4,3,.64) 52%,rgba(5,4,3,.9) 77%,#000 100%)!important;
+}
+</style>
