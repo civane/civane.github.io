@@ -419,3 +419,14 @@ body.is-revealed #golden-spotlight{width:58vmax!important;height:58vmax!importan
   .hero-copy .eyebrow,.hero-copy h1,.hero-copy .intro,.hero-copy .hero-location,.hero-copy .hero-contact,.hero-copy .cta{margin:0!important}
 }
 </style>
+
+<style>/* Keep the copy compact inside its shared fisheye alignment frame. */
+@media(min-width:801px){
+  .hero-copy{justify-content:flex-start!important}
+  .hero-copy .eyebrow{margin-bottom:18px!important}
+  .hero-copy h1{margin-bottom:34px!important}
+  .hero-copy .intro{margin-bottom:clamp(52px,5vw,76px)!important}
+  .hero-copy .hero-location{margin-bottom:30px!important}
+  .hero-copy .cta{margin-top:auto!important}
+}
+</style>
