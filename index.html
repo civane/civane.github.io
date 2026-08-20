@@ -412,3 +412,10 @@ body.is-revealed #golden-spotlight{width:58vmax!important;height:58vmax!importan
 <style>/* Keep the portfolio label centered on the far right of the hero. */
 @media(min-width:801px){.corner-right{top:50%!important;right:3.5vw!important;bottom:auto!important;left:auto!important;transform:translateY(-50%)!important;z-index:4!important}}
 </style>
+
+<style>/* Match the copy block's top and bottom to the visible fisheye circle. */
+@media(min-width:801px){
+  .hero-copy{top:calc(98svh - min(45.12vw,658px))!important;transform:none!important;height:min(42.24vw,616px)!important;display:flex!important;flex-direction:column!important;justify-content:space-between!important}
+  .hero-copy .eyebrow,.hero-copy h1,.hero-copy .intro,.hero-copy .hero-location,.hero-copy .hero-contact,.hero-copy .cta{margin:0!important}
+}
+</style>
