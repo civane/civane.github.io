@@ -89,16 +89,7 @@ loaderV2.load('assets/portrait-web.glb',g=>{
 function resizeV2(){const w=mountV2.clientWidth,h=mountV2.clientHeight;if(!w||!h)return;cameraV2.aspect=w/h;cameraV2.updateProjectionMatrix();rendererV2.setSize(w,h,false)}
 window.addEventListener('resize',resizeV2); resizeV2();
 function renderV2(time){if(avatarV2){avatarV2.rotation.y+=(targetYawV2-avatarV2.rotation.y)*.035;avatarV2.rotation.x+=(targetPitchV2-avatarV2.rotation.x)*.035;avatarV2.position.y=-.77+Math.sin(time*.0007)*.012}controlsV2.update();rendererV2.render(sceneV2,cameraV2);requestAnimationFrame(renderV2)} renderV2(0);
-</script><style>
-
-
-.manifesto .stamp { width: clamp(218px, 18vw, 244px); max-width: 100%; }
-.manifesto .stamp picture { display: block; }
-.manifesto .stamp img { height: auto; }
-@media (min-width: 801px) {
-  .manifesto .manifesto-grid { grid-template-columns: minmax(0,1fr) clamp(218px, 18vw, 244px); }
-}
-</style>
+</script>
 <style>
 @media (prefers-reduced-motion: no-preference) {
   #static-hero-portrait img { transform-origin: center; animation: peephole-rock 2.8s ease-in-out infinite; }
@@ -112,30 +103,30 @@ function renderV2(time){if(avatarV2){avatarV2.rotation.y+=(targetYawV2-avatarV2.
 
 <style>
 
-.manifesto .notebook { align-items:start; }
-.note-pages {
-  min-width:0; scroll-margin-top:2rem;
-  font-family:"Bradley Hand","Segoe Print",Kalam,"Kaiti SC",KaiTi,"Ma Shan Zheng",cursive;
+
+.note-pages { min-width:0; scroll-margin-top:2rem; }
+.note-pages section + section { margin-top:clamp(1.4rem,3vw,2.7rem); }
+.note-pages h2 { font:normal clamp(28px,3vw,41px)/1.18 "Bradley Hand","Segoe Print",Kalam,"Kaiti SC",KaiTi,cursive; letter-spacing:-.025em; }
+.note-list { display:grid; grid-auto-flow:column; grid-auto-columns:minmax(0,1fr); list-style:none; padding:0; margin:14px 0 0; }
+.note-list li { position:relative; padding:8px clamp(15px,2.4vw,38px) 50px; }
+.note-list li::after {
+  content:""; position:absolute; pointer-events:none; inset:auto 0 0; height:43px;
+  background:url("assets/profile-notches.svg") center / 100% 100% no-repeat;
 }
-.note-pages section + section { margin-top:clamp(1.25rem,2vw,1.75rem); }
-.note-pages h2 { font-family:inherit; font-size:clamp(28px,3vw,41px); font-weight:normal; line-height:1.15; letter-spacing:-.025em; }
-.note-list { list-style:none; padding:0; margin:7px 0 0; border-bottom:1px solid #504632; }
-.note-list li { display:grid; grid-template-columns:clamp(8rem,12vw,11rem) minmax(0,1fr); gap:1rem; padding:.62rem 0; border-top:1px solid #504632; }
-.note-date { color:#c9a36b; font-size:.98rem; line-height:1.3; padding-top:.12rem; }
-.note-list h3 { margin:0; font-family:inherit; font-weight:600; font-size:clamp(19px,1.65vw,23px); line-height:1.2; }
-.note-list p { font-family:inherit; margin:.14rem 0 0; line-height:1.32; }
-.note-role { color:#e3d8c6; font-size:1.06rem; }
-.note-body { color:#c9c2b8; font-size:1.04rem; }
-@media(max-width:600px) {
-  .note-list li { grid-template-columns:1fr; gap:.12rem; padding:.58rem 0; }
-  .note-date { padding-top:0; }
+.note-date { color:#c9a36b; font:12px/1.5 "DM Mono",monospace; }
+.note-list h3 { margin:.4rem 0 .15rem; font:600 clamp(19px,1.6vw,24px)/1.18 Georgia,"Kaiti SC",serif; }
+.note-list p { margin:.24rem 0 0; font:.96rem/1.45 "DM Sans",Arial,sans-serif; }
+.note-role { color:#e3d8c6; } .note-body { color:#c9c2b8; }
+@media(max-width:760px) {
+  .note-list { grid-auto-flow:row; grid-auto-columns:1fr; margin-top:8px; }
+  .note-list li { padding:.65rem 0 .8rem 30px; }
+  .note-list li::after { inset:0 auto 0 0; width:21px; height:auto; background-image:url("assets/profile-notches-vertical.svg"); }
 }
 </style>
 </head><body><main>
 <section class="hero" id="home"><div class="grain"></div><header class="topbar"><a class="wordmark" href="#home">ZQ<span>•</span></a><nav><a href="#profile" data-en="PROFILE" data-zh="关于我">PROFILE</a><a href="#journey" data-en="JOURNEY" data-zh="经历">JOURNEY</a><a href="work.html" data-en="SELECTED WORK" data-zh="项目作品">SELECTED WORK</a><a href="photography.html" data-en="PHOTOGRAPHY" data-zh="摄影">PHOTOGRAPHY</a></nav><button class="language" id="language">中文</button></header><div class="hero-copy"><p class="eyebrow"><span></span><b data-en="HELLO, I’M" data-zh="你好，我是">HELLO, I’M</b></p><h1>Zhangxizi<br><em>QIU</em></h1><p class="intro" data-en="AI Engineer · World Explorer · Life Lover · Vibe Coding Aficionado" data-zh="AI 工程师 · 世界探索者 · 生活热爱者 · Vibe Coding 爱好者">AI Engineer · World Explorer · Life Lover · Vibe Coding Aficionado</p><div class="hero-location"><span class="location-pin" aria-hidden="true"></span><span>SHEN ZHEN / HONG KONG</span></div><div class="hero-contact" aria-label="Contact links"><a href="mailto:civaneeeeee@gmail.com">E-MAIL ↗</a><a href="https://github.com/civane" target="_blank" rel="noreferrer">GITHUB ↗</a><a href="https://www.linkedin.com/in/%E8%A5%BF%E5%AD%90-%E9%82%B1%E5%BC%A0-b48540321/" target="_blank" rel="noreferrer">LINKEDIN ↗</a></div><a class="cta" href="#journey"><span data-en="Start exploring" data-zh="开始探索">Start exploring</span><b>↓</b></a></div><div id="scene"></div><figure id="static-hero-portrait" aria-label="Portrait of Zhangxizi QIU"><img src="assets/hero-editorial-portrait-square-v9.png" alt="Zhangxizi QIU with playful companions"/></figure><div class="corner corner-right">PORTFOLIO<br>2026</div><div class="scroll-indicator">SCROLL <i></i></div></section>
 <section class="manifesto" id="profile" aria-labelledby="profile-label">
 <p class="section-kicker" id="profile-label">01 / PROFILE</p>
-<div class="manifesto-grid notebook">
 <div id="journey" class="note-pages">
 <section aria-labelledby="work-notes-heading"><h2 id="work-notes-heading" data-en="Where I’ve worked" data-zh="工作经历">Where I’ve worked</h2>
 <ol class="note-list">
@@ -151,8 +142,7 @@ function renderV2(time){if(avatarV2){avatarV2.rotation.y+=(targetYawV2-avatarV2.
 </ol>
 </section>
 </div>
-<div class="stamp"><picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/dipa.png"><img src="assets/dipa-card-ears.webp" alt="DIPA cat sticker" width="588" height="630"></picture><span>CURIOUS<br>BY DEFAULT</span></div>
-</div></section>
+</section>
 <section class="work" id="work"><a class="work-entry" href="https://civane.github.io/work.html"><span class="entry-label">02 / WORK</span><h2 data-en="Selected work" data-zh="项目作品">Selected work</h2><span class="entry-arrow">↗</span></a><a class="work-entry photo-entry" href="https://civane.github.io/photography.html"><span class="entry-label">03 / VISUAL DIARY</span><h2 data-en="Photography" data-zh="摄影作品">Photography</h2><span class="entry-arrow">↗</span></a><div class="project-grid" id="project-grid" hidden></div></section><footer><p data-en="Explore the world with curiosity." data-zh="带着好奇心探索世界。">Explore the world with curiosity.</p><a href="mailto:civaneeeeee@gmail.com">civaneeeeee@gmail.com ↗</a><div><a href="https://github.com/civane" target="_blank">GITHUB</a><a href="https://www.linkedin.com/in/%E8%A5%BF%E5%AD%90-%E9%82%B1%E5%BC%A0-b48540321/" target="_blank">LINKEDIN</a></div></footer></main>
 <script type="module">
 const p=[['assets/HeGZO.png','HeGZO','Diffusion Optimization','Heterogeneous zeroth-order optimization for diffusion models — 27.4% less SD3 memory.','面向扩散模型的异构零阶优化，在 SD3 上降低 27.4% 峰值显存。'],['assets/LifeMem.png','LifeMem','LLM Agents','A hippocampal-inspired memory architecture for grounded long-context retrieval.','受海马体启发的长上下文记忆架构，实现可靠的原始对话检索。'],['assets/AIGC.png','On-device AIGC','Mobile Imaging','Compressed SD 1.5 with LoRA adaptation, adversarial detail recovery and on-device deployment.','压缩 SD 1.5，结合 LoRA、对抗细节恢复与端侧部署。'],['assets/云相机.png','RAW Reconstruction','Computational Photography','Staggered HDR and RAW-domain diffusion for high-quality mobile imaging.','面向高质量移动影像的交错 HDR 与 RAW 域扩散重建。'],['assets/微距deblur.png','Macro Deblurring','Mobile NPU','Hybrid U-Net and LSTM for real-time defocus and motion deblurring.','基于 Hybrid U-Net 与 LSTM 的实时散焦和运动去模糊。'],['assets/正在施工2.png','More in progress','Experiment','A place for curious work that is still taking shape.','为仍在生长的好奇实验预留的位置。']];let l='en',grid=document.querySelector('#project-grid');function cards(){grid.innerHTML=p.map((x,i)=>`<button class="project" data-i="${i}"><img src="${x[0]}" alt="${x[1]}"><span class="project-number">0${i+1}</span><div><p>${x[2]}</p><h3>${x[1]}</h3><span>${l==='en'?'View project':'查看项目'} ↗</span></div></button>`).join('');document.querySelectorAll('.project').forEach(b=>b.onclick=()=>modal(p[b.dataset.i]))}function modal(x){let m=document.createElement('div');m.className='modal-backdrop';m.innerHTML=`<article class="project-modal"><button>×</button><img src="${x[0]}"><p>${x[2]}</p><h2>${x[1]}</h2><p class="modal-description">${x[l==='en'?3:4]}</p></article>`;m.onclick=e=>{if(e.target===m||e.target.tagName==='BUTTON')m.remove()};document.body.append(m)}cards();document.querySelector('#language').onclick=()=>{l=l==='en'?'zh':'en';document.documentElement.lang=l;document.querySelector('#language').textContent=l==='en'?'中文':'EN';document.querySelectorAll('[data-en]').forEach(e=>e.textContent=e.dataset[l]);cards()};
