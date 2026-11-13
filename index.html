@@ -38,10 +38,12 @@
 
 :root { --profile-handwriting: "Bradley Hand","Segoe Print",Kalam,"Kaiti SC",KaiTi,"Ma Shan Zheng",cursive; }
 .hero-copy .intro { font-family:var(--profile-handwriting); font-size:clamp(17px,1.3vw,20px); line-height:1.4; text-wrap:balance; }
-#profile.manifesto { padding-bottom:clamp(28px, 3.5vw, 56px); }
+#profile.manifesto { padding-bottom:0; overflow:clip; }
 #work > .work-entry:first-child {
   min-height:0;
-  padding-block:clamp(36px, 5vw, 80px);
+  padding-top:clamp(12px, 1.5vw, 24px);
+  padding-bottom:clamp(36px, 5vw, 80px);
+  transform:none;
 }
 .note-pages { min-width:0; scroll-margin-top:2rem; }
 .note-pages section + section { margin-top:clamp(1.4rem,3vw,2.7rem); }
@@ -160,7 +162,7 @@ footer{background:linear-gradient(135deg,#120d05,#4c3715)!important;color:#f2ead
 @keyframes goldenReveal{0%{opacity:1;transform:scale(1)}55%{opacity:1;transform:scale(2.8)}100%{opacity:0;transform:scale(5.2);visibility:hidden}}@keyframes hintOut{to{opacity:0;transform:translate(-50%,12px)}}@media(max-width:700px){body:after{font-size:8px;bottom:9vh}}@media(prefers-reduced-motion:reduce){body:before,body.is-revealed:before{display:none}body:after{display:none}}
 </style>
 <script>
-(()=>{const root=document.body;if(root.dataset.goldIntro)return;root.dataset.goldIntro='1';const move=e=>{const p=e.touches?e.touches[0]:e;root.style.setProperty('--spot-x',p.clientX+'px');root.style.setProperty('--spot-y',p.clientY+'px')};window.addEventListener('pointermove',move,{passive:true});window.addEventListener('touchmove',move,{passive:true});const reveal=()=>{if(root.classList.contains('is-revealed'))return;root.classList.add('is-revealed');window.removeEventListener('pointermove',move)};document.querySelector('.hero')?.addEventListener('click',reveal,{once:true});document.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')reveal()},{once:true})})();
+(()=>{const root=document.body;if(root.dataset.goldIntro)return;root.dataset.goldIntro='1';const move=e=>{const p=e.touches?e.touches[0]:e;root.style.setProperty('--spot-x',p.clientX+'px');root.style.setProperty('--spot-y',p.clientY+'px')};window.addEventListener('pointermove',move,{passive:true});window.addEventListener('touchmove',move,{passive:true});const reveal=()=>{if(root.classList.contains('is-revealed'))return;root.classList.add('is-revealed');window.removeEventListener('pointermove',move)};document.querySelector('.hero')?.addEventListener('click',reveal,{once:true});const profile=document.getElementById('profile');if(profile){const entered=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){reveal();entered.disconnect()}});entered.observe(profile)};document.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')reveal()},{once:true})})();
 </script>
 
 <!-- FIX: SINGLE CLEAN GOLDEN SPOTLIGHT -->
