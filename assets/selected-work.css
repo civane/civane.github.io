@@ -1,4 +1,4 @@
-#work .work-index { padding:clamp(12px,1.5vw,24px) 8vw clamp(32px,5vw,72px); background:#151511; color:#f1e9dc; }
+#work .work-index { padding:clamp(28px,3vw,44px) 8vw clamp(32px,5vw,72px); background:#000; color:#f1e9dc; }
 .work-index .section-kicker,.work-no,.work-kind,.detail-kind { color:#cfaa67; font:500 .76rem/1.4 "DM Mono",monospace; }
 .work-index .work-title { margin:.35em 0; font:700 clamp(36px,5.5vw,84px)/1.12 "Playfair Display",Georgia,serif; letter-spacing:-.05em; }
 .work-list { list-style:none; margin:0; padding:0; border-bottom:1px solid #584b34; }
