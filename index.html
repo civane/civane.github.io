@@ -93,9 +93,11 @@ function renderV2(time){if(avatarV2){avatarV2.rotation.y+=(targetYawV2-avatarV2.
 <style>
 
 
+:root { --profile-handwriting: "Bradley Hand","Segoe Print",Kalam,"Kaiti SC",KaiTi,"Ma Shan Zheng",cursive; }
+.hero-copy .intro { font-family:var(--profile-handwriting); font-size:clamp(17px,1.3vw,20px); line-height:1.4; text-wrap:balance; }
 .note-pages { min-width:0; scroll-margin-top:2rem; }
 .note-pages section + section { margin-top:clamp(1.4rem,3vw,2.7rem); }
-.note-pages h2 { font:normal clamp(28px,3vw,41px)/1.18 "Bradley Hand","Segoe Print",Kalam,"Kaiti SC",KaiTi,cursive; letter-spacing:-.025em; }
+.note-pages h2 { font:normal clamp(28px,3vw,41px)/1.18 var(--profile-handwriting); letter-spacing:-.025em; }
 .note-list { display:grid; grid-auto-flow:column; grid-auto-columns:minmax(0,1fr); list-style:none; padding:0; margin:14px 0 0; }
 .note-list li { position:relative; padding:8px clamp(15px,2.4vw,38px) 50px; }
 .note-list li::after {
