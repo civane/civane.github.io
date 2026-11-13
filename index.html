@@ -90,33 +90,25 @@ function resizeV2(){const w=mountV2.clientWidth,h=mountV2.clientHeight;if(!w||!h
 window.addEventListener('resize',resizeV2); resizeV2();
 function renderV2(time){if(avatarV2){avatarV2.rotation.y+=(targetYawV2-avatarV2.rotation.y)*.035;avatarV2.rotation.x+=(targetPitchV2-avatarV2.rotation.x)*.035;avatarV2.position.y=-.77+Math.sin(time*.0007)*.012}controlsV2.update();rendererV2.render(sceneV2,cameraV2);requestAnimationFrame(renderV2)} renderV2(0);
 </script><style>
-.manifesto .dipa-ledge {
-  position: absolute;
-  inset: 0 6vw auto auto;
-  width: clamp(9rem, 18vw, 16rem);
-  height: clamp(3.6rem, 6.8vw, 6rem);
-  border-bottom: 1px solid #a67e41;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  pointer-events: none;
+
+section.manifesto { padding-top: clamp(24px, 3vw, 48px); }
+.manifesto .dipa-signature {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 22px;
 }
-.dipa-ledge img {
-  display: block;
-  width: auto;
-  height: 92%;
-}
-@media (max-width: 800px) {
-  .manifesto .dipa-ledge { right: 7vw; }
-}
+.dipa-signature picture { display: block; width: clamp(154px, 15vw, 212px); pointer-events: none; }
+.dipa-signature img { display: block; width: 100%; height: auto; filter: brightness(.94) saturate(.90); }
+.manifesto .dipa-signature .section-kicker { margin: -1px 0 0; }
 </style>
 </head><body><main>
 <section class="hero" id="profile"><div class="grain"></div><header class="topbar"><a class="wordmark" href="#profile">ZQ<span>•</span></a><nav><a href="#profile" data-en="PROFILE" data-zh="关于我">PROFILE</a><a href="#journey" data-en="JOURNEY" data-zh="经历">JOURNEY</a><a href="work.html" data-en="SELECTED WORK" data-zh="项目作品">SELECTED WORK</a><a href="photography.html" data-en="PHOTOGRAPHY" data-zh="摄影">PHOTOGRAPHY</a></nav><button class="language" id="language">中文</button></header><div class="hero-copy"><p class="eyebrow"><span></span><b data-en="HELLO, I’M" data-zh="你好，我是">HELLO, I’M</b></p><h1>Zhangxizi<br><em>QIU</em></h1><p class="intro" data-en="AI Engineer · World Explorer · Life Lover · Vibe Coding Aficionado" data-zh="AI 工程师 · 世界探索者 · 生活热爱者 · Vibe Coding 爱好者">AI Engineer · World Explorer · Life Lover · Vibe Coding Aficionado</p><div class="hero-location"><span class="location-pin" aria-hidden="true"></span><span>SHEN ZHEN / HONG KONG</span></div><div class="hero-contact" aria-label="Contact links"><a href="mailto:civaneeeeee@gmail.com">E-MAIL ↗</a><a href="https://github.com/civane" target="_blank" rel="noreferrer">GITHUB ↗</a><a href="https://www.linkedin.com/in/%E8%A5%BF%E5%AD%90-%E9%82%B1%E5%BC%A0-b48540321/" target="_blank" rel="noreferrer">LINKEDIN ↗</a></div><a class="cta" href="#journey"><span data-en="Start exploring" data-zh="开始探索">Start exploring</span><b>↓</b></a></div><div id="scene"></div><figure id="static-hero-portrait" aria-label="Portrait of Zhangxizi QIU"><img src="assets/hero-editorial-portrait-square-v9.png" alt="Zhangxizi QIU with playful companions"/></figure><div class="corner corner-right">PORTFOLIO<br>2026</div><div class="scroll-indicator">SCROLL <i></i></div></section>
 <section class="manifesto">
-<picture class="dipa-ledge" aria-hidden="true">
-  <source media="(prefers-reduced-motion: reduce)" srcset="assets/dipa-peek-still.webp">
-  <img src="assets/dipa-peek.webp" width="336" height="210" alt="" decoding="async">
-</picture><p class="section-kicker">01 / PROFILE</p><div class="manifesto-grid"><div><h2 data-en="If something catches my interest, I usually end up building something." data-zh="遇到让我好奇的事，我通常会动手做点什么。">If something catches my interest, I usually end up building something.</h2><p style="margin-top:1.25rem;max-width:62ch;font-size:1.1rem;line-height:1.6" data-en="At Huawei, that meant figuring out how to make blurry close-ups sharper. More recently, I’ve been working on optimizing diffusion models for image generation. I also study memory for language models: when a model can read only a small part of its conversation history, which details should it see to answer a question correctly? I also take photos when I travel. The cat on the right is DIPA." data-zh="在华为，我研究的是怎样让模糊的微距照片变清晰。最近，我在做图像生成扩散模型的优化，也在研究语言模型的记忆：当模型回答问题时只能读到一小部分对话历史，应该让它看到哪些细节，才能答对？旅行时我也喜欢拍照。旁边这只猫叫 DIPA。">At Huawei, that meant figuring out how to make blurry close-ups sharper. More recently, I’ve been working on optimizing diffusion models for image generation. I also study memory for language models: when a model can read only a small part of its conversation history, which details should it see to answer a question correctly? I also take photos when I travel. The cat on the right is DIPA.</p></div><div class="stamp"><img src="assets/dipa.png" alt="DIPA cat sticker"><span>CURIOUS<br>BY DEFAULT</span></div></div></section>
+<div class="dipa-signature"><picture aria-hidden="true">
+  <source media="(prefers-reduced-motion: reduce)" srcset="assets/dipa-profile-still.webp">
+  <img src="assets/dipa-profile.webp" width="430" height="380" alt="" decoding="async">
+</picture><p class="section-kicker">01 / PROFILE</p></div><div class="manifesto-grid"><div><h2 data-en="If something catches my interest, I usually end up building something." data-zh="遇到让我好奇的事，我通常会动手做点什么。">If something catches my interest, I usually end up building something.</h2><p style="margin-top:1.25rem;max-width:62ch;font-size:1.1rem;line-height:1.6" data-en="At Huawei, that meant figuring out how to make blurry close-ups sharper. More recently, I’ve been working on optimizing diffusion models for image generation. I also study memory for language models: when a model can read only a small part of its conversation history, which details should it see to answer a question correctly? I also take photos when I travel. The cat on the right is DIPA." data-zh="在华为，我研究的是怎样让模糊的微距照片变清晰。最近，我在做图像生成扩散模型的优化，也在研究语言模型的记忆：当模型回答问题时只能读到一小部分对话历史，应该让它看到哪些细节，才能答对？旅行时我也喜欢拍照。旁边这只猫叫 DIPA。">At Huawei, that meant figuring out how to make blurry close-ups sharper. More recently, I’ve been working on optimizing diffusion models for image generation. I also study memory for language models: when a model can read only a small part of its conversation history, which details should it see to answer a question correctly? I also take photos when I travel. The cat on the right is DIPA.</p></div><div class="stamp"><img src="assets/dipa.png" alt="DIPA cat sticker"><span>CURIOUS<br>BY DEFAULT</span></div></div></section>
 <section class="journey" id="journey"><div class="section-heading"><p class="section-kicker">02 / JOURNEY</p><p data-en="A small orbit through my work and study." data-zh="沿着我的学习与工作轨迹轻轻漫游。">A small orbit through my work and study.</p></div><div class="timeline"><article class="timeline-card"><span class="index">01</span><p class="year">2025.9 — 2027.1</p><h3 data-en="HKUST" data-zh="香港科技大学">HKUST</h3><h4 data-en="MSc in AI · Vivo Intern" data-zh="AI 硕士 · vivo 实习">MSc in AI · Vivo Intern</h4><p data-en="Researching efficient diffusion optimization and personalized generation." data-zh="研究高效扩散优化与个性化生成。">Researching efficient diffusion optimization and personalized generation.</p></article><article class="timeline-card"><span class="index">02</span><p class="year">2021.8 — 2025.8</p><h3 data-en="Huawei" data-zh="华为">Huawei</h3><h4 data-en="Algorithm Engineer" data-zh="算法工程师">Algorithm Engineer</h4><p data-en="Mobile imaging, RAW reconstruction and deployed AIGC systems." data-zh="移动影像、RAW 重建与端侧 AIGC 系统。">Mobile imaging, RAW reconstruction and deployed AIGC systems.</p></article><article class="timeline-card"><span class="index">03</span><p class="year">2017.9 — 2021.7</p><h3 data-en="Xidian University" data-zh="西安电子科技大学">Xidian University</h3><h4 data-en="Intelligent Science & Technology" data-zh="智能科学与技术">Intelligent Science & Technology</h4><p data-en="GPA 3.8/4.0 · Scholarship and graduation thesis award." data-zh="GPA 3.8/4.0 · 奖学金与优秀毕业论文。">GPA 3.8/4.0 · Scholarship and graduation thesis award.</p></article></div></section>
 <section class="work" id="work"><a class="work-entry" href="https://civane.github.io/work.html"><span class="entry-label">03 / WORK</span><h2 data-en="Selected work" data-zh="项目作品">Selected work</h2><span class="entry-arrow">↗</span></a><a class="work-entry photo-entry" href="https://civane.github.io/photography.html"><span class="entry-label">04 / VISUAL DIARY</span><h2 data-en="Photography" data-zh="摄影作品">Photography</h2><span class="entry-arrow">↗</span></a><div class="project-grid" id="project-grid" hidden></div></section><footer><p data-en="Explore the world with curiosity." data-zh="带着好奇心探索世界。">Explore the world with curiosity.</p><a href="mailto:civaneeeeee@gmail.com">civaneeeeee@gmail.com ↗</a><div><a href="https://github.com/civane" target="_blank">GITHUB</a><a href="https://www.linkedin.com/in/%E8%A5%BF%E5%AD%90-%E9%82%B1%E5%BC%A0-b48540321/" target="_blank">LINKEDIN</a></div></footer></main>
 <script type="module">
