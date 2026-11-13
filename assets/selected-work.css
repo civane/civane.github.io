@@ -1,0 +1,21 @@
+#work .work-index { padding:clamp(12px,1.5vw,24px) 8vw clamp(32px,5vw,72px); background:#151511; color:#f1e9dc; }
+.work-index .section-kicker,.work-no,.work-kind,.detail-kind { color:#cfaa67; font:500 .76rem/1.4 "DM Mono",monospace; }
+.work-index .work-title { margin:.35em 0; font:700 clamp(36px,5.5vw,84px)/1.12 "Playfair Display",Georgia,serif; letter-spacing:-.05em; }
+.work-list { list-style:none; margin:0; padding:0; border-bottom:1px solid #584b34; }
+.work-row { width:100%; display:grid; grid-template-columns:2.7rem minmax(0,1fr) minmax(10rem,28%) 1.6rem; gap:1rem; align-items:center; text-align:left; padding:1.05rem .45rem; border:0; border-top:1px solid #584b34; background:transparent; color:inherit; cursor:pointer; }
+.work-name { font:600 clamp(19px,2vw,29px)/1.22 Georgia,serif; }
+.work-plus { color:#e2c586; font-size:1.5rem; text-align:center; }
+.work-row:hover,.work-row:focus-visible { background:#221f18; }
+.work-row:focus-visible,.detail-close:focus-visible { outline:2px solid #e2c586; outline-offset:-2px; }
+#work-detail { width:min(640px,92vw); max-height:86vh; max-height:86dvh; overflow:auto; overscroll-behavior:contain; box-sizing:border-box; padding:clamp(18px,4vw,34px); margin:auto; border:1px solid #9a7d4f; border-radius:4px; background:#191813; color:#f1e9dc; }
+#work-detail::backdrop { background:rgb(0 0 0 / .76); }
+#work-detail form { margin:0; text-align:right; }
+.detail-close { padding:.6em .9em; background:transparent; border:1px solid #817052; color:#e2c586; cursor:pointer; }
+.detail-kind { margin:0 0 .5em; }
+#detail-title { margin:0; font:600 clamp(26px,4vw,42px)/1.2 Georgia,serif; }
+.detail-summary { line-height:1.55; }
+.detail-image { display:block; width:100%; max-height:42vh; object-fit:contain; }
+@media(max-width:650px){
+  .work-row { grid-template-columns:1.7rem minmax(0,1fr) 1.5rem; gap:.25rem .55rem; }
+  .work-no,.work-plus { grid-row:1/3; } .work-plus { grid-column:3; } .work-kind { grid-column:2; grid-row:2; }
+}
