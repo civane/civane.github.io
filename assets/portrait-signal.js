@@ -1,8 +1,18 @@
-// Tune in as soon as the portrait is ready, independent of the page's fonts.
 (async () => {
   const portrait = document.getElementById('static-hero-portrait');
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   if (!portrait || motion.matches) return;
+  if (!document.body.dataset.enteredPortrait) {
+    await new Promise(resolve => document.body.addEventListener('portrait-enter', resolve, { once:true }));
+  }
+  const spotlight = document.getElementById('golden-spotlight');
+  const visible = style => style.display !== 'none' && style.visibility !== 'hidden' && Number(style.opacity) > 0;
+  // Wait for both layers of the opening spotlight to finish fading.
+  while (visible(getComputedStyle(document.body, '::before')) ||
+         (spotlight && visible(getComputedStyle(spotlight)))) {
+    if (document.hidden || motion.matches) return;
+    await new Promise(requestAnimationFrame);
+  }
   const photo = portrait.querySelector('img');
   try { await photo.decode(); } catch { return; }
   if (motion.matches || document.hidden || portrait.getBoundingClientRect().bottom <= 0) return;
@@ -15,7 +25,7 @@
   if (!ctx) return;
   const pixels = ctx.createImageData(snow.width, snow.height);
   portrait.append(snow);
-  const duration = 950;
+  const duration = 2400;
   const start = performance.now();
   let lastFrame = -1;
 
