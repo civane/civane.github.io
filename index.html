@@ -38,6 +38,11 @@
 
 :root { --profile-handwriting: "Bradley Hand","Segoe Print",Kalam,"Kaiti SC",KaiTi,"Ma Shan Zheng",cursive; }
 .hero-copy .intro { font-family:var(--profile-handwriting); font-size:clamp(17px,1.3vw,20px); line-height:1.4; text-wrap:balance; }
+#profile.manifesto { padding-bottom:clamp(28px, 3.5vw, 56px); }
+#work > .work-entry:first-child {
+  min-height:0;
+  padding-block:clamp(36px, 5vw, 80px);
+}
 .note-pages { min-width:0; scroll-margin-top:2rem; }
 .note-pages section + section { margin-top:clamp(1.4rem,3vw,2.7rem); }
 .note-pages h2 { font:normal clamp(28px,3vw,41px)/1.18 var(--profile-handwriting); letter-spacing:-.025em; }
