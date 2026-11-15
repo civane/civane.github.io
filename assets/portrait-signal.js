@@ -1,21 +1,12 @@
-(async () => {
+(() => {
   const portrait = document.getElementById('static-hero-portrait');
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   if (!portrait || motion.matches) return;
-  if (!document.body.dataset.enteredPortrait) {
-    await new Promise(resolve => document.body.addEventListener('portrait-enter', resolve, { once:true }));
-  }
   const spotlight = document.getElementById('golden-spotlight');
   const visible = style => style.display !== 'none' && style.visibility !== 'hidden' && Number(style.opacity) > 0;
-  // Wait for both layers of the opening spotlight to finish fading.
-  while (visible(getComputedStyle(document.body, '::before')) ||
-         (spotlight && visible(getComputedStyle(spotlight)))) {
-    if (document.hidden || motion.matches) return;
-    await new Promise(requestAnimationFrame);
-  }
   const photo = portrait.querySelector('img');
-  try { await photo.decode(); } catch { return; }
-  if (motion.matches || document.hidden || portrait.getBoundingClientRect().bottom <= 0) return;
+  let photoReady = false;
+  photo.decode().then(() => { photoReady = true; }).catch(() => { photoReady = true; });
 
   const snow = document.createElement('canvas');
   snow.className = 'portrait-signal';
@@ -27,18 +18,23 @@
   portrait.append(snow);
   const duration = 2400;
   const start = performance.now();
+  let revealStart = null;
   let lastFrame = -1;
 
   function draw(now) {
-    const progress = (now - start) / duration;
-    if (progress >= 1 || motion.matches || document.hidden) {
+    // Snow is present during the opening spotlight; fade only after entry.
+    if (revealStart === null && photoReady && document.body.classList.contains('is-revealed') &&
+        !visible(getComputedStyle(document.body, '::before')) &&
+        (!spotlight || !visible(getComputedStyle(spotlight)))) revealStart = now;
+    const progress = revealStart === null ? 0 : (now - revealStart) / duration;
+    if (progress >= 1 || motion.matches || portrait.getBoundingClientRect().bottom <= 0) {
       snow.remove();
       return;
     }
     const frame = Math.floor((now - start) / 65);
     if (frame !== lastFrame) {
       lastFrame = frame;
-      const band = progress * 220 - 16;
+      const band = ((now - start) % duration) / duration * 220 - 16;
       for (let y = 0; y < snow.height; y++) {
         const bias = (y % 3 === 0 ? -15 : 0) + Math.max(0, 1 - Math.abs(y - band) / 6) * 32;
         for (let x = 0; x < snow.width; x++) {
