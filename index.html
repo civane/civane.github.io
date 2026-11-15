@@ -39,6 +39,7 @@
 :root { --profile-handwriting: "Bradley Hand","Segoe Print",Kalam,"Kaiti SC",KaiTi,"Ma Shan Zheng",cursive; }
 .hero-copy .intro { font-family:var(--profile-handwriting); font-size:clamp(17px,1.3vw,20px); line-height:1.4; text-wrap:balance; }
 #profile.manifesto { padding-bottom:0; overflow:clip; }
+#profile.manifesto::after { content:none; }
 #work > .work-entry:first-child {
   min-height:0;
   padding-top:clamp(12px, 1.5vw, 24px);
