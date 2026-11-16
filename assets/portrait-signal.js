@@ -16,7 +16,7 @@
   if (!ctx) return;
   const pixels = ctx.createImageData(snow.width, snow.height);
   portrait.append(snow);
-  const duration = 2400;
+  const duration = 1600;
   const start = performance.now();
   let revealStart = null;
   let lastFrame = -1;
@@ -34,7 +34,7 @@
     const frame = Math.floor((now - start) / 65);
     if (frame !== lastFrame) {
       lastFrame = frame;
-      const band = ((now - start) % duration) / duration * 220 - 16;
+      const band = ((now - start) % 2400) / 2400 * 220 - 16;
       for (let y = 0; y < snow.height; y++) {
         const bias = (y % 3 === 0 ? -15 : 0) + Math.max(0, 1 - Math.abs(y - band) / 6) * 32;
         for (let x = 0; x < snow.width; x++) {
