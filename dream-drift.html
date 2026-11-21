@@ -25,6 +25,7 @@ header{max-width:calc(100vw - 48px)}h1{font-size:42px;letter-spacing:.045em;marg
 #resume-drift {min-height:44px;padding:0 17px;border:1px solid #cbb78d88;border-radius:24px;background:#090d13dc;color:#eee3c9;font:14px Georgia,serif}
 #scene-stop {position:fixed;left:0;top:0;z-index:2;width:max(48px,var(--diameter));height:48px;padding:0;border:0;background:transparent;touch-action:manipulation;cursor:pointer}
 #scene-stop span {position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:var(--diameter);height:var(--depth);border:1.5px solid #fff1cf;border-radius:50%;background:radial-gradient(ellipse,#fff7dd 0 7%,#f4d08a88 14%,#f5d59318 42%,#e9c68035 75%);box-shadow:0 0 4px #ffe3a9,0 1px 10px #e8bd7570,inset 0 0 4px #ffdda290;pointer-events:none}
+#scene-stop[data-edge]::before {content:"";position:absolute;left:50%;top:50%;width:7px;height:7px;border:solid #ffe9b7;border-width:1.5px 1.5px 0 0;transform:translate(-50%,-50%) rotate(var(--heading)) translateX(27px) rotate(45deg)}
 #scene-stop span::after {content:"";position:absolute;left:50%;top:50%;width:5px;height:3px;border-radius:50%;background:#fff9e2;box-shadow:0 0 4px #ffda91;transform:translate(-50%,-50%);animation:waypointGlow 2.6s ease-in-out infinite}
 @keyframes waypointGlow {50% {transform:translate(-50%,-50%) scale(1.45);box-shadow:0 0 7px #ffda91}}
 @media(prefers-reduced-motion:reduce){#scene-stop span::after{animation:none}}
@@ -656,72 +657,101 @@ class PointNavigation {
   this.marker.addEventListener('click',()=>this.visit());
   $('resume-drift').addEventListener('click',()=>this.resume());
  }
- mark(){
-  this.stop=null;
-  if(this.mode!=='tour' || nav.elapsed>=118 || !memoryNotes){this.marker.hidden=true;return;}
-  camera.updateMatrixWorld();
-  let best=Infinity;
-  const consider=(kind,item,name)=>{
-   // The camera passes each stop on the way to its subject. Anchor the ring
-   // to the lake or gallery floor on the approach side of that subject.
-   this.anchor.y=.04;
-   const position=this.projected.copy(this.anchor).project(camera);
-   const {x,y,z}=position;
-   const px=(x+1)*innerWidth/2,py=(1-y)*innerHeight/2;
-   if(z<=-1 || z>=1 || px<25 || px>innerWidth-25 || py<50 || py>innerHeight-26)return;
-   const score=x*x+y*y*.6;
-   if(score>=best)return;
-   best=score;
-   this.stop={kind,item};
-   this.marker.setAttribute('aria-label',name);
-   const distance=camera.position.distanceTo(this.anchor);
-   const diameter=clamp(1.05*innerHeight/(distance*Math.tan(THREE.MathUtils.degToRad(camera.fov/2))),27,66);
-   const depth=diameter*clamp((camera.position.y-this.anchor.y)/distance,.18,.52);
-   this.marker.style.setProperty('--diameter',diameter+'px');
-   this.marker.style.setProperty('--depth',depth+'px');
-   this.marker.style.transform='translate('+px+'px,'+py+'px) translate(-50%,-50%)';
-  };
-  if(nav.phase==='cat'){
-   dipa.group.getWorldPosition(this.anchor);
+ buildRoute(){
+  const stops=memoryNotes.items.map(item=>({kind:'memory',item,name:item.title,time:item.time}));
+  stops.push({kind:'cat',item:dipa,name:'DIPA',time:33});
+  for(const item of gallery.items.filter(photo=>photo.primary)){
+   const time=74+(-88-item.center.z-9)*52/102;
+   stops.push({kind:'photo',item,name:item.photo.place,time});
+  }
+  stops.push({kind:'ending',name:'To be continued',time:118});
+  return stops.sort((a,b)=>a.time-b.time);
+ }
+ place(stop,guiding){
+  const {kind,item}=stop;
+  if(kind==='memory'){
+   this.anchor.copy(item.panel.position);
+   item.approach??=nav.sample(item.time).position;
+   this.approach.copy(item.approach).sub(this.anchor).setY(0).normalize();
+   this.anchor.addScaledVector(this.approach,3.5);
+  }else if(kind==='cat'){
+   item.group.getWorldPosition(this.anchor);
    this.anchor.x+=1.35;
    this.anchor.z-=.15;
-   consider('cat',dipa,'Meet DIPA');
-  }else if(nav.phase==='gallery'){
-   for(const photo of gallery.items){
-    if(!photo.primary)continue;
-    photo.pivot.getWorldPosition(this.anchor);
-    if(this.anchor.distanceTo(camera.position)>23)continue;
-    this.anchor.z+=2.2;
-    this.anchor.x+=(42-this.anchor.x)*.22;
-    consider('photo',photo,'View '+photo.photo.place);
-   }
+  }else if(kind==='ending'){
+   this.anchor.copy(nav.sample(stop.time).position);
   }else{
-   for(const note of memoryNotes.items){
-    if(!note.panel.visible || note.panel.material.opacity<.35)continue;
-    this.anchor.copy(note.panel.position);
-    note.approach??=nav.sample(note.time).position;
-    this.approach.copy(note.approach).sub(this.anchor).setY(0).normalize();
-    this.anchor.addScaledVector(this.approach,3.5);
-    consider('memory',note,'View '+note.title);
-   }
+   item.pivot.getWorldPosition(this.anchor);
+   if(!guiding && this.anchor.distanceTo(camera.position)>23)return null;
+   this.anchor.z+=2.2;
+   this.anchor.x+=(42-this.anchor.x)*.22;
   }
-  this.marker.hidden=!this.stop;
+  this.anchor.y=.04;
+  const local=this.projected.copy(this.anchor).applyMatrix4(camera.matrixWorldInverse);
+  const behind=local.z>=-.1;
+  const side=local.x<0?-1:1;
+  const {x,y,z}=local.applyMatrix4(camera.projectionMatrix);
+  let px=(x+1)*innerWidth/2,py=(1-y)*innerHeight/2;
+  const offscreen=behind || z<=-1 || z>=1 || px<35 || px>innerWidth-35 || py<50 || py>innerHeight-65;
+  if(offscreen && !guiding)return null;
+  if(behind){px=side<0?35:innerWidth-35;py=innerHeight*.72;}
+  return {score:x*x+y*y*.6,px:clamp(px,35,innerWidth-35),py:clamp(py,55,innerHeight-82),
+   distance:camera.position.distanceTo(this.anchor),edge:offscreen,angle:Math.atan2(py-innerHeight/2,px-innerWidth/2)};
+ }
+ mark(){
+  this.stop=null;
+  if(nav.elapsed>=118 || !memoryNotes || this.crossing){this.marker.hidden=true;return;}
+  this.route??=this.buildRoute();
+  camera.updateMatrixWorld();
+  const guiding=this.mode==='explore';
+  const next=guiding?this.route[this.route.indexOf(this.currentStop)+1]:null;
+  let best=Infinity,point;
+  for(const stop of this.route){
+   if(guiding){if(stop!==next)continue;}
+   else if(stop.kind==='ending')continue;
+   else if(stop.kind==='memory'){
+    if(nav.phase==='cat' || !stop.item.panel.visible || stop.item.panel.material.opacity<.35)continue;
+   }else if(nav.phase!==(stop.kind==='cat'?'cat':'gallery'))continue;
+   const candidate=this.place(stop,guiding);
+   if(!candidate || candidate.score>=best)continue;
+   best=candidate.score;point=candidate;this.stop=stop;
+  }
+  this.marker.hidden=!point;
+  if(!point)return;
+  const diameter=clamp(1.05*innerHeight/(point.distance*Math.tan(THREE.MathUtils.degToRad(camera.fov/2))),guiding?40:27,66);
+  this.marker.style.setProperty('--diameter',diameter+'px');
+  this.marker.style.setProperty('--depth',diameter*clamp((camera.position.y-.04)/point.distance,.18,.52)+'px');
+  this.marker.toggleAttribute('data-edge',point.edge);
+  this.marker.style.setProperty('--heading',point.angle+'rad');
+  this.marker.style.transform='translate('+point.px+'px,'+point.py+'px) translate(-50%,-50%)';
+  this.marker.setAttribute('aria-label',(guiding?'Next stop: ':'Visit ')+this.stop.name);
  }
  visit(){
-  if(!this.stop || this.mode!=='tour')return;
-  const {kind,item}=this.stop;
+  if(!this.stop)return;
+  const target=this.stop;
+  const {kind,item}=target;
+  if(kind==='ending'){this.resume();return;}
+  if(this.mode==='explore' && this.currentStop.kind==='memory' && kind==='photo'){
+   // Follow the existing waterfront, street and glass-door approach to the gallery.
+   this.resume();
+   this.crossing=target;
+   this.marker.hidden=true;
+   return;
+  }
+  this.currentStop=target;
+  memoryNotes.focused=null;
   this.mode='explore';
   this.marker.hidden=true;
   this.stop=null;
   this.rejoin=null;
-  this.routeTime=nav.elapsed;
+  this.routeTime=target.time;
   document.body.classList.add('exploring');
   $('resume-drift').focus({preventScroll:true});
   const focus=new THREE.Vector3();
   if(kind==='memory'){
    focus.copy(item.panel.position);
    focus.y+=1.15;
-   const offset=camera.position.clone().sub(focus).setY(0).normalize();
+   const offset=nav.sample(item.time).position.sub(focus).setY(0).normalize();
    this.goal.copy(focus).addScaledVector(offset,clamp(6.4/camera.aspect,8,15));
    this.goal.y=camera.position.y;
    this.routeTime=item.time;
@@ -769,6 +799,12 @@ class PointNavigation {
  update(dt){
   if(this.mode==='tour'){
    const join=this.rejoin;
+   if(this.crossing){
+    dt=Math.min(dt*2.5,Math.max(0,this.crossing.time-nav.elapsed));
+    if(dt===0 && nav.elapsed>=this.crossing.time){
+     this.stop=this.crossing;this.crossing=null;this.visit();return;
+    }
+   }
    if(!join){nav.update(dt);return;}
    join.age+=dt;
    const mix=THREE.MathUtils.smoothstep(join.age,0,join.duration);
