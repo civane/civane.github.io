@@ -23,10 +23,12 @@ header{max-width:calc(100vw - 48px)}h1{font-size:42px;letter-spacing:.045em;marg
 .exploring #roam-controls {display:flex}
 #roam-hint {color:#eee6d8;font:italic 15px Georgia,serif;text-shadow:0 1px 4px #000;pointer-events:none}
 #resume-drift {min-height:44px;padding:0 17px;border:1px solid #cbb78d88;border-radius:24px;background:#090d13dc;color:#eee3c9;font:14px Georgia,serif}
-.exploring #world {cursor:crosshair;touch-action:none}
-#tap-ring {position:fixed;pointer-events:none;width:20px;height:20px;border:1.5px solid #f7dca2;border-radius:50%;opacity:0;z-index:2;box-shadow:0 0 6px #201b16;transform:translate(-50%,-50%)}
+#scene-stop {position:fixed;left:0;top:0;z-index:2;min-height:44px;min-width:44px;padding:0 8px;touch-action:manipulation;color:#f1ddb0}
+#scene-stop span {display:inline-flex;align-items:center;gap:7px;padding:5px 10px;border:1px solid #d7bd8570;border-radius:16px;background:#10151ce8;font:italic 13px Georgia,serif;white-space:nowrap}
+#scene-stop span::before {content:"";width:5px;height:5px;border-radius:50%;background:#e3c58a}
+#scene-stop:hover span,#scene-stop:focus-visible span {border-color:#f1ddb0}
 #world:focus:not(:focus-visible){outline:none}
-</style></head><body><div id="worldLabel">MY WORLD MODEL</div><canvas id="world" tabindex="0" aria-label="West Lake. Click to pause the drift, then click a spot to move."></canvas><div class="shade"></div><span id="tap-ring" aria-hidden="true"></span><div id="roam-controls"><span id="roam-hint" role="status"></span><button id="resume-drift" type="button">Resume drift</button></div>
+</style></head><body><div id="worldLabel">MY WORLD MODEL</div><canvas id="world" tabindex="-1" aria-label="West Lake dream drift"></canvas><div class="shade"></div><button id="scene-stop" type="button" hidden><span></span></button><div id="roam-controls"><button id="resume-drift" type="button">Resume drift</button></div>
 
 
 
@@ -631,11 +633,7 @@ class MemoryNotes {
    if(!overlaps)placed.push(bounds);
   }
  }
- pick(raycaster){
-  const visible=this.items.filter(item=>item.panel.visible && item.panel.material.opacity>.12);
-  const hit=raycaster.intersectObjects(visible.flatMap(item=>[item.panel,item.landmark.mesh]),false)[0];
-  return hit && {item:visible.find(item=>item.panel===hit.object || item.landmark.mesh===hit.object),distance:hit.distance};
- }
+
 }
 
 async function init(){try{await yieldToScreen();renderer=new THREE.WebGLRenderer({canvas:$('world'),antialias:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio,CONFIG.pixelRatio));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;scene=new THREE.Scene();scene.background=new THREE.Color(CONFIG.night);scene.fog=new THREE.FogExp2(CONFIG.night,CONFIG.fogDensity);camera=new THREE.PerspectiveCamera(46,innerWidth/innerHeight,.1,1400);resize();scene.add(new THREE.HemisphereLight(0xa6afbd,0x25251f,1.1));const ambient=new THREE.DirectionalLight(0xd6c8ad,.95);ambient.position.set(-40,70,-70);scene.add(ambient);
@@ -645,153 +643,92 @@ async function init(){try{await yieldToScreen();renderer=new THREE.WebGLRenderer
 class PointNavigation {
  constructor(){
   this.mode='tour';
-  this.ray=new THREE.Raycaster();
-  this.surface=new THREE.Plane(new THREE.Vector3(0,1,0),0);
   this.eye=new THREE.Vector3();
   this.goal=new THREE.Vector3();
   this.facing=new THREE.Quaternion();
-  this.up=new THREE.Vector3(0,1,0);
-  this.reduced=matchMedia('(prefers-reduced-motion: reduce)');
+  this.anchor=new THREE.Vector3();
   this.canvas=$('world');
-  this.canvas.addEventListener('pointerdown',event=>{
-   if(event.button!==0 || !event.isPrimary)return;
-   this.pointer={id:event.pointerId,x:event.clientX,y:event.clientY,lastX:event.clientX,lastY:event.clientY,dragged:false};
-   this.canvas.setPointerCapture(event.pointerId);
-  });
-  this.canvas.addEventListener('pointermove',event=>{
-   const p=this.pointer;
-   if(!p || p.id!==event.pointerId || this.mode!=='explore')return;
-   if(!p.dragged && Math.hypot(event.clientX-p.x,event.clientY-p.y)<7)return;
-   p.dragged=true;
-   this.travelling=false;
-   const angles=new THREE.Euler().setFromQuaternion(camera.quaternion,'YXZ');
-   angles.y-=(event.clientX-p.lastX)*.004;
-   angles.x=clamp(angles.x-(event.clientY-p.lastY)*.004,-1.05,1.05);
-   camera.quaternion.setFromEuler(angles);
-   p.lastX=event.clientX;p.lastY=event.clientY;
-  });
-  this.canvas.addEventListener('pointercancel',()=>{this.pointer=null;});
-  this.canvas.addEventListener('pointerup',event=>{
-   const p=this.pointer;
-   if(!p || p.id!==event.pointerId)return;
-   this.pointer=null;
-   if(p.dragged || Math.hypot(event.clientX-p.x,event.clientY-p.y)>10)return;
-   const bounds=this.canvas.getBoundingClientRect();
-   this.select(new THREE.Vector2(2*(event.clientX-bounds.left)/bounds.width-1,1-2*(event.clientY-bounds.top)/bounds.height));
-  });
-  this.canvas.addEventListener('keydown',event=>{
-   if(event.repeat || !['Enter',' '].includes(event.key))return;
-   event.preventDefault();
-   this.select(new THREE.Vector2(0,0));
-  });
+  this.marker=$('scene-stop');
+  this.label=this.marker.firstElementChild;
+  this.marker.addEventListener('click',()=>this.visit());
   $('resume-drift').addEventListener('click',()=>this.resume());
  }
- select(pointer){
-  if(!ready || nav.elapsed>=118)return;
-  if(this.mode==='tour'){
-   this.mode='explore';
-   this.travelling=false;
-   this.rejoin=null;
-   this.routeTime=nav.elapsed;
-   $('journeyFade').style.opacity=0;
-   document.body.classList.add('exploring');
-   $('roam-hint').textContent='Tap to move · Drag to look';
-   this.canvas.focus({preventScroll:true});
-   return;
-  }
+ mark(){
+  this.stop=null;
+  if(this.mode!=='tour' || nav.elapsed>=118 || !memoryNotes){this.marker.hidden=true;return;}
   camera.updateMatrixWorld();
-  this.ray.setFromCamera(pointer,camera);
-  const ray=this.ray.ray;
-  const ground=ray.intersectPlane(this.surface,new THREE.Vector3());
-  const solids=[towers.group,...boats.map(boat=>boat.group),quarter.group,gallery.group];
-  this.ray.far=ground?camera.position.distanceTo(ground):180;
-  const solidHit=()=>this.ray.intersectObjects(solids,true).find(hit=>
-   hit.object.isMesh && hit.object.visible && hit.object.material?.depthWrite!==false);
-  const hit=solidHit();
-  const note=memoryNotes.pick(this.ray);
-  memoryNotes.focused=null;
-  if(note && (!hit || note.distance<hit.distance)){
-   const focus=note.item.panel.position.clone();
-   focus.y+=1.15;
-   const towardEye=camera.position.clone().sub(focus).setY(0);
-   if(towardEye.lengthSq()<.01)towardEye.set(0,0,1);
-   const standOff=clamp(6.4/camera.aspect,8,15);
-   this.goal.copy(focus).addScaledVector(towardEye.normalize(),standOff);
-   this.goal.y=camera.position.y;
-   this.routeTime=note.item.time;
-   memoryNotes.focused=note.item;
-   this.beginMove(focus,pointer);
-   return;
-  }
-  const photo=hit && gallery.items.find(item=>item.pivot===hit.object.parent);
-  if(photo){
-   const focus=photo.pivot.getWorldPosition(new THREE.Vector3());
-   const normal=new THREE.Vector3(0,0,1).applyQuaternion(photo.pivot.quaternion);
-   if(normal.dot(camera.position.clone().sub(focus))<0)normal.negate();
-   const halfFov=Math.tan(THREE.MathUtils.degToRad(camera.fov/2));
-   const width=photo.height*photo.photo.width/photo.photo.height;
-   const gap=1.2*Math.max((photo.height+.8)/2,width/(2*camera.aspect))/halfFov;
-   this.goal.copy(focus).addScaledVector(normal,Math.max(3,gap));
-   this.goal.y=camera.position.y;
-   this.beginMove(focus,pointer);
-   return;
-  }
-  const aim=hit?hit.point.clone():ground || ray.at(14,new THREE.Vector3());
-  this.eye.copy(camera.position);
-  const direction=aim.clone().sub(this.eye);
-  direction.y=0;
-  const distance=direction.length();
-  if(distance<.05)return;
-  direction.divideScalar(distance);
-  // Stop at viewing distance from a subject. Check the actual walking line
-  // as well as the sightline so a low click can't send the eye through a wall.
-  const subject=hit && hit.point.y>.45;
-  const clearance=subject?(galleryBlend>.9?3.5:6.5):0;
-  let stride=Math.min(22,Math.max(0,distance-clearance));
-  this.ray.set(this.eye,direction);
-  this.ray.far=stride+.75;
-  const obstacle=solidHit();
-  if(obstacle)stride=Math.min(stride,Math.max(0,obstacle.distance-.75));
-  this.goal.copy(this.eye).addScaledVector(direction,stride);
-  // Along the city block, stay inside the curbs, away from walls and tree crowns.
-  if(this.goal.z<-122 && this.goal.z>-166){
-   this.streetLine??=nav.cityPath.getSpacedPoints(100).map(p=>p.add(quarter.group.position));
-   let nearest=null,best=Infinity;
-   for(const p of this.streetLine){
-    const d=Math.hypot(this.goal.x-p.x,this.goal.z-p.z);
-    if(d<best){best=d;nearest=p;}
+  let best=Infinity;
+  const consider=(kind,item,label,name)=>{
+   this.anchor.project(camera);
+   const {x,y,z}=this.anchor;
+   if(z<=-1 || z>=1 || Math.abs(x)>.93 || Math.abs(y)>.88)return;
+   const score=x*x+y*y*.6;
+   if(score>=best)return;
+   best=score;
+   this.stop={kind,item};
+   if(this.label.textContent!==label)this.label.textContent=label;
+   this.marker.setAttribute('aria-label',name);
+   const px=clamp((x+1)*innerWidth/2,56,innerWidth-56);
+   const py=clamp((1-y)*innerHeight/2+15,54,innerHeight-34);
+   this.marker.style.transform='translate('+px+'px,'+py+'px) translate(-50%,-50%)';
+  };
+  if(nav.phase==='cat'){
+   dipa.group.getWorldPosition(this.anchor);
+   consider('cat',dipa,'Meet DIPA','Meet DIPA');
+  }else if(nav.phase==='gallery'){
+   for(const photo of gallery.items){
+    if(!photo.primary)continue;
+    photo.pivot.getWorldPosition(this.anchor);
+    if(this.anchor.distanceTo(camera.position)>23)continue;
+    this.anchor.y-=photo.height*.52+.65;
+    consider('photo',photo,'View photo','View '+photo.photo.place);
    }
-   if(nearest && best>3.2 && camera.position.distanceTo(nearest)<stride+18){
-    this.goal.x=nearest.x+(this.goal.x-nearest.x)*3.2/best;
-    this.goal.z=nearest.z+(this.goal.z-nearest.z)*3.2/best;
+  }else{
+   for(const note of memoryNotes.items){
+    if(!note.panel.visible || note.panel.material.opacity<.35)continue;
+    this.anchor.copy(note.panel.position);
+    this.anchor.y-=1.24;
+    consider('memory',note,'View memory','View '+note.title);
    }
   }
-  const radius=Math.hypot(this.goal.x,this.goal.z);
-  if(radius>CONFIG.lakeRadius-10){
-   const scale=(CONFIG.lakeRadius-10)/radius;
-   this.goal.x*=scale;this.goal.z*=scale;
-  }
-  if(!subject)aim.y=this.eye.y-.15;
-  this.beginMove(aim,pointer);
+  this.marker.hidden=!this.stop;
  }
- beginMove(aim,pointer){
+ visit(){
+  if(!this.stop || this.mode!=='tour')return;
+  const {kind,item}=this.stop;
+  this.mode='explore';
+  this.marker.hidden=true;
+  this.stop=null;
+  this.rejoin=null;
+  this.routeTime=nav.elapsed;
+  document.body.classList.add('exploring');
+  $('resume-drift').focus({preventScroll:true});
+  const focus=new THREE.Vector3();
+  if(kind==='memory'){
+   focus.copy(item.panel.position);
+   focus.y+=1.15;
+   const offset=camera.position.clone().sub(focus).setY(0).normalize();
+   this.goal.copy(focus).addScaledVector(offset,clamp(6.4/camera.aspect,8,15));
+   this.goal.y=camera.position.y;
+   this.routeTime=item.time;
+   memoryNotes.focused=item;
+  }else if(kind==='cat'){
+   item.head.getWorldPosition(focus);
+   this.goal.copy(nav.sample(33).position);
+  }else{
+   item.pivot.getWorldPosition(focus);
+   const normal=new THREE.Vector3(0,0,1).applyQuaternion(item.pivot.quaternion);
+   if(normal.dot(camera.position.clone().sub(focus))<0)normal.negate();
+   const width=item.height*item.photo.width/item.photo.height;
+   const gap=.65*Math.max(item.height+.8,width/camera.aspect)/Math.tan(THREE.MathUtils.degToRad(camera.fov/2));
+   this.goal.copy(focus).addScaledVector(normal,Math.max(3,gap));
+  }
   this.eye.copy(camera.position);
-  const gaze=aim.clone().sub(this.goal);
-  const horizontal=Math.hypot(gaze.x,gaze.z);
-  // At the chosen floor spot, keep looking in the direction of travel.
-  if(horizontal<.5)gaze.copy(this.goal).sub(this.eye).setY(-.04);
-  if(gaze.lengthSq()<.001)camera.getWorldDirection(gaze);
-  gaze.y=clamp(gaze.y,-.55*Math.hypot(gaze.x,gaze.z),.7*Math.hypot(gaze.x,gaze.z));
-  this.facing.setFromRotationMatrix(new THREE.Matrix4().lookAt(new THREE.Vector3(),gaze,this.up));
+  this.facing.setFromRotationMatrix(new THREE.Matrix4().lookAt(this.goal,focus,camera.up));
   this.startFacing=camera.quaternion.clone();
-  this.duration=clamp(this.eye.distanceTo(this.goal)/8,.28,3.5);
+  this.duration=reduced?0.01:clamp(this.eye.distanceTo(this.goal)/7,.45,2.8);
   this.movingTime=0;
   this.travelling=true;
-  const ring=$('tap-ring');
-  ring.style.left=(pointer.x+1)*50+'%';
-  ring.style.top=(1-pointer.y)*50+'%';
-  ring.getAnimations().forEach(animation=>animation.cancel());
-  ring.animate([{opacity:.95,scale:.8},{opacity:0,scale:1.6}],{duration:520});
  }
  closestTime(){
   this.routeSamples??=Array.from({length:473},(_,i)=>nav.sample(i*.25).position);
@@ -847,7 +784,7 @@ class PointNavigation {
 }
 
 const pointNavigation=new PointNavigation();
-function frame(now){if(!ready)return;const dt=document.hidden?0:Math.min((now-last)/1000||.016,.05);last=now;if(!environmentPaused){clock+=dt;pointNavigation.update(dt);stars.update(clock);lake.update(clock);towers.update(clock);boats.forEach(b=>b.update(clock));lanterns.update(clock);mist.update(clock);dipa.update(clock);gallery.update(clock);}lake.renderReflection();composer.render();requestAnimationFrame(frame);}
+function frame(now){if(!ready)return;const dt=document.hidden?0:Math.min((now-last)/1000||.016,.05);last=now;if(!environmentPaused){clock+=dt;pointNavigation.update(dt);stars.update(clock);lake.update(clock);towers.update(clock);boats.forEach(b=>b.update(clock));lanterns.update(clock);mist.update(clock);dipa.update(clock);gallery.update(clock);pointNavigation.mark();}lake.renderReflection();composer.render();requestAnimationFrame(frame);}
 window.addEventListener('resize',resize);
 document.addEventListener('visibilitychange',()=>{last=performance.now();});
 $('return-home').addEventListener('click',event=>{
