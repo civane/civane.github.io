@@ -1,53 +1,72 @@
 (() => {
   const portrait = document.getElementById('static-hero-portrait');
+  const answer = document.getElementById('door-answer');
+  if (!portrait || !answer || document.body.dataset.dreamReturn) return;
+
+  const destination = portrait.href;
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
-  if (!portrait || motion.matches) return;
-  const spotlight = document.getElementById('golden-spotlight');
-  const visible = style => style.display !== 'none' && style.visibility !== 'hidden' && Number(style.opacity) > 0;
-  const photo = portrait.querySelector('img');
-  let photoReady = false;
-  photo.decode().then(() => { photoReady = true; }).catch(() => { photoReady = true; });
+  portrait.removeAttribute('href');
+  portrait.setAttribute('aria-disabled', 'true');
 
   const snow = document.createElement('canvas');
   snow.className = 'portrait-signal';
   snow.setAttribute('aria-hidden', 'true');
-  snow.width = snow.height = 192;
-  const ctx = snow.getContext('2d');
-  if (!ctx) return;
-  const pixels = ctx.createImageData(snow.width, snow.height);
+  snow.width = snow.height = 176;
   portrait.append(snow);
-  const duration = 1600;
-  const start = performance.now();
-  let revealStart = null;
-  let lastFrame = -1;
+  const ctx = snow.getContext('2d');
+  const pixels = ctx.createImageData(snow.width, snow.height);
+  let timer;
+  let inView = true;
+  let finished = false;
 
-  function draw(now) {
-    // Snow is present during the opening spotlight; fade only after entry.
-    if (revealStart === null && photoReady && document.body.classList.contains('is-revealed') &&
-        !visible(getComputedStyle(document.body, '::before')) &&
-        (!spotlight || !visible(getComputedStyle(spotlight)))) revealStart = now;
-    const progress = revealStart === null ? 0 : (now - revealStart) / duration;
-    if (progress >= 1 || motion.matches || portrait.getBoundingClientRect().bottom <= 0) {
-      snow.remove();
-      return;
+  function draw() {
+    clearTimeout(timer);
+    if (finished || document.hidden || !inView) return;
+    for (let i = 0; i < pixels.data.length; i += 4) {
+      const shade = 28 + Math.random() * 160;
+      pixels.data[i] = pixels.data[i+1] = pixels.data[i+2] = shade;
+      pixels.data[i+3] = 255;
     }
-    const frame = Math.floor((now - start) / 65);
-    if (frame !== lastFrame) {
-      lastFrame = frame;
-      const band = ((now - start) % 2400) / 2400 * 220 - 16;
-      for (let y = 0; y < snow.height; y++) {
-        const bias = (y % 3 === 0 ? -15 : 0) + Math.max(0, 1 - Math.abs(y - band) / 6) * 32;
-        for (let x = 0; x < snow.width; x++) {
-          const index = (y * snow.width + x) * 4;
-          const shade = 25 + Math.random() * 168 + bias;
-          pixels.data[index] = pixels.data[index + 1] = pixels.data[index + 2] = shade;
-          pixels.data[index + 3] = 255;
-        }
-      }
-      ctx.putImageData(pixels, 0, 0);
-    }
-    snow.style.opacity = .82 * (1 - Math.max(0, (progress - .25) / .75));
-    requestAnimationFrame(draw);
+    ctx.putImageData(pixels, 0, 0);
+    if (!motion.matches) timer = setTimeout(draw, 90);
   }
-  draw(start);
+  const observer = new IntersectionObserver(([entry]) => {
+    inView = entry.isIntersecting;
+    draw();
+  });
+  observer.observe(portrait);
+  document.addEventListener('visibilitychange', draw);
+  motion.addEventListener('change', draw);
+  draw();
+
+  function enter() {
+    answer.hidden = false;
+  }
+  document.body.addEventListener('portrait-enter', enter, {once:true});
+  if (document.body.classList.contains('is-revealed')) enter();
+
+  function pickUp(event) {
+    if (answer.hidden || event.button !== 0) return;
+    event.preventDefault();
+    event.stopPropagation();
+    window.removeEventListener('click', pickUp, true);
+    const ring = document.getElementById('call-ring');
+    ring.dataset.status = 'answered';
+    ring.pause();
+    ring.currentTime = 0;
+    answer.hidden = true;
+    snow.classList.add('answered');
+    setTimeout(() => {
+      finished = true;
+      observer.disconnect();
+      clearTimeout(timer);
+      document.removeEventListener('visibilitychange',draw);
+      motion.removeEventListener('change',draw);
+      snow.remove();
+      portrait.href = destination;
+      portrait.removeAttribute('aria-disabled');
+      portrait.focus({preventScroll:true});
+    }, motion.matches ? 0 : 1650);
+  }
+  window.addEventListener('click', pickUp, true);
 })();
