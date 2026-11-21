@@ -5,10 +5,12 @@
 header{top:32px}h1{font-size:34px}header p{color:#95a4b7}.voyage-caption{position:fixed;bottom:26px;left:4.5vw;font-size:10px;letter-spacing:.2em;color:#8f9fb1;pointer-events:none}#world{touch-action:auto}.shade{background:linear-gradient(180deg,#03060d33,transparent 22%,transparent 80%,#03060d55)}@media(max-width:700px){header{top:26px}h1{font-size:27px}.voyage-caption{left:6vw;bottom:22px}}
 header{max-width:calc(100vw - 48px)}h1{font-size:42px;letter-spacing:.045em;margin:16px 0 14px}header p{white-space:pre-line;font-size:13px;line-height:1.8;letter-spacing:.035em;max-width:360px}@media(max-width:700px){h1{font-size:33px}header p{font-size:11px;max-width:285px}.eyebrow{font-size:8.5px;letter-spacing:.11em}}
 .in-gallery header h1{font-size:24px;margin:12px 0}.in-gallery header p{display:none}.in-gallery .eyebrow{font-size:8px}.in-gallery .shade{background:linear-gradient(180deg,#03060a99,transparent 20%,transparent 80%,#03060a66)}
-#ending{position:fixed;inset:0;display:grid;place-items:center;z-index:6;color:#fff;opacity:0;pointer-events:none;font:italic clamp(25px,4vw,42px) Georgia,serif;letter-spacing:.06em}#worldLabel{position:fixed;top:max(24px,env(safe-area-inset-top));left:max(28px,env(safe-area-inset-left));z-index:3;margin:0;color:#e5dccb;font:500 13px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;pointer-events:none;text-shadow:0 1px 10px #0008}@media(max-width:600px){#worldLabel{top:max(20px,env(safe-area-inset-top));left:max(20px,env(safe-area-inset-left));font-size:11px;letter-spacing:.15em}}</style><style>
+#ending{position:fixed;inset:0;display:grid;place-items:center;z-index:6;color:#fff;opacity:0;pointer-events:none;font:italic clamp(25px,4vw,42px) Georgia,serif;letter-spacing:.06em}#worldLabel{position:fixed;top:max(24px,env(safe-area-inset-top));left:max(28px,env(safe-area-inset-left));z-index:3;margin:0;color:#e5dccb;font:500 13px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;pointer-events:auto;text-decoration:none;text-shadow:0 1px 10px #0008}@media(max-width:600px){#worldLabel{top:max(20px,env(safe-area-inset-top));left:max(20px,env(safe-area-inset-left));font-size:11px;letter-spacing:.15em}}</style><style>
 #return-home {display:block;line-height:0;color:inherit;pointer-events:auto;text-decoration:none;border-radius:.35em}
 #return-home[inert]{pointer-events:none}
-#return-home:focus-visible{outline:1px solid #dccca4;outline-offset:10px}
+#worldLabel::after{content:"";position:absolute;inset:-12px -7px}
+#worldLabel:hover{text-decoration:underline;text-underline-offset:5px}
+#worldLabel:focus-visible,#return-home:focus-visible{outline:1px solid #dccca4;outline-offset:10px}
 #loader {background:#000;z-index:8;transition:opacity 1s ease}
 #loader.done {visibility:hidden;transition:opacity 1s ease,visibility 0s 1s}
 .welcome-ink {display:flex;align-items:center;justify-content:center;gap:.32em;color:#f4f1e9;font-size:clamp(34px,5.5vw,76px)}
@@ -20,9 +22,11 @@ header{max-width:calc(100vw - 48px)}h1{font-size:42px;letter-spacing:.045em;marg
 @media(prefers-reduced-motion:reduce){.welcome-ink path{animation:none;stroke-dashoffset:0}#loader.done{transition:none}}
 </style><script>if(new URLSearchParams(location.search).get('entry')==='portrait')document.documentElement.classList.add('portrait-arrival');</script><style>
 #roam-controls {display:none;position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:3;align-items:center;gap:14px}
-.exploring #roam-controls {display:flex}
+.exploring #roam-controls,.in-gallery #roam-controls {display:flex}
+body:not(.exploring) #resume-drift {display:none}
+#previous-stop[hidden]{display:none}
 #roam-hint {color:#eee6d8;font:italic 15px Georgia,serif;text-shadow:0 1px 4px #000;pointer-events:none}
-#resume-drift {min-height:44px;padding:0 17px;border:1px solid #cbb78d88;border-radius:24px;background:#090d13dc;color:#eee3c9;font:14px Georgia,serif}
+#previous-stop,#resume-drift {min-height:44px;padding:0 17px;border:1px solid #cbb78d88;border-radius:24px;background:#090d13dc;color:#eee3c9;font:14px Georgia,serif}
 #scene-stop {position:fixed;left:0;top:0;z-index:2;width:max(48px,var(--diameter));height:48px;padding:0;border:0;background:transparent;touch-action:manipulation;cursor:pointer}
 #scene-stop span {position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:var(--diameter);height:var(--depth);border:1.5px solid #fff1cf;border-radius:50%;background:radial-gradient(ellipse,#fff7dd 0 7%,#f4d08a88 14%,#f5d59318 42%,#e9c68035 75%);box-shadow:0 0 4px #ffe3a9,0 1px 10px #e8bd7570,inset 0 0 4px #ffdda290;pointer-events:none}
 #scene-stop[data-edge]::before {content:"";position:absolute;left:50%;top:50%;width:7px;height:7px;border:solid #ffe9b7;border-width:1.5px 1.5px 0 0;transform:translate(-50%,-50%) rotate(var(--heading)) translateX(27px) rotate(45deg)}
@@ -31,7 +35,7 @@ header{max-width:calc(100vw - 48px)}h1{font-size:42px;letter-spacing:.045em;marg
 @media(prefers-reduced-motion:reduce){#scene-stop span::after{animation:none}}
 #scene-stop:hover span,#scene-stop:focus-visible span {border-color:white;box-shadow:0 0 7px #fff2cd,0 1px 15px #efc778aa}
 #world:focus:not(:focus-visible){outline:none}
-</style></head><body><div id="worldLabel">MY WORLD MODEL</div><canvas id="world" tabindex="-1" aria-label="West Lake dream drift"></canvas><div class="shade"></div><button id="scene-stop" type="button" hidden><span></span></button><div id="roam-controls"><button id="resume-drift" type="button">Resume drift</button></div>
+</style></head><body><a id="worldLabel" href="index.html?from=dream-drift#home" aria-label="My World Model — return to the homepage">MY WORLD MODEL</a><canvas id="world" tabindex="-1" aria-label="West Lake dream drift"></canvas><div class="shade"></div><button id="scene-stop" type="button" hidden><span></span></button><div id="roam-controls"><button id="previous-stop" type="button" hidden>← Previous stop</button><button id="resume-drift" type="button">Resume drift</button></div>
 
 
 
@@ -654,15 +658,46 @@ class PointNavigation {
   this.marker=$('scene-stop');
   this.projected=new THREE.Vector3();
   this.approach=new THREE.Vector3();
+  this.visited=[];
+  this.ray=new THREE.Raycaster();
+  this.canvas.addEventListener('click',event=>{
+   const item=this.photoAt(event);
+   if(!item || (this.mode==='explore' && this.currentStop.item===item))return;
+   if(this.mode==='tour'){
+    this.visited.push({kind:'viewpoint',time:nav.elapsed,position:camera.position.clone(),facing:camera.quaternion.clone()});
+   }
+   this.visit(this.route.find(stop=>stop.item===item) || this.photoStop(item));
+  });
+  this.canvas.addEventListener('pointermove',event=>{
+   if(event.pointerType==='mouse')this.canvas.style.cursor=this.photoAt(event)?'pointer':'';
+  });
+  $('previous-stop').addEventListener('click',()=>{
+   const target=this.visited.pop() || this.priorOnRoute();
+   if(target)this.visit(target,false);
+  });
   this.marker.addEventListener('click',()=>this.visit());
   $('resume-drift').addEventListener('click',()=>this.resume());
+ }
+ photoAt(event){
+  if(!ready || galleryBlend<.65 || nav.elapsed>=118 || this.crossing)return null;
+  const rect=this.canvas.getBoundingClientRect();
+  const ndc=new THREE.Vector2(2*(event.clientX-rect.left)/rect.width-1,1-2*(event.clientY-rect.top)/rect.height);
+  this.ray.setFromCamera(ndc,camera);
+  const hit=this.ray.intersectObject(gallery.group,true).find(h=>h.object.isMesh && h.object.material.depthWrite!==false);
+  return hit && gallery.items.find(item=>item.pivot===hit.object.parent);
+ }
+ photoStop(item){
+  return {kind:'photo',item,name:item.photo.place,time:Math.min(117.75,74+(-88-item.center.z-9)*52/102)};
+ }
+ priorOnRoute(){
+  const time=this.mode==='explore'?this.currentStop.time:nav.elapsed;
+  return this.route?.findLast(stop=>stop.kind!=='ending' && stop.time<time-.15);
  }
  buildRoute(){
   const stops=memoryNotes.items.map(item=>({kind:'memory',item,name:item.title,time:item.time}));
   stops.push({kind:'cat',item:dipa,name:'DIPA',time:33});
   for(const item of gallery.items.filter(photo=>photo.primary)){
-   const time=74+(-88-item.center.z-9)*52/102;
-   stops.push({kind:'photo',item,name:item.photo.place,time});
+   stops.push(this.photoStop(item));
   }
   stops.push({kind:'ending',name:'To be continued',time:118});
   return stops.sort((a,b)=>a.time-b.time);
@@ -700,11 +735,12 @@ class PointNavigation {
  }
  mark(){
   this.stop=null;
+  $('previous-stop').hidden=nav.elapsed>=118 || !!this.crossing || !(this.visited.length || this.priorOnRoute());
   if(nav.elapsed>=118 || !memoryNotes || this.crossing){this.marker.hidden=true;return;}
   this.route??=this.buildRoute();
   camera.updateMatrixWorld();
   const guiding=this.mode==='explore';
-  const next=guiding?this.route[this.route.indexOf(this.currentStop)+1]:null;
+  const next=guiding?this.route.find(stop=>stop.time>this.currentStop.time):null;
   let best=Infinity,point;
   for(const stop of this.route){
    if(guiding){if(stop!==next)continue;}
@@ -726,14 +762,14 @@ class PointNavigation {
   this.marker.style.transform='translate('+point.px+'px,'+point.py+'px) translate(-50%,-50%)';
   this.marker.setAttribute('aria-label',(guiding?'Next stop: ':'Visit ')+this.stop.name);
  }
- visit(){
-  if(!this.stop)return;
-  const target=this.stop;
+ visit(target=this.stop,remember=true){
+  if(!target)return;
   const {kind,item}=target;
   if(kind==='ending'){this.resume();return;}
+  if(remember && this.mode==='explore' && this.currentStop!==target)this.visited.push(this.currentStop);
   if(this.mode==='explore' && this.currentStop.kind==='memory' && kind==='photo'){
    // Follow the existing waterfront, street and glass-door approach to the gallery.
-   this.resume();
+   this.resume(true);
    this.crossing=target;
    this.marker.hidden=true;
    return;
@@ -748,7 +784,10 @@ class PointNavigation {
   document.body.classList.add('exploring');
   $('resume-drift').focus({preventScroll:true});
   const focus=new THREE.Vector3();
-  if(kind==='memory'){
+  if(kind==='viewpoint'){
+   this.goal.copy(target.position);
+   focus.set(0,0,-1).applyQuaternion(target.facing).add(this.goal);
+  }else if(kind==='memory'){
    focus.copy(item.panel.position);
    focus.y+=1.15;
    const offset=nav.sample(item.time).position.sub(focus).setY(0).normalize();
@@ -762,13 +801,14 @@ class PointNavigation {
   }else{
    item.pivot.getWorldPosition(focus);
    const normal=new THREE.Vector3(0,0,1).applyQuaternion(item.pivot.quaternion);
-   if(normal.dot(camera.position.clone().sub(focus))<0)normal.negate();
+   // The hanging print faces local +Z.
    const width=item.height*item.photo.width/item.photo.height;
    const gap=.65*Math.max(item.height+.8,width/camera.aspect)/Math.tan(THREE.MathUtils.degToRad(camera.fov/2));
    this.goal.copy(focus).addScaledVector(normal,Math.max(3,gap));
   }
   this.eye.copy(camera.position);
   this.facing.setFromRotationMatrix(new THREE.Matrix4().lookAt(this.goal,focus,camera.up));
+  if(kind==='viewpoint')this.facing.copy(target.facing);
   this.startFacing=camera.quaternion.clone();
   this.duration=reduced?0.01:clamp(this.eye.distanceTo(this.goal)/7,.45,2.8);
   this.movingTime=0;
@@ -785,7 +825,8 @@ class PointNavigation {
   }
   return Math.min(117.75,bestTime);
  }
- resume(){
+ resume(keepHistory=false){
+  if(!keepHistory)this.visited.length=0;
   if(this.mode!=='explore')return;
   nav.elapsed=this.closestTime();
   const offset=camera.position.clone().sub(nav.sample(nav.elapsed).position);
@@ -837,7 +878,7 @@ const pointNavigation=new PointNavigation();
 function frame(now){if(!ready)return;const dt=document.hidden?0:Math.min((now-last)/1000||.016,.05);last=now;if(!environmentPaused){clock+=dt;pointNavigation.update(dt);stars.update(clock);lake.update(clock);towers.update(clock);boats.forEach(b=>b.update(clock));lanterns.update(clock);mist.update(clock);dipa.update(clock);gallery.update(clock);pointNavigation.mark();}lake.renderReflection();composer.render();requestAnimationFrame(frame);}
 window.addEventListener('resize',resize);
 document.addEventListener('visibilitychange',()=>{last=performance.now();});
-$('return-home').addEventListener('click',event=>{
+for(const link of [$('worldLabel'),$('return-home')])link.addEventListener('click',event=>{
  if(window.frameElement?.returnToPortfolio){event.preventDefault();window.frameElement.returnToPortfolio();}
 });
 conversation=new NaturalAmbience();
