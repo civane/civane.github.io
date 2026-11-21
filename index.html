@@ -86,12 +86,12 @@
 #door-blackout.leaving {visibility:visible;pointer-events:auto;opacity:1;transition:opacity .42s ease-in}
 #door-answer {
   --receiver-width:clamp(76px,6.5vw,98px);
-  --cord-length:clamp(105px,21svh,220px);
-  position:absolute;top:0;right:5.4%;z-index:8;width:var(--receiver-width);
-  height:calc(var(--cord-length) + 2.25 * var(--receiver-width));padding:0;border:0;
+  --receiver-height:calc(2.25 * var(--receiver-width));
+  position:absolute;top:0;right:3.5vw;z-index:8;width:var(--receiver-width);
+  height:calc(50% + 87px + var(--receiver-height) / 2);padding:0;border:0;
   background:transparent;transform-origin:50% 0;pointer-events:none;animation:receiverDrop 1.15s both
 }
-#door-answer .cord {position:absolute;top:-3px;left:40%;width:20%;height:calc(var(--cord-length) + 4px);overflow:visible}
+#door-answer .cord {position:absolute;top:-3px;left:40%;width:20%;height:calc(100% - var(--receiver-height) + 4px);overflow:visible}
 #door-answer .receiver {position:absolute;bottom:0;left:0;width:100%;height:auto;cursor:pointer;pointer-events:auto}
 #door-answer:focus-visible {outline:none}
 #door-answer:focus-visible .receiver {outline:1px solid #e6c77e;outline-offset:3px;border-radius:40%}
@@ -102,7 +102,7 @@
   89% {transform:translateY(0) rotate(1deg)}
   100% {transform:none}
 }
-@media(max-width:800px){#door-answer{left:18%;right:auto;--receiver-width:64px;--cord-length:clamp(125px,19svh,180px)}}
+@media(max-width:800px){#door-answer{--receiver-width:64px;height:calc(50% + var(--receiver-height) / 2)}}
 @media(prefers-reduced-motion:reduce){#door-answer{animation:none}}
 #door-answer[hidden],body:not(.is-revealed) #door-answer {display:none}
 .hero #static-hero-portrait[aria-disabled="true"] {cursor:default}
@@ -134,7 +134,7 @@
   <circle cx="51" cy="189" r="1.6"/><circle cx="59" cy="190" r="1.45"/><circle cx="46" cy="195" r="1.55"/><circle cx="54" cy="196" r="1.85"/><circle cx="62" cy="198" r="1.55"/><circle cx="49" cy="203" r="1.5"/><circle cx="57" cy="204" r="1.65"/>
  </g>
  </g>
-</svg></button><audio id="call-ring" src="assets/incoming-call.wav?v=soft-double-ring" loop preload="auto" aria-hidden="true"></audio><div class="corner corner-right">PORTFOLIO<br>2026</div><div class="scroll-indicator">SCROLL <i></i></div></section>
+</svg></button><audio id="call-ring" src="assets/incoming-call.wav?v=soft-double-ring" loop preload="auto" aria-hidden="true"></audio><div class="scroll-indicator">SCROLL <i></i></div></section>
 <section class="manifesto" id="profile" aria-labelledby="profile-label">
 <p class="section-kicker" id="profile-label">01 / PROFILE</p>
 <div id="journey" class="note-pages">
@@ -488,9 +488,6 @@ body.is-revealed #golden-spotlight{width:58vmax!important;height:58vmax!importan
 @media(min-width:801px){.hero-copy .eyebrow{margin-bottom:28px!important}.hero-copy .intro{margin:36px 0!important}.hero-copy .hero-location{margin:0 0 28px!important}.hero-copy .hero-contact{margin:28px 0 34px!important}.hero-copy .cta{padding-top:15px!important;padding-bottom:15px!important}}
 </style>
 
-<style>/* Keep the portfolio label centered on the far right of the hero. */
-@media(min-width:801px){.corner-right{top:50%!important;right:3.5vw!important;bottom:auto!important;left:auto!important;transform:translateY(-50%)!important;z-index:4!important}}
-</style>
 
 <style>/* Match the copy block's top and bottom to the visible fisheye circle. */
 @media(min-width:801px){
