@@ -584,14 +584,14 @@ class MemoryLandmark {
    }
    x.strokeStyle='#f4cf83';x.lineWidth=3.7;x.lineJoin=x.lineCap='round';x.stroke();
   }else if(this.city==='camera'){
-   const down=THREE.MathUtils.smoothstep(age,3.56,3.93)*(1-THREE.MathUtils.smoothstep(age,4.02,4.37));
+   const down=THREE.MathUtils.smoothstep(age,0,.08)*(1-THREE.MathUtils.smoothstep(age,.12,.26));
    x.beginPath();x.arc(678,176,22-down*9,0,2*Math.PI);x.strokeStyle='#f8dea7';x.lineWidth=2.9+down*1.5;x.stroke();
    if(down>.03){
     x.save();x.globalAlpha=down*.86;x.strokeStyle='#ffdfa2';x.lineWidth=2.8;x.translate(454,180);x.scale(1.14-.24*down,1.14-.24*down);
     x.stroke(new Path2D('M-43 -14 v-16 h16 M27 -30 h16 v16 M43 14 v16 h-16 M-27 30 h-16 v-16'));x.restore();
    }
    x.beginPath();x.arc(678,176,16-down*9,0,2*Math.PI);x.strokeStyle='#f5d79f';x.lineWidth=2.3;x.stroke();x.fillStyle='rgba(250,222,165,'+(.17+.72*down)+')';x.fill();
-   const flash=THREE.MathUtils.smoothstep(age,3.98,4.09)*(1-THREE.MathUtils.smoothstep(age,4.09,4.62));
+   const flash=THREE.MathUtils.smoothstep(age,.06,.12)*(1-THREE.MathUtils.smoothstep(age,.15,.34));
    if(flash>0){
     x.save();x.beginPath();x.roundRect(199,52,505,252,16);x.clip();
     const light=x.createRadialGradient(596,86,3,510,158,415);
@@ -636,6 +636,7 @@ class MemoryNotes {
   for(const item of this.items){
    const {panel,time,landmark,veil}=item;
    const ahead=time-t;
+   if(landmark.city==='camera' && !exploring && (ahead>10 || ahead < -4.4))item.shotAt=null;
    // A quieter preview appears uproute; the illustration reaches full ink at its stop.
    const preview=1-THREE.MathUtils.smoothstep(ahead,4.6,10);
    const close=1-THREE.MathUtils.smoothstep(ahead,2.6,4.6);
@@ -657,7 +658,7 @@ class MemoryNotes {
    const age=exploring && item===this.focused
     ? (this.focusedSince===null?0:clock-this.focusedSince)
     : exploring?clock:Math.max(.15,t-time+4.4);
-   landmark.update(age);
+   if(landmark.city!=='camera')landmark.update(age);
    landmark.mesh.material.opacity=opacity*.9;
    if(veil)veil.material.opacity=opacity;
   }
@@ -667,7 +668,17 @@ class MemoryNotes {
    if(bounds.right<-1 || bounds.left>1 || bounds.bottom>1 || bounds.top<-1)continue;
    const overlaps=placed.some(b=>b.left<bounds.right && b.right>bounds.left && b.bottom<bounds.top && b.top>bounds.bottom);
    item.panel.visible=!overlaps;
-   if(!overlaps)placed.push(bounds);
+   if(overlaps)continue;
+   placed.push(bounds);
+   if(item.landmark.city==='camera'){
+    const centerX=(bounds.left+bounds.right)/2;
+    const sketchY=bounds.top-(bounds.top-bounds.bottom)*.28;
+    const readable=Math.abs(centerX)<.75 && Math.abs(sketchY)<.8 && bounds.top-bounds.bottom>.22;
+    if(item.shotAt==null && readable && item.panel.material.opacity>.45 && (!exploring || item===this.focused)){
+     item.shotAt=clock;
+    }
+    item.landmark.update(item.shotAt==null?0:Math.min(.4,clock-item.shotAt));
+   }
   }
  }
 
@@ -829,6 +840,7 @@ class PointNavigation {
    focus.y=this.goal.y+setback*Math.tan(THREE.MathUtils.degToRad(2));
    this.routeTime=item.time;
    memoryNotes.focused=item;
+   if(item.landmark.city==='camera')item.shotAt=null;
    memoryNotes.focusedSince=null;
   }else if(kind==='cat'){
    item.head.getWorldPosition(focus);
