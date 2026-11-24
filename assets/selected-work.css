@@ -25,18 +25,19 @@
 .sea-contributions { margin:.3rem 0 0; padding-left:1.25rem; list-style:disc; }
 .sea-contributions li + li { margin-top:.45rem; }
 .sea-contributions li::marker { color:#cfaa67; }
-.sea-flow { margin:.5rem 0 .3rem; padding:.9rem 1rem; border:1px solid #514631; border-radius:4px; background:#141410; }
-.sea-flow strong { color:#eee1c7; font:600 1rem/1.3 Georgia,serif; }
-.sea-flow p { margin:.2rem 0 0; color:#d2cabc; font-size:.84rem; line-height:1.45; }
-.sea-writing { display:flex; align-items:center; gap:.7rem; padding-bottom:.8rem; border-bottom:1px solid #514631; }
-.sea-writing svg { flex:0 0 28px; width:28px; height:28px; fill:none; stroke:#d2b57f; stroke-width:1.3; stroke-linejoin:round; }
-.sea-retrieval { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.15rem; list-style:none; margin:.8rem 0 0; padding:0; }
+.sea-flow { display:grid; grid-template-columns:1fr 3.4fr; gap:1.3rem; margin:.55rem 0 .65rem; padding:.8rem 0; border-block:1px solid #514631; }
+.sea-flow h4 { margin:0 0 .6rem; color:#e4d7be; font:500 .94rem/1.3 Georgia,serif; }
+.sea-flow img { display:block; width:100%; height:clamp(90px,18vw,154px); object-fit:contain; object-position:left center; }
+.sea-retrieval { display:grid; grid-template-columns:106fr 122fr 103fr; gap:1.1rem; list-style:none; margin:0; padding:0; }
 .sea-retrieval li { position:relative; }
-.sea-retrieval li + li::before { content:"→"; position:absolute; right:calc(100% + .23rem); top:.05rem; color:#bca16f; font-size:.8rem; }
+.sea-retrieval li + li::before { content:"→"; color:#c2ae87; position:absolute; left:-1.05rem; top:50%; transform:translateY(-50%); font-size:.9rem; }
 .sea-links { display:flex; align-items:center; flex-wrap:wrap; gap:.2rem 1.25rem; }
 .sea-links a { padding:.5rem 0; color:#dfc58e; font-size:.87rem; text-underline-offset:.22em; }
 .sea-links a:focus-visible { outline:2px solid #dfc58e; outline-offset:3px; }
 @media(max-width:540px) {
-  .sea-retrieval { grid-template-columns:1fr; gap:.6rem; padding-left:.85rem; border-left:1px solid #6c5b3d; }
-  .sea-retrieval li::before,.sea-retrieval li + li::before { content:""; position:absolute; left:calc(-.85rem - 3px); top:.55rem; width:5px; height:5px; border-radius:50%; background:#c8aa74; }
+  .sea-flow { grid-template-columns:1fr; gap:.85rem; }
+  .sea-writing { display:flex; align-items:center; gap:1rem; }
+  .sea-writing h4 { margin:0; }
+  .sea-writing img { width:auto; height:96px; }
+  .sea-reading img { height:auto; }
 }

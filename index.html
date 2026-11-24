@@ -70,7 +70,7 @@
 @media(prefers-reduced-motion:reduce) { .portrait-signal { display:none; } }
 </style>
 <script defer src="assets/portrait-signal.js?v=hanging-call"></script>
-<link rel="stylesheet" href="assets/selected-work.css?v=sea-flow"><script defer src="assets/selected-work.js?v=sea-mem"></script>
+<link rel="stylesheet" href="assets/selected-work.css?v=sea-panels"><script defer src="assets/selected-work.js?v=sea-mem"></script>
 
 <style>
 .hero #static-hero-portrait { pointer-events:auto; cursor:pointer }
@@ -179,14 +179,17 @@
     <h3 id="sea-architecture-title">Architecture</h3>
     <figure class="sea-flow" aria-labelledby="sea-architecture-title">
       <div class="sea-writing">
-        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 10V5h16l5 5v14h-5M21 5v6h5M2 13h17v15H2zM6 18h9m-9 5h6"/></svg>
-        <div><strong>Memory Writing</strong><p>Keep each original turn, extract its facts, and link related turns.</p></div>
+        <h4>Memory Writing</h4>
+        <img src="assets/sea-mem-writer.webp" alt="Single-Pass Extraction. A query-independent writer extracts facts from each original turn.">
       </div>
-      <ol class="sea-retrieval" aria-label="Retrieval sequence">
-        <li><strong>DG-Address</strong><p>Use a query cue to locate the right episode.</p></li>
-        <li><strong>CA3-Complete</strong><p>Follow one hop from a match to recover related evidence.</p></li>
-        <li><strong>CA1-Select</strong><p>Choose up to <i>k</i> original turns that together support the answer.</p></li>
-      </ol>
+      <div class="sea-reading">
+        <h4>Memory Retrieval</h4>
+        <ol class="sea-retrieval" aria-label="Retrieval stages">
+          <li><img src="assets/sea-mem-dg.webp" alt="DG-Address. Sparse event addressing locates a matching episode."></li>
+          <li><img src="assets/sea-mem-ca3.webp" alt="CA3-Complete. Episode completion follows stored links to recover related evidence."></li>
+          <li><img src="assets/sea-mem-ca1.webp" alt="CA1-Select. Source selection returns up to k original dialogue turns."></li>
+        </ol>
+      </div>
     </figure>
     <div class="sea-links">
       <a href="https://openreview.net/forum?id=qYB9vc0xka" target="_blank" rel="noopener">OpenReview submission <span aria-hidden="true">↗</span></a>
