@@ -4,7 +4,7 @@ document.querySelector('.work-list').addEventListener('click', event => {
   if (!row) return;
   workDialog.querySelector('#detail-title').textContent = row.querySelector('.work-name').textContent;
   workDialog.querySelector('.detail-kind').textContent = row.querySelector('.work-kind').textContent;
-  workDialog.querySelector('.detail-summary').textContent = document.documentElement.lang === 'zh' ? row.dataset.summaryZh : row.dataset.summaryEn;
+  workDialog.querySelector('.detail-summary').textContent = row.dataset.summaryEn;
   workDialog.querySelector('.detail-image').src = row.dataset.image;
   workDialog.scrollTop = 0;
   workDialog.showModal();
