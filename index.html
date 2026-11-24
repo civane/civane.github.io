@@ -70,7 +70,7 @@
 @media(prefers-reduced-motion:reduce) { .portrait-signal { display:none; } }
 </style>
 <script defer src="assets/portrait-signal.js?v=hanging-call"></script>
-<link rel="stylesheet" href="assets/selected-work.css?v=sea-mem"><script defer src="assets/selected-work.js?v=sea-mem"></script>
+<link rel="stylesheet" href="assets/selected-work.css?v=sea-architecture"><script defer src="assets/selected-work.js?v=sea-mem"></script>
 
 <style>
 .hero #static-hero-portrait { pointer-events:auto; cursor:pointer }
@@ -172,31 +172,11 @@
     <p>In long conversations, similar episodes compete for space. A reader with room for only a few turns can miss the detail that distinguishes one event from another.</p>
     <h3>Main contributions</h3>
     <p>Sparse Event Addressing Memory (SEA-Mem) links facts across turns. From a partial cue, it locates an episode, follows one-hop links for missing details, and gives the reader a small set of original turns that jointly support the answer.</p>
-    <figure class="sea-figure" aria-label="SEA-Mem method overview adapted from Figure 1">
-      <div class="sea-band"><span>Memory writing</span><span>Single pass</span></div>
-      <div class="sea-traces" aria-label="Source turns from the paper’s GPS example">
-        <div><small>Turn 42</small><span>GPS broken</span></div>
-        <div><small>Turn 57</small><span>Under repair</span></div>
-        <div><small>Turn 70</small><span>Working again</span></div>
-      </div>
-      <div class="sea-binding"><span>GPS · status</span></div>
-      <div class="sea-band"><span>Memory retrieval</span><span>Per query</span></div>
-      <ol class="sea-stages">
-        <li>
-          <svg viewBox="0 0 108 52" aria-hidden="true"><g class="sea-faint" fill="currentColor">
-            <circle cx="12" cy="12" r="2"/><circle cx="26" cy="12" r="2"/><circle cx="40" cy="12" r="2"/><circle cx="54" cy="12" r="2"/><circle cx="68" cy="12" r="2"/><circle cx="12" cy="26" r="2"/><circle cx="40" cy="26" r="2"/><circle cx="54" cy="26" r="2"/><circle cx="68" cy="26" r="2"/><circle cx="12" cy="40" r="2"/><circle cx="26" cy="40" r="2"/><circle cx="40" cy="40" r="2"/><circle cx="54" cy="40" r="2"/><circle cx="68" cy="40" r="2"/></g>
-            <g class="sea-pen"><circle cx="26" cy="26" r="8"/><path d="M34 26H92m-5-4 5 4-5 4"/></g><circle cx="26" cy="26" r="3" fill="currentColor"/></svg>
-          <div><strong>DG-Address</strong><span>Match a query cue to an event.</span></div>
-        </li>
-        <li>
-          <svg viewBox="0 0 108 52" aria-hidden="true"><g class="sea-pen"><path d="M21 26C40 26 42 10 62 10m-41 16c19 0 22 15 41 15"/><circle cx="17" cy="26" r="5"/><circle cx="68" cy="10" r="5"/><circle cx="68" cy="41" r="5"/></g><circle cx="17" cy="26" r="2" fill="currentColor"/></svg>
-          <div><strong>CA3-Complete</strong><span>Follow stored links to related turns.</span></div>
-        </li>
-        <li>
-          <svg viewBox="0 0 108 52" aria-hidden="true"><g class="sea-pen"><path opacity=".45" d="M15 37V5h42m-36 37V10h42"/><path d="M27 16h43v31H27zM34 24h29m-29 7h24m-24 7h13m30-8h17m-5-4 5 4-5 4"/></g></svg>
-          <div><strong>CA1-Select</strong><span>Give the reader up to <i>k</i> original turns.</span></div>
-        </li>
-      </ol>
+    <figure class="sea-figure">
+      <a href="assets/sea-mem-architecture.webp" target="_blank" rel="noopener" aria-label="View the full-resolution SEA-Mem architecture diagram in a new tab">
+        <img src="assets/sea-mem-architecture.webp" width="3400" height="1880" alt="SEA-Mem writes dialogue into source-linked atoms, retrieves original turns through event addressing, episode completion and source selection, and uses dense retrieval for fallback.">
+        <span>View full size ↗</span>
+      </a>
     </figure>
     <p>On 150 LongMemEval-S questions with a five-turn budget, adding similar but irrelevant conversations left SEA-Mem’s judged accuracy at 76%. Dense retrieval fell from 64% to 58%.</p>
   </div>
