@@ -22,6 +22,8 @@
 .sea-detail { color:#e1d9ca; font-size:.94rem; line-height:1.5; }
 .sea-detail h3 { margin:1.1rem 0 .28rem; color:#d9bb83; font:500 .72rem/1.4 "DM Mono",monospace; letter-spacing:.065em; text-transform:uppercase; }
 .sea-detail p { max-width:84ch; margin:0; }
-.sea-detail .sea-result { margin-top:.75rem; }
+.sea-contributions { margin:.3rem 0 0; padding-left:1.25rem; list-style:disc; }
+.sea-contributions li + li { margin-top:.45rem; }
+.sea-contributions li::marker { color:#cfaa67; }
 .sea-architecture-link { display:inline-block; margin-top:1rem; padding:.45rem 0; color:#dfc58e; text-underline-offset:.22em; }
 .sea-architecture-link:focus-visible { outline:2px solid #dfc58e; outline-offset:3px; }

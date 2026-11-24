@@ -70,7 +70,7 @@
 @media(prefers-reduced-motion:reduce) { .portrait-signal { display:none; } }
 </style>
 <script defer src="assets/portrait-signal.js?v=hanging-call"></script>
-<link rel="stylesheet" href="assets/selected-work.css?v=sea-overview"><script defer src="assets/selected-work.js?v=sea-mem"></script>
+<link rel="stylesheet" href="assets/selected-work.css?v=sea-contributions"><script defer src="assets/selected-work.js?v=sea-mem"></script>
 
 <style>
 .hero #static-hero-portrait { pointer-events:auto; cursor:pointer }
@@ -169,10 +169,13 @@
 <template id="sea-mem-detail">
   <div class="sea-detail">
     <h3>Motivation</h3>
-    <p>A GPS breaks, goes in for repair, then works again. Each update mentions the same device. To explain what changed, an agent needs to find the related turns across a long conversation.</p>
+    <p>In long conversations, the details needed for one answer can be scattered across several turns. When similar events recur and the reader can see only a few turns, how can a memory system recover the right episode and keep all the evidence needed to answer?</p>
     <h3>Main contributions</h3>
-    <p>SEA-Mem links each fact to the turn where it was recorded. Given a partial clue, it finds the matching episode, follows links to related updates, and selects a few original turns to support the answer.</p>
-    <p class="sea-result">On 150 LongMemEval-S questions with a five-turn budget, adding similar but irrelevant conversations left SEA-Mem’s judged accuracy at 76%. Dense retrieval fell from 64% to 58%.</p>
+    <ul class="sea-contributions">
+      <li>We measure which pieces of evidence retrieval finds and which of them reach the reader within its turn budget.</li>
+      <li>Inspired by the hippocampus, SEA-Mem uses a query cue to identify an episode, follows its stored links one hop to recover missing details, and jointly selects the original turns that support the answer.</li>
+      <li>We evaluate SEA-Mem on LongMemEval, with additional tests on LoCoMo. In controlled LongMemEval tests, it preserved accuracy better than dense retrieval as similar events were added.</li>
+    </ul>
     <a class="sea-architecture-link" href="assets/sea-mem-architecture.webp" target="_blank" rel="noopener" aria-label="View full architecture in a new tab">View full architecture <span aria-hidden="true">↗</span></a>
   </div>
 </template>
