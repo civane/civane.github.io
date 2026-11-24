@@ -602,7 +602,15 @@ class MemoryNotes {
  [23,'2023 – 2025','Huawei · Shanghai','Smartphone & cloud imaging'],
  [45,'2025 – 2027 · expected','HKUST · Hong Kong','M.Sc. in Artificial Intelligence'],
  [54,'2025 – present','vivo · Shenzhen','LLM Memory · Diffusion Optimization']];
- for(const [time,date,title,detail] of entries){const c=document.createElement('canvas');c.width=1536;c.height=512;const x=c.getContext('2d');x.textAlign='center';x.textBaseline='middle';x.shadowColor='#000';x.shadowBlur=1;x.fillStyle='#dfc18a';x.font='68px ui-monospace, Menlo, monospace';x.fillText(date,768,112);x.fillStyle='#f1eadc';x.font='96px Georgia';x.fillText(title,768,226);x.fillStyle='#d6cebe';x.font='72px system-ui, sans-serif';x.fillText(detail,768,335,1480);const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;const m=new THREE.MeshBasicMaterial({map:tex,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide,toneMapped:false});const panel=new THREE.Mesh(new THREE.PlaneGeometry(8,2.66),m),sample=nav.sample(time),dir=sample.target.clone().sub(sample.position).normalize();panel.position.copy(sample.position).add(dir.multiplyScalar(12));panel.position.y+=1.5;const city=({6:"book",14:"sport",23:"camera",45:"harbour",54:"recall"})[time];const landmark=new MemoryLandmark(city);panel.add(landmark.mesh);if(city==='harbour'){landmark.mesh.scale.setScalar(.86);landmark.mesh.position.y=2.58;}let veil=null;if(time===54){const v=document.createElement('canvas');v.width=v.height=512;const vx=v.getContext('2d'),gradient=vx.createRadialGradient(256,256,45,256,256,250);gradient.addColorStop(0,'rgba(2,5,10,.92)');gradient.addColorStop(.45,'rgba(2,5,10,.7)');gradient.addColorStop(1,'rgba(2,5,10,0)');vx.fillStyle=gradient;vx.fillRect(0,0,512,512);const vt=new THREE.CanvasTexture(v);vt.colorSpace=THREE.SRGBColorSpace;veil=new THREE.Mesh(new THREE.PlaneGeometry(12,9),new THREE.MeshBasicMaterial({map:vt,transparent:true,depthWrite:false,toneMapped:false}));veil.position.set(0,1.1,-.08);panel.add(veil);}this.group.add(panel);this.items.push({panel,time,title,landmark,veil});}
+ for(const [time,date,title,detail] of entries){const c=document.createElement('canvas');c.width=1536;c.height=512;const x=c.getContext('2d');
+  // A feathered patch of night keeps the lettering legible over bright windows.
+  x.save();x.scale(768,256);
+  const shade=x.createRadialGradient(1,1,0,1,1,1);
+  shade.addColorStop(0,'rgba(5,10,17,.82)');shade.addColorStop(.62,'rgba(5,10,17,.65)');shade.addColorStop(1,'rgba(5,10,17,0)');
+  x.fillStyle=shade;x.fillRect(0,0,2,2);x.restore();
+  x.textAlign='center';x.textBaseline='middle';x.fillStyle='#dfc18a';x.font='68px ui-monospace, Menlo, monospace';x.fillText(date,768,112);x.fillStyle='#f1eadc';x.font='96px Georgia';x.fillText(title,768,226);x.fillStyle='#d6cebe';x.font='72px system-ui, sans-serif';x.fillText(detail,768,335,1480);const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;const m=new THREE.MeshBasicMaterial({map:tex,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide,toneMapped:false});const panel=new THREE.Mesh(new THREE.PlaneGeometry(8,2.66),m),sample=nav.sample(time),dir=sample.target.clone().sub(sample.position).normalize();panel.position.copy(sample.position).add(dir.multiplyScalar(12));panel.position.y=sample.position.y+1.85;const city=({6:"book",14:"sport",23:"camera",45:"harbour",54:"recall"})[time];const landmark=new MemoryLandmark(city);panel.add(landmark.mesh);if(city==='harbour'){landmark.mesh.scale.setScalar(.86);landmark.mesh.position.y=2.58;}let veil=null;if(time===54){const v=document.createElement('canvas');v.width=v.height=512;const vx=v.getContext('2d'),gradient=vx.createRadialGradient(256,256,45,256,256,250);gradient.addColorStop(0,'rgba(2,5,10,.92)');gradient.addColorStop(.45,'rgba(2,5,10,.7)');gradient.addColorStop(1,'rgba(2,5,10,0)');vx.fillStyle=gradient;vx.fillRect(0,0,512,512);const vt=new THREE.CanvasTexture(v);vt.colorSpace=THREE.SRGBColorSpace;veil=new THREE.Mesh(new THREE.PlaneGeometry(12,9),new THREE.MeshBasicMaterial({map:vt,transparent:true,depthWrite:false,toneMapped:false}));veil.position.set(0,1.1,-.08);panel.add(veil);}// Inscriptions sit in the air; the reflection camera sees the lake scenery below them.
+  panel.traverse(part=>part.layers.set(1));
+  this.group.add(panel);this.items.push({panel,time,title,landmark,veil});}
  }
  update(t,exploring=false){
   const candidates=[];
@@ -647,7 +655,7 @@ class MemoryNotes {
 
 }
 
-async function init(){try{await yieldToScreen();renderer=new THREE.WebGLRenderer({canvas:$('world'),antialias:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio,CONFIG.pixelRatio));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;scene=new THREE.Scene();scene.background=new THREE.Color(CONFIG.night);scene.fog=new THREE.FogExp2(CONFIG.night,CONFIG.fogDensity);camera=new THREE.PerspectiveCamera(46,innerWidth/innerHeight,.1,1400);resize();scene.add(new THREE.HemisphereLight(0xa6afbd,0x25251f,1.1));const ambient=new THREE.DirectionalLight(0xd6c8ad,.95);ambient.position.set(-40,70,-70);scene.add(ambient);
+async function init(){try{await yieldToScreen();renderer=new THREE.WebGLRenderer({canvas:$('world'),antialias:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio,CONFIG.pixelRatio));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;scene=new THREE.Scene();scene.background=new THREE.Color(CONFIG.night);scene.fog=new THREE.FogExp2(CONFIG.night,CONFIG.fogDensity);camera=new THREE.PerspectiveCamera(46,innerWidth/innerHeight,.1,1400);camera.layers.enable(1);resize();scene.add(new THREE.HemisphereLight(0xa6afbd,0x25251f,1.1));const ambient=new THREE.DirectionalLight(0xd6c8ad,.95);ambient.position.set(-40,70,-70);scene.add(ambient);
  sky=new BlueHourSky();scene.add(sky.group);stars=new StarField(voyageSeed);scene.add(stars.group);await yieldToScreen();city=new DistantCity();city.group.position.z=-145;city.group.scale.set(1.35,1.45,1);scene.add(city.group);await yieldToScreen();towers=new ThreeMoonTowers();scene.add(towers.group);await yieldToScreen();boats=[new DreamBoat(0),new DreamBoat(1)];boats.forEach(b=>scene.add(b.group));lanterns=new FloatingLanterns();scene.add(lanterns.group);mist=new DreamMist();scene.add(mist.group);await yieldToScreen();lake=new LakeWater();scene.add(lake.group);lake.resize();nav=new DreamJourney(voyageSeed);dipa=new SleepingDipa(boats[0].group);quarter=new WarmCity(nav.cityPath);quarter.group.position.z=-80;scene.add(quarter.group);gallery=new PhotoGallery(nav.layout);scene.add(gallery.group);await yieldToScreen();await Promise.all(gallery.ready);memoryNotes=new MemoryNotes();scene.add(memoryNotes.group);composer=new DreamComposer();await yieldToScreen();renderer.compile(scene,camera);lake.renderReflection();composer.render();await yieldToScreen();await welcomeFinished;ready=true;last=performance.now();$('loader').classList.add('done');requestAnimationFrame(frame);
  }catch(e){console.error(e);$('error').style.display='block';$('error').textContent='Please enable browser graphics acceleration, then reload to enter the dream.';}}
 // Point navigation takes over the existing camera and keeps the tour's place.
@@ -793,10 +801,14 @@ class PointNavigation {
    focus.set(0,0,-1).applyQuaternion(target.facing).add(this.goal);
   }else if(kind==='memory'){
    focus.copy(item.panel.position);
-   focus.y+=1.15;
-   const offset=nav.sample(item.time).position.sub(focus).setY(0).normalize();
-   this.goal.copy(focus).addScaledVector(offset,clamp(6.4/camera.aspect,8,15));
-   this.goal.y=camera.position.y;
+   const driftEye=nav.sample(item.time).position;
+   const offset=driftEye.clone().sub(focus).setY(0).normalize();
+   // Give the whole inscription room above the lake while keeping the horizon steady.
+   const halfFov=THREE.MathUtils.degToRad(camera.fov/2);
+   const setback=Math.max(11.5,4.8/(camera.aspect*Math.tan(halfFov)));
+   this.goal.copy(focus).addScaledVector(offset,setback);
+   this.goal.y=driftEye.y;
+   focus.y=this.goal.y+setback*Math.tan(THREE.MathUtils.degToRad(2));
    this.routeTime=item.time;
    memoryNotes.focused=item;
    memoryNotes.focusedSince=null;
@@ -815,7 +827,12 @@ class PointNavigation {
   this.facing.setFromRotationMatrix(new THREE.Matrix4().lookAt(this.goal,focus,camera.up));
   if(kind==='viewpoint')this.facing.copy(target.facing);
   this.startFacing=camera.quaternion.clone();
-  this.duration=reduced?0.01:clamp(this.eye.distanceTo(this.goal)/7,.45,2.8);
+  this.startAngles=new THREE.Euler().setFromQuaternion(this.startFacing,'YXZ');
+  this.endAngles=new THREE.Euler().setFromQuaternion(this.facing,'YXZ');
+  const yaw=this.endAngles.y-this.startAngles.y;
+  this.endAngles.y=this.startAngles.y+Math.atan2(Math.sin(yaw),Math.cos(yaw));
+  const distance=this.eye.distanceTo(this.goal);
+  this.duration=reduced ? .01 : clamp(Math.max(distance/7,this.startFacing.angleTo(this.facing)/.55),1.5,5.5);
   this.movingTime=0;
   this.travelling=true;
  }
@@ -866,9 +883,13 @@ class PointNavigation {
   if(this.travelling){
    this.movingTime+=dt;
    const t=Math.min(1,this.movingTime/this.duration);
-   const glide=1-(1-t)*(1-t);
+   const glide=THREE.MathUtils.smootherstep(t,0,1);
    camera.position.lerpVectors(this.eye,this.goal,glide);
-   camera.quaternion.slerpQuaternions(this.startFacing,this.facing,THREE.MathUtils.smoothstep(this.movingTime,0,Math.min(.85,this.duration)));
+   camera.rotation.set(
+    THREE.MathUtils.lerp(this.startAngles.x,this.endAngles.x,glide),
+    THREE.MathUtils.lerp(this.startAngles.y,this.endAngles.y,glide),
+    THREE.MathUtils.lerp(this.startAngles.z,this.endAngles.z,glide),'YXZ'
+   );
    // The gallery threshold is at (42, -167); its lighting follows the visitor.
    const along=THREE.MathUtils.smoothstep(-camera.position.z,156,168);
    const across=1-THREE.MathUtils.smoothstep(Math.abs(camera.position.x-42),13,27);
