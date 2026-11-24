@@ -532,7 +532,7 @@ class MemoryLandmark {
  }
  drawHarbourGrains(ctx,progress,age){
   const smooth=THREE.MathUtils.smoothstep;
-  const lineOpacity=smooth(progress,.39,.94);
+  const lineOpacity=smooth(progress,.16,.80);
   ctx.save();
   if(lineOpacity>0){
    ctx.globalAlpha=lineOpacity;
@@ -610,11 +610,11 @@ class MemoryLandmark {
     x.globalAlpha=flash;x.fillStyle=light;x.fillRect(198,51,508,255);x.restore();
    }
   }else{
-   const p=THREE.MathUtils.smoothstep(age,.45,4.65);
-   this.drawHarbourGrains(x,p,age);
-   x.save();x.globalAlpha=THREE.MathUtils.smoothstep(p,.52,.92);
-   const travel=Math.max(0,age-2.8);
-   x.translate(313+160*Math.sin(travel*.18),296+1.6*Math.sin(age*2.3));
+   // The grain motion is already eased per stroke. Start spreading on arrival.
+   const progress=clamp(age/1.1,0,1);
+   this.drawHarbourGrains(x,progress,age);
+   x.save();x.globalAlpha=THREE.MathUtils.smoothstep(progress,.19,.60);
+   x.translate(313+160*Math.sin(age*.18),296+1.6*Math.sin(age*2.3));
    x.rotate(Math.sin(age*1.8)*.019);
    x.strokeStyle='#edcd90';x.fillStyle='#302c27';x.lineWidth=2.7;x.lineJoin='round';
    const boat=new Path2D('M-50 -3 Q-15 5 49 -7 L37 6 Q0 18 -34 10 Z M9 -6 V-55 M5 -52 Q-20 -47 -30 -16 L5 -16 Z M13 -45 Q35 -38 41 -17 L13 -19 Z');x.fill(boat);x.stroke(boat);
