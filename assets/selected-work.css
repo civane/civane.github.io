@@ -32,9 +32,14 @@
 .sea-retrieval li { position:relative; }
 .sea-retrieval li + li::before { content:"→"; color:#c2ae87; position:absolute; left:-1.05rem; top:50%; transform:translateY(-50%); font-size:.9rem; }
 .sea-links { display:flex; align-items:center; flex-wrap:wrap; gap:.2rem 1.25rem; }
-.sea-links a { padding:.5rem 0; color:#dfc58e; font-size:.87rem; text-underline-offset:.22em; }
-.sea-links a:focus-visible { outline:2px solid #dfc58e; outline-offset:3px; }
+.detail-title-row { display:flex; align-items:baseline; flex-wrap:wrap; gap:0 1rem; }
+.sea-submission { display:none; }
+#work-detail:has(.sea-detail) .sea-submission { display:inline-block; }
+.sea-submission,.sea-links a { padding:.5rem 0; color:#dfc58e; font-size:.87rem; text-underline-offset:.22em; }
+.sea-submission:focus-visible,.sea-links a:focus-visible { outline:2px solid #dfc58e; outline-offset:3px; }
 @media(max-width:540px) {
+  .detail-title-row { column-gap:.45rem; }
+  #work-detail .sea-submission { font-size:.77rem; letter-spacing:normal; }
   .sea-flow { grid-template-columns:1fr; gap:.85rem; }
   .sea-writing { display:flex; align-items:center; gap:1rem; }
   .sea-writing h4 { margin:0; }

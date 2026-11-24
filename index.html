@@ -70,7 +70,7 @@
 @media(prefers-reduced-motion:reduce) { .portrait-signal { display:none; } }
 </style>
 <script defer src="assets/portrait-signal.js?v=hanging-call"></script>
-<link rel="stylesheet" href="assets/selected-work.css?v=sea-panels"><script defer src="assets/selected-work.js?v=sea-mem"></script>
+<link rel="stylesheet" href="assets/selected-work.css?v=sea-title-link"><script defer src="assets/selected-work.js?v=sea-mem"></script>
 
 <style>
 .hero #static-hero-portrait { pointer-events:auto; cursor:pointer }
@@ -163,7 +163,13 @@
 </ol></div></section><footer><p>Explore the world with curiosity.</p><a href="mailto:civaneeeeee@gmail.com">civaneeeeee@gmail.com ↗</a><div><a href="https://github.com/civane" target="_blank">GITHUB</a><a href="https://www.linkedin.com/in/%E8%A5%BF%E5%AD%90-%E9%82%B1%E5%BC%A0-b48540321/" target="_blank">LINKEDIN</a></div></footer></main>
 <dialog id="work-detail" aria-labelledby="detail-title">
   <form method="dialog"><button class="detail-close" type="submit" autofocus>Close ×</button></form>
-  <header><p class="detail-kind"></p><h2 id="detail-title"></h2></header>
+  <header>
+    <p class="detail-kind"></p>
+    <div class="detail-title-row">
+      <h2 id="detail-title"></h2>
+      <a class="sea-submission" href="https://openreview.net/forum?id=qYB9vc0xka" target="_blank" rel="noopener">OpenReview submission <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
   <div class="detail-body"></div>
 </dialog>
 <template id="sea-mem-detail">
@@ -192,7 +198,6 @@
       </div>
     </figure>
     <div class="sea-links">
-      <a href="https://openreview.net/forum?id=qYB9vc0xka" target="_blank" rel="noopener">OpenReview submission <span aria-hidden="true">↗</span></a>
       <a href="assets/sea-mem-architecture.webp" target="_blank" rel="noopener">Full diagram <span aria-hidden="true">↗</span></a>
     </div>
   </div>
