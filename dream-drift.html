@@ -26,7 +26,7 @@ header{max-width:calc(100vw - 48px)}h1{font-size:42px;letter-spacing:.045em;marg
 body:not(.exploring) #resume-drift {display:none}
 #previous-stop[hidden]{display:none}
 #roam-hint {color:#eee6d8;font:italic 15px Georgia,serif;text-shadow:0 1px 4px #000;pointer-events:none}
-#previous-stop,#resume-drift {min-height:44px;padding:0 17px;border:1px solid #cbb78d88;border-radius:24px;background:#090d13dc;color:#eee3c9;font:14px Georgia,serif}
+#previous-stop,#resume-drift {min-height:44px;padding:0 17px;border:1px solid #cbb78d88;border-radius:24px;background:#090d13dc;color:#f1eadc;font:500 12px/1.3 ui-monospace,Menlo,monospace}
 #scene-stop {position:fixed;left:0;top:0;z-index:2;width:max(48px,var(--diameter));height:48px;padding:0;border:0;background:transparent;touch-action:manipulation;cursor:pointer}
 #scene-stop span {position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:var(--diameter);height:var(--depth);border:1.5px solid #fff1cf;border-radius:50%;background:radial-gradient(ellipse,#fff7dd 0 7%,#f4d08a88 14%,#f5d59318 42%,#e9c68035 75%);box-shadow:0 0 4px #ffe3a9,0 1px 10px #e8bd7570,inset 0 0 4px #ffdda290;pointer-events:none}
 #scene-stop[data-edge]::before {content:"";position:absolute;left:50%;top:50%;width:7px;height:7px;border:solid #ffe9b7;border-width:1.5px 1.5px 0 0;transform:translate(-50%,-50%) rotate(var(--heading)) translateX(27px) rotate(45deg)}
@@ -264,8 +264,8 @@ function initHandwriting(){const glyphs={
  i:{w:23,p:['M 10 54 C 7 66 2 82 9 85 C 15 87 20 80 22 77','M 14 36 L 15 35']},
  u:{w:46,p:['M 12 53 C 7 64 1 82 11 85 C 23 88 31 63 34 53 C 29 70 25 83 34 85 C 39 86 44 79 45 77']},
  d:{w:46,p:['M 32 57 C 21 44 6 56 5 71 C 2 88 17 90 27 75 C 36 58 46 23 39 21 C 32 19 26 78 33 85 C 37 88 43 80 45 77']}
- };const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('role','img');svg.setAttribute('aria-label','to be continued');let x=12,total=0;for(const char of 'to be continued'){if(char===' '){x+=25;continue;}const glyph=glyphs[char];for(const d of glyph.p){const path=document.createElementNS(ns,'path');path.setAttribute('d',d);path.setAttribute('transform',`translate(${x},${Math.sin(x*.04)*1.5})`);path.setAttribute('fill','none');path.setAttribute('stroke','white');path.setAttribute('stroke-width','2.5');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');svg.appendChild(path);handwriting.push({path});}x+=glyph.w;}let signatureX=(x+12)/2-27;for(const char of 'civ'){const glyph=glyphs[char];for(const d of glyph.p){const path=document.createElementNS(ns,'path');path.setAttribute('d',d);path.setAttribute('transform',`translate(${signatureX},110) scale(.55)`);path.setAttribute('fill','none');path.setAttribute('stroke','white');path.setAttribute('stroke-width','2.5');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');path.dataset.signature='true';svg.appendChild(path);handwriting.push({path,signature:true});}signatureX+=glyph.w*.55;}svg.setAttribute('aria-label','to be continued — civ');svg.setAttribute('viewBox',`0 0 ${x+12} 180`);svg.style.cssText='width:min(660px,82vw);height:auto;overflow:visible';$('return-home').replaceChildren(svg);let signatureTotal=0;for(const item of handwriting){item.length=item.path.getTotalLength();item.start=item.signature?signatureTotal:total;if(item.signature)signatureTotal+=item.length;else total+=item.length;item.path.style.strokeDasharray=String(item.length+1);item.path.style.strokeDashoffset=String(item.length+1);}handwriting.total=total;handwriting.signatureTotal=signatureTotal;}
-function writeEnding(t){const amount=clamp((t-119.3)/6.2,0,1)*handwriting.total;for(const item of handwriting){const ink=clamp((item.signature?clamp((t-125.6)/1.5,0,1)*handwriting.signatureTotal:amount)-item.start,0,item.length);item.path.style.visibility=ink>0?"visible":"hidden";item.path.style.strokeDashoffset=String(item.length-ink);}}
+ };const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('role','img');svg.setAttribute('aria-label','to be continued');let x=12,total=0;for(const char of 'to be continued'){if(char===' '){x+=25;continue;}const glyph=glyphs[char];for(const d of glyph.p){const path=document.createElementNS(ns,'path');path.setAttribute('d',d);path.setAttribute('transform',`translate(${x},${Math.sin(x*.04)*1.5})`);path.setAttribute('fill','none');path.setAttribute('stroke','#f3eee4');path.setAttribute('stroke-width','2.5');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');svg.appendChild(path);handwriting.push({path});}x+=glyph.w;}let signatureX=(x+12)/2-27;for(const char of 'civ'){const glyph=glyphs[char];for(const d of glyph.p){const path=document.createElementNS(ns,'path');path.setAttribute('d',d);path.setAttribute('transform',`translate(${signatureX},110) scale(.55)`);path.setAttribute('fill','none');path.setAttribute('stroke','#dfc18a');path.setAttribute('stroke-width','2.5');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');path.dataset.signature='true';svg.appendChild(path);handwriting.push({path,signature:true});}signatureX+=glyph.w*.55;}svg.setAttribute('aria-label','to be continued — civ');svg.setAttribute('viewBox',`0 0 ${x+12} 180`);svg.style.cssText='width:min(660px,82vw);height:auto;overflow:visible';$('return-home').replaceChildren(svg);let signatureTotal=0;for(const item of handwriting){item.length=item.path.getTotalLength();item.start=item.signature?signatureTotal:total;if(item.signature)signatureTotal+=item.length;else total+=item.length;item.path.style.strokeDasharray=String(item.length+1);item.path.style.strokeDashoffset=String(item.length+1);}handwriting.total=total;handwriting.signatureTotal=signatureTotal;}
+function writeEnding(t){const amount=clamp((t-119.3)/2.8,0,1)*handwriting.total;for(const item of handwriting){const ink=clamp((item.signature?clamp((t-122.2)/.7,0,1)*handwriting.signatureTotal:amount)-item.start,0,item.length);item.path.style.visibility=ink>0?"visible":"hidden";item.path.style.strokeDashoffset=String(item.length-ink);}}
 
 // An original, quiet nocturne: singing upper voice over a gentle broken-chord accompaniment.
 // Piano strings, soft hammer envelopes and room response are generated locally.
@@ -585,7 +585,7 @@ class MemoryLandmark {
    this.drawHarbourGrains(x,p,age);
    x.save();x.globalAlpha=THREE.MathUtils.smoothstep(p,.52,.92);
    const travel=Math.max(0,age-2.8);
-   x.translate(313+travel*29,296+1.6*Math.sin(age*2.3));
+   x.translate(313+160*Math.sin(travel*.18),296+1.6*Math.sin(age*2.3));
    x.rotate(Math.sin(age*1.8)*.019);
    x.strokeStyle='#edcd90';x.fillStyle='#302c27';x.lineWidth=2.7;x.lineJoin='round';
    const boat=new Path2D('M-50 -3 Q-15 5 49 -7 L37 6 Q0 18 -34 10 Z M9 -6 V-55 M5 -52 Q-20 -47 -30 -16 L5 -16 Z M13 -45 Q35 -38 41 -17 L13 -19 Z');x.fill(boat);x.stroke(boat);
@@ -602,7 +602,7 @@ class MemoryNotes {
  [23,'2023 – 2025','Huawei · Shanghai','Smartphone & cloud imaging'],
  [45,'2025 – 2027 · expected','HKUST · Hong Kong','M.Sc. in Artificial Intelligence'],
  [54,'2025 – present','vivo · Shenzhen','LLM Memory · Diffusion Optimization']];
- for(const [time,date,title,detail] of entries){const c=document.createElement('canvas');c.width=1536;c.height=512;const x=c.getContext('2d');x.textAlign='center';x.textBaseline='middle';x.shadowColor='#000';x.shadowBlur=3;x.fillStyle='#c9b99a';x.font='60px Georgia';x.fillText(date,768,112);x.fillStyle='#eee9df';x.font='96px Georgia';x.fillText(title,768,226);x.fillStyle='#c5c5c3';x.font='62px Georgia';x.fillText(detail,768,328);const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;const m=new THREE.MeshBasicMaterial({map:tex,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide,toneMapped:false});const panel=new THREE.Mesh(new THREE.PlaneGeometry(8,2.66),m),sample=nav.sample(time),dir=sample.target.clone().sub(sample.position).normalize();panel.position.copy(sample.position).add(dir.multiplyScalar(12));panel.position.y+=1.5;const city=({6:"book",14:"sport",23:"camera",45:"harbour",54:"recall"})[time];const landmark=new MemoryLandmark(city);panel.add(landmark.mesh);if(city==='harbour'){landmark.mesh.scale.setScalar(.86);landmark.mesh.position.y=2.58;}let veil=null;if(time===54){const v=document.createElement('canvas');v.width=v.height=512;const vx=v.getContext('2d'),gradient=vx.createRadialGradient(256,256,45,256,256,250);gradient.addColorStop(0,'rgba(2,5,10,.92)');gradient.addColorStop(.45,'rgba(2,5,10,.7)');gradient.addColorStop(1,'rgba(2,5,10,0)');vx.fillStyle=gradient;vx.fillRect(0,0,512,512);const vt=new THREE.CanvasTexture(v);vt.colorSpace=THREE.SRGBColorSpace;veil=new THREE.Mesh(new THREE.PlaneGeometry(12,9),new THREE.MeshBasicMaterial({map:vt,transparent:true,depthWrite:false,toneMapped:false}));veil.position.set(0,1.1,-.08);panel.add(veil);}this.group.add(panel);this.items.push({panel,time,title,landmark,veil});}
+ for(const [time,date,title,detail] of entries){const c=document.createElement('canvas');c.width=1536;c.height=512;const x=c.getContext('2d');x.textAlign='center';x.textBaseline='middle';x.shadowColor='#000';x.shadowBlur=1;x.fillStyle='#dfc18a';x.font='68px ui-monospace, Menlo, monospace';x.fillText(date,768,112);x.fillStyle='#f1eadc';x.font='96px Georgia';x.fillText(title,768,226);x.fillStyle='#d6cebe';x.font='72px system-ui, sans-serif';x.fillText(detail,768,335,1480);const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;const m=new THREE.MeshBasicMaterial({map:tex,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide,toneMapped:false});const panel=new THREE.Mesh(new THREE.PlaneGeometry(8,2.66),m),sample=nav.sample(time),dir=sample.target.clone().sub(sample.position).normalize();panel.position.copy(sample.position).add(dir.multiplyScalar(12));panel.position.y+=1.5;const city=({6:"book",14:"sport",23:"camera",45:"harbour",54:"recall"})[time];const landmark=new MemoryLandmark(city);panel.add(landmark.mesh);if(city==='harbour'){landmark.mesh.scale.setScalar(.86);landmark.mesh.position.y=2.58;}let veil=null;if(time===54){const v=document.createElement('canvas');v.width=v.height=512;const vx=v.getContext('2d'),gradient=vx.createRadialGradient(256,256,45,256,256,250);gradient.addColorStop(0,'rgba(2,5,10,.92)');gradient.addColorStop(.45,'rgba(2,5,10,.7)');gradient.addColorStop(1,'rgba(2,5,10,0)');vx.fillStyle=gradient;vx.fillRect(0,0,512,512);const vt=new THREE.CanvasTexture(v);vt.colorSpace=THREE.SRGBColorSpace;veil=new THREE.Mesh(new THREE.PlaneGeometry(12,9),new THREE.MeshBasicMaterial({map:vt,transparent:true,depthWrite:false,toneMapped:false}));veil.position.set(0,1.1,-.08);panel.add(veil);}this.group.add(panel);this.items.push({panel,time,title,landmark,veil});}
  }
  update(t,exploring=false){
   const candidates=[];
@@ -627,7 +627,11 @@ class MemoryNotes {
    candidates.push({item,bounds,priority:opacity-.12*Math.abs(cx)+(exploring && item===this.focused?1:0)});
    panel.material.opacity=opacity;
    panel.quaternion.copy(camera.quaternion);
-   landmark.update(exploring?clock:Math.max(.15,t-time+4.4));
+   // A selected illustration starts its own sequence once the camera settles.
+   const age=exploring && item===this.focused
+    ? (this.focusedSince===null?0:clock-this.focusedSince)
+    : exploring?clock:Math.max(.15,t-time+4.4);
+   landmark.update(age);
    landmark.mesh.material.opacity=opacity*.9;
    if(veil)veil.material.opacity=opacity;
   }
@@ -795,6 +799,7 @@ class PointNavigation {
    this.goal.y=camera.position.y;
    this.routeTime=item.time;
    memoryNotes.focused=item;
+   memoryNotes.focusedSince=null;
   }else if(kind==='cat'){
    item.head.getWorldPosition(focus);
    this.goal.copy(nav.sample(33).position);
@@ -868,7 +873,10 @@ class PointNavigation {
    const along=THREE.MathUtils.smoothstep(-camera.position.z,156,168);
    const across=1-THREE.MathUtils.smoothstep(Math.abs(camera.position.x-42),13,27);
    setGalleryAtmosphere(THREE.MathUtils.lerp(galleryBlend,along*across,1-Math.exp(-4*dt)));
-   if(t===1)this.travelling=false;
+   if(t===1){
+    this.travelling=false;
+    if(memoryNotes.focused)memoryNotes.focusedSince=clock;
+   }
   }
   memoryNotes.update(nav.elapsed,true);
  }
