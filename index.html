@@ -70,7 +70,7 @@
 @media(prefers-reduced-motion:reduce) { .portrait-signal { display:none; } }
 </style>
 <script defer src="assets/portrait-signal.js?v=hanging-call"></script>
-<link rel="stylesheet" href="assets/selected-work.css?v=sea-architecture"><script defer src="assets/selected-work.js?v=sea-mem"></script>
+<link rel="stylesheet" href="assets/selected-work.css?v=sea-overview"><script defer src="assets/selected-work.js?v=sea-mem"></script>
 
 <style>
 .hero #static-hero-portrait { pointer-events:auto; cursor:pointer }
@@ -169,16 +169,11 @@
 <template id="sea-mem-detail">
   <div class="sea-detail">
     <h3>Motivation</h3>
-    <p>In long conversations, similar episodes compete for space. A reader with room for only a few turns can miss the detail that distinguishes one event from another.</p>
+    <p>A GPS breaks, goes in for repair, then works again. Each update mentions the same device. To explain what changed, an agent needs to find the related turns across a long conversation.</p>
     <h3>Main contributions</h3>
-    <p>Sparse Event Addressing Memory (SEA-Mem) links facts across turns. From a partial cue, it locates an episode, follows one-hop links for missing details, and gives the reader a small set of original turns that jointly support the answer.</p>
-    <figure class="sea-figure">
-      <a href="assets/sea-mem-architecture.webp" target="_blank" rel="noopener" aria-label="View the full-resolution SEA-Mem architecture diagram in a new tab">
-        <img src="assets/sea-mem-architecture.webp" width="3400" height="1880" alt="SEA-Mem writes dialogue into source-linked atoms, retrieves original turns through event addressing, episode completion and source selection, and uses dense retrieval for fallback.">
-        <span>View full size ↗</span>
-      </a>
-    </figure>
-    <p>On 150 LongMemEval-S questions with a five-turn budget, adding similar but irrelevant conversations left SEA-Mem’s judged accuracy at 76%. Dense retrieval fell from 64% to 58%.</p>
+    <p>SEA-Mem links each fact to the turn where it was recorded. Given a partial clue, it finds the matching episode, follows links to related updates, and selects a few original turns to support the answer.</p>
+    <p class="sea-result">On 150 LongMemEval-S questions with a five-turn budget, adding similar but irrelevant conversations left SEA-Mem’s judged accuracy at 76%. Dense retrieval fell from 64% to 58%.</p>
+    <a class="sea-architecture-link" href="assets/sea-mem-architecture.webp" target="_blank" rel="noopener" aria-label="View full architecture in a new tab">View full architecture <span aria-hidden="true">↗</span></a>
   </div>
 </template>
 <style>/* Static editorial portrait replaces the interactive 3D hero. */#static-hero-portrait{position:absolute;z-index:2;right:15vw;bottom:5vh;width:min(33vw,540px);height:min(33vw,540px);margin:0;pointer-events:none;opacity:1;filter:drop-shadow(0 20px 32px rgba(0,0,0,.45))}#static-hero-portrait img{width:100%;height:100%;object-fit:contain;object-position:50% 100%;display:block}#framed-scene-v2{display:none!important}.portrait-loading{display:none!important}@media(max-width:800px){#static-hero-portrait{right:-6vw;bottom:0;width:112vw;height:64vh;opacity:1;transform:none;animation:none}.hero-copy{z-index:6}}@media(prefers-reduced-motion:reduce){#static-hero-portrait{opacity:1;transform:none;animation:none}}</style><style>/* Blend the square source into the textured hero as a clean circular fisheye. */#static-hero-portrait{right:10vw!important;bottom:-2vh!important;width:min(48vw,700px)!important;height:min(48vw,700px)!important;clip-path:circle(44% at 50% 50%);background:transparent!important;filter:drop-shadow(0 20px 32px rgba(0,0,0,.48))!important}#static-hero-portrait img{object-fit:contain!important;object-position:center!important}</style></body></html>
