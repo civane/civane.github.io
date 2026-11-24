@@ -70,7 +70,7 @@
 @media(prefers-reduced-motion:reduce) { .portrait-signal { display:none; } }
 </style>
 <script defer src="assets/portrait-signal.js?v=hanging-call"></script>
-<link rel="stylesheet" href="assets/selected-work.css?v=sea-contributions"><script defer src="assets/selected-work.js?v=sea-mem"></script>
+<link rel="stylesheet" href="assets/selected-work.css?v=sea-flow"><script defer src="assets/selected-work.js?v=sea-mem"></script>
 
 <style>
 .hero #static-hero-portrait { pointer-events:auto; cursor:pointer }
@@ -176,7 +176,22 @@
       <li>Inspired by the hippocampus, SEA-Mem uses a query cue to identify an episode, follows its stored links one hop to recover missing details, and jointly selects the original turns that support the answer.</li>
       <li>We evaluate SEA-Mem on LongMemEval, with additional tests on LoCoMo. In controlled LongMemEval tests, it preserved accuracy better than dense retrieval as similar events were added.</li>
     </ul>
-    <a class="sea-architecture-link" href="assets/sea-mem-architecture.webp" target="_blank" rel="noopener" aria-label="View full architecture in a new tab">View full architecture <span aria-hidden="true">↗</span></a>
+    <h3 id="sea-architecture-title">Architecture</h3>
+    <figure class="sea-flow" aria-labelledby="sea-architecture-title">
+      <div class="sea-writing">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 10V5h16l5 5v14h-5M21 5v6h5M2 13h17v15H2zM6 18h9m-9 5h6"/></svg>
+        <div><strong>Memory Writing</strong><p>Keep each original turn, extract its facts, and link related turns.</p></div>
+      </div>
+      <ol class="sea-retrieval" aria-label="Retrieval sequence">
+        <li><strong>DG-Address</strong><p>Use a query cue to locate the right episode.</p></li>
+        <li><strong>CA3-Complete</strong><p>Follow one hop from a match to recover related evidence.</p></li>
+        <li><strong>CA1-Select</strong><p>Choose up to <i>k</i> original turns that together support the answer.</p></li>
+      </ol>
+    </figure>
+    <div class="sea-links">
+      <a href="https://openreview.net/forum?id=qYB9vc0xka" target="_blank" rel="noopener">OpenReview submission <span aria-hidden="true">↗</span></a>
+      <a href="assets/sea-mem-architecture.webp" target="_blank" rel="noopener">Full diagram <span aria-hidden="true">↗</span></a>
+    </div>
   </div>
 </template>
 <style>/* Static editorial portrait replaces the interactive 3D hero. */#static-hero-portrait{position:absolute;z-index:2;right:15vw;bottom:5vh;width:min(33vw,540px);height:min(33vw,540px);margin:0;pointer-events:none;opacity:1;filter:drop-shadow(0 20px 32px rgba(0,0,0,.45))}#static-hero-portrait img{width:100%;height:100%;object-fit:contain;object-position:50% 100%;display:block}#framed-scene-v2{display:none!important}.portrait-loading{display:none!important}@media(max-width:800px){#static-hero-portrait{right:-6vw;bottom:0;width:112vw;height:64vh;opacity:1;transform:none;animation:none}.hero-copy{z-index:6}}@media(prefers-reduced-motion:reduce){#static-hero-portrait{opacity:1;transform:none;animation:none}}</style><style>/* Blend the square source into the textured hero as a clean circular fisheye. */#static-hero-portrait{right:10vw!important;bottom:-2vh!important;width:min(48vw,700px)!important;height:min(48vw,700px)!important;clip-path:circle(44% at 50% 50%);background:transparent!important;filter:drop-shadow(0 20px 32px rgba(0,0,0,.48))!important}#static-hero-portrait img{object-fit:contain!important;object-position:center!important}</style></body></html>
