@@ -19,3 +19,31 @@
   .work-row { grid-template-columns:1.7rem minmax(0,1fr) 1.5rem; gap:.25rem .55rem; }
   .work-no,.work-plus { grid-row:1/3; } .work-plus { grid-column:3; } .work-kind { grid-column:2; grid-row:2; }
 }
+.sea-detail { color:#e1d9ca; font-size:.94rem; line-height:1.5; }
+.sea-detail h3,.sea-band,.sea-traces small,.sea-binding { font:500 .72rem/1.4 "DM Mono",monospace; }
+.sea-detail h3 { margin:1.1rem 0 .28rem; color:#d9bb83; letter-spacing:.065em; text-transform:uppercase; }
+.sea-detail p { margin:0; }
+.sea-figure { margin:1.1rem 0 .9rem; padding:clamp(12px,2.7vw,21px); background:#11110e; border:1px solid #50432e; color:#debf83; }
+.sea-band { display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:.8rem; letter-spacing:.045em; }
+.sea-band span:first-child { color:#efdbb4; }
+.sea-band span:last-child { color:#b2a48a; font-size:.69rem; }
+.sea-traces,.sea-stages { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(5px,1.6vw,12px); }
+.sea-traces > div { display:flex; flex-direction:column; gap:3px; padding:.4rem .55rem; background:#211e18; border-left:2px solid #a78a53; }
+.sea-traces small { color:#c8ac78; }
+.sea-traces span { font:500 clamp(.78rem,1.4vw,.94rem)/1.3 Georgia,serif; color:#f1e8d7; }
+.sea-binding { position:relative; margin:0 0 .85rem; padding:.48rem 0 0; text-align:center; color:#c8b590; }
+.sea-binding::before { content:""; position:absolute; top:0; height:.85rem; left:16.5%; right:16.5%; border:1px solid #766447; border-top:0; }
+.sea-binding span { position:relative; padding:0 .5rem; background:#11110e; }
+.sea-stages { margin:0; padding:0; list-style:none; }
+.sea-stages li { border-top:1px solid #584a32; padding-top:.32rem; }
+.sea-stages svg { display:block; width:90px; max-width:100%; height:42px; }
+.sea-pen { fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+.sea-faint { opacity:.42; }
+.sea-stages strong { display:block; color:#f1e9dc; font:600 clamp(.9rem,1.5vw,1.05rem)/1.4 Georgia,serif; }
+.sea-stages span { display:block; color:#c7bfae; font-size:.8rem; line-height:1.4; margin-top:.18rem; }
+@media(max-width:520px){
+  .sea-stages { grid-template-columns:1fr; gap:.35rem; }
+  .sea-stages li { display:grid; grid-template-columns:54px 1fr; align-items:center; gap:.6rem; padding-top:.4rem; }
+  .sea-stages svg { height:30px; }
+  .sea-stages span { margin:0; }
+}

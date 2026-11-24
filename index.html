@@ -70,7 +70,7 @@
 @media(prefers-reduced-motion:reduce) { .portrait-signal { display:none; } }
 </style>
 <script defer src="assets/portrait-signal.js?v=hanging-call"></script>
-<link rel="stylesheet" href="assets/selected-work.css"><script defer src="assets/selected-work.js"></script>
+<link rel="stylesheet" href="assets/selected-work.css?v=sea-mem"><script defer src="assets/selected-work.js?v=sea-mem"></script>
 
 <style>
 .hero #static-hero-portrait { pointer-events:auto; cursor:pointer }
@@ -154,7 +154,7 @@
 </div>
 </section>
 <section class="work" id="work"><div class="work-index"><span class="section-kicker">02 / WORK</span><h2 class="work-title">Selected work</h2><ol class="work-list">
-<li><button class="work-row" type="button" aria-haspopup="dialog" data-image="assets/LifeMem.png" data-summary-en="A hippocampal-inspired memory architecture for grounded long-context retrieval."><span class="work-no" aria-hidden="true">01</span><span class="work-name">SEA-Mem</span><span class="work-kind">LLM Agents</span><span aria-hidden="true" class="work-plus">+</span></button></li>
+<li><button class="work-row" type="button" aria-haspopup="dialog" data-detail="sea-mem-detail"><span class="work-no" aria-hidden="true">01</span><span class="work-name">SEA-Mem</span><span class="work-kind">LLM Agents</span><span aria-hidden="true" class="work-plus">+</span></button></li>
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-image="assets/HeGZO.png" data-summary-en="Heterogeneous zeroth-order optimization for diffusion models — 27.4% less SD3 memory."><span class="work-no" aria-hidden="true">02</span><span class="work-name">HeGZO</span><span class="work-kind">Diffusion Optimization</span><span aria-hidden="true" class="work-plus">+</span></button></li>
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-image="assets/AIGC.png" data-summary-en="Compressed SD 1.5 with LoRA adaptation, adversarial detail recovery and on-device deployment."><span class="work-no" aria-hidden="true">03</span><span class="work-name">On-device AIGC</span><span class="work-kind">Mobile Imaging</span><span aria-hidden="true" class="work-plus">+</span></button></li>
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-image="assets/云相机.png" data-summary-en="Staggered HDR and RAW-domain diffusion for high-quality mobile imaging."><span class="work-no" aria-hidden="true">04</span><span class="work-name">RAW Reconstruction</span><span class="work-kind">Computational Photography</span><span aria-hidden="true" class="work-plus">+</span></button></li>
@@ -164,8 +164,43 @@
 <dialog id="work-detail" aria-labelledby="detail-title">
   <form method="dialog"><button class="detail-close" type="submit" autofocus>Close ×</button></form>
   <header><p class="detail-kind"></p><h2 id="detail-title"></h2></header>
-  <p class="detail-summary"></p><img class="detail-image" alt="">
+  <div class="detail-body"></div>
 </dialog>
+<template id="sea-mem-detail">
+  <div class="sea-detail">
+    <h3>Motivation</h3>
+    <p>In long conversations, similar episodes compete for space. A reader with room for only a few turns can miss the detail that distinguishes one event from another.</p>
+    <h3>Main contributions</h3>
+    <p>Sparse Event Addressing Memory (SEA-Mem) links facts across turns. From a partial cue, it locates an episode, follows one-hop links for missing details, and gives the reader a small set of original turns that jointly support the answer.</p>
+    <figure class="sea-figure" aria-label="SEA-Mem method overview adapted from Figure 1">
+      <div class="sea-band"><span>Memory writing</span><span>Single pass</span></div>
+      <div class="sea-traces" aria-label="Source turns from the paper’s GPS example">
+        <div><small>Turn 42</small><span>GPS broken</span></div>
+        <div><small>Turn 57</small><span>Under repair</span></div>
+        <div><small>Turn 70</small><span>Working again</span></div>
+      </div>
+      <div class="sea-binding"><span>GPS · status</span></div>
+      <div class="sea-band"><span>Memory retrieval</span><span>Per query</span></div>
+      <ol class="sea-stages">
+        <li>
+          <svg viewBox="0 0 108 52" aria-hidden="true"><g class="sea-faint" fill="currentColor">
+            <circle cx="12" cy="12" r="2"/><circle cx="26" cy="12" r="2"/><circle cx="40" cy="12" r="2"/><circle cx="54" cy="12" r="2"/><circle cx="68" cy="12" r="2"/><circle cx="12" cy="26" r="2"/><circle cx="40" cy="26" r="2"/><circle cx="54" cy="26" r="2"/><circle cx="68" cy="26" r="2"/><circle cx="12" cy="40" r="2"/><circle cx="26" cy="40" r="2"/><circle cx="40" cy="40" r="2"/><circle cx="54" cy="40" r="2"/><circle cx="68" cy="40" r="2"/></g>
+            <g class="sea-pen"><circle cx="26" cy="26" r="8"/><path d="M34 26H92m-5-4 5 4-5 4"/></g><circle cx="26" cy="26" r="3" fill="currentColor"/></svg>
+          <div><strong>DG-Address</strong><span>Match a query cue to an event.</span></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 108 52" aria-hidden="true"><g class="sea-pen"><path d="M21 26C40 26 42 10 62 10m-41 16c19 0 22 15 41 15"/><circle cx="17" cy="26" r="5"/><circle cx="68" cy="10" r="5"/><circle cx="68" cy="41" r="5"/></g><circle cx="17" cy="26" r="2" fill="currentColor"/></svg>
+          <div><strong>CA3-Complete</strong><span>Follow stored links to related turns.</span></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 108 52" aria-hidden="true"><g class="sea-pen"><path opacity=".45" d="M15 37V5h42m-36 37V10h42"/><path d="M27 16h43v31H27zM34 24h29m-29 7h24m-24 7h13m30-8h17m-5-4 5 4-5 4"/></g></svg>
+          <div><strong>CA1-Select</strong><span>Give the reader up to <i>k</i> original turns.</span></div>
+        </li>
+      </ol>
+    </figure>
+    <p>On 150 LongMemEval-S questions with a five-turn budget, adding similar but irrelevant conversations left SEA-Mem’s judged accuracy at 76%. Dense retrieval fell from 64% to 58%.</p>
+  </div>
+</template>
 <style>/* Static editorial portrait replaces the interactive 3D hero. */#static-hero-portrait{position:absolute;z-index:2;right:15vw;bottom:5vh;width:min(33vw,540px);height:min(33vw,540px);margin:0;pointer-events:none;opacity:1;filter:drop-shadow(0 20px 32px rgba(0,0,0,.45))}#static-hero-portrait img{width:100%;height:100%;object-fit:contain;object-position:50% 100%;display:block}#framed-scene-v2{display:none!important}.portrait-loading{display:none!important}@media(max-width:800px){#static-hero-portrait{right:-6vw;bottom:0;width:112vw;height:64vh;opacity:1;transform:none;animation:none}.hero-copy{z-index:6}}@media(prefers-reduced-motion:reduce){#static-hero-portrait{opacity:1;transform:none;animation:none}}</style><style>/* Blend the square source into the textured hero as a clean circular fisheye. */#static-hero-portrait{right:10vw!important;bottom:-2vh!important;width:min(48vw,700px)!important;height:min(48vw,700px)!important;clip-path:circle(44% at 50% 50%);background:transparent!important;filter:drop-shadow(0 20px 32px rgba(0,0,0,.48))!important}#static-hero-portrait img{object-fit:contain!important;object-position:center!important}</style></body></html>
 
 <!-- CINEMATIC SURREAL VISUAL LAYER -->
