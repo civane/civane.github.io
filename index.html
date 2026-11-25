@@ -70,7 +70,7 @@
 @media(prefers-reduced-motion:reduce) { .portrait-signal { display:none; } }
 </style>
 <script defer src="assets/portrait-signal.js?v=hanging-call"></script>
-<link rel="stylesheet" href="assets/selected-work.css?v=sea-title-link"><script defer src="assets/selected-work.js?v=sea-mem"></script>
+<link rel="stylesheet" href="assets/selected-work.css?v=hegzo-detail"><script defer src="assets/selected-work.js?v=sea-mem"></script>
 
 <style>
 .hero #static-hero-portrait { pointer-events:auto; cursor:pointer }
@@ -152,7 +152,7 @@
 </section>
 <section class="work" id="work"><div class="work-index"><span class="section-kicker">02 / WORK</span><h2 class="work-title">Selected work</h2><ol class="work-list">
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-detail="sea-mem-detail"><span class="work-no" aria-hidden="true">01</span><span class="work-name">SEA-Mem</span><span class="work-kind">LLM Agents</span><span aria-hidden="true" class="work-plus">+</span></button></li>
-<li><button class="work-row" type="button" aria-haspopup="dialog" data-image="assets/HeGZO.png" data-summary-en="Heterogeneous zeroth-order optimization for diffusion models — 27.4% less SD3 memory."><span class="work-no" aria-hidden="true">02</span><span class="work-name">HeGZO</span><span class="work-kind">Diffusion Optimization</span><span aria-hidden="true" class="work-plus">+</span></button></li>
+<li><button class="work-row" type="button" aria-haspopup="dialog" data-detail="hegzo-detail"><span class="work-no" aria-hidden="true">02</span><span class="work-name">HeGZO</span><span class="work-kind">Diffusion Optimization</span><span aria-hidden="true" class="work-plus">+</span></button></li>
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-image="assets/AIGC.png" data-summary-en="Compressed SD 1.5 with LoRA adaptation, adversarial detail recovery and on-device deployment."><span class="work-no" aria-hidden="true">03</span><span class="work-name">On-device AIGC</span><span class="work-kind">Mobile Imaging</span><span aria-hidden="true" class="work-plus">+</span></button></li>
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-image="assets/云相机.png" data-summary-en="Staggered HDR and RAW-domain diffusion for high-quality mobile imaging."><span class="work-no" aria-hidden="true">04</span><span class="work-name">RAW Reconstruction</span><span class="work-kind">Computational Photography</span><span aria-hidden="true" class="work-plus">+</span></button></li>
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-image="assets/微距deblur.png" data-summary-en="Hybrid U-Net and LSTM for real-time defocus and motion deblurring."><span class="work-no" aria-hidden="true">05</span><span class="work-name">Macro Deblurring</span><span class="work-kind">Mobile NPU</span><span aria-hidden="true" class="work-plus">+</span></button></li>
@@ -169,12 +169,29 @@
   </header>
   <div class="detail-body"></div>
 </dialog>
+<template id="hegzo-detail">
+  <div class="project-detail">
+    <h3>Motivation</h3>
+    <p>Personalizing Stable Diffusion 3 with LoRA updates only a small set of weights, yet backpropagation still uses memory to store intermediate activations. Zeroth-order updates can save memory, but their estimates can become unstable in deeper layers.</p>
+    <h3>Main contributions</h3>
+    <ul class="project-contributions">
+      <li>HeGZO guides zeroth-order updates with backpropagation. It scales perturbations according to the signal-to-noise ratio and uses activations to choose search directions.</li>
+      <li>On Stable Diffusion 3 LoRA training, HeGZO reduced peak training memory overhead by <strong>27.4%</strong> compared with full backpropagation.</li>
+      <li>On the DreamBooth <i>dog6</i> subject, the DINO score for subject fidelity rose from <strong>0.5849 to 0.6274</strong>.</li>
+    </ul>
+    <h3 id="hegzo-architecture-title">Architecture</h3>
+    <figure class="hegzo-flow" aria-labelledby="hegzo-architecture-title">
+      <img src="assets/hegzo-architecture.webp" width="1450" height="540" alt="Deep-layer instability → Gated-CCI → LoSP → stable updates.">
+    </figure>
+    <div class="project-links"><a href="assets/HeGZO.png" target="_blank" rel="noopener">Full diagram <span aria-hidden="true">↗</span></a></div>
+  </div>
+</template>
 <template id="sea-mem-detail">
-  <div class="sea-detail">
+  <div class="project-detail sea-detail">
     <h3>Motivation</h3>
     <p>In long conversations, the details needed for one answer can be scattered across several turns. When similar events recur and the reader can see only a few turns, how can a memory system recover the right episode and keep all the evidence needed to answer?</p>
     <h3>Main contributions</h3>
-    <ul class="sea-contributions">
+    <ul class="project-contributions">
       <li>We measure which pieces of evidence retrieval finds and which of them reach the reader within its turn budget.</li>
       <li>Inspired by the hippocampus, SEA-Mem uses a query cue to identify an episode, follows its stored links one hop to recover missing details, and jointly selects the original turns that support the answer.</li>
       <li>We evaluate SEA-Mem on LongMemEval, with additional tests on LoCoMo. In controlled LongMemEval tests, it preserved accuracy better than dense retrieval as similar events were added.</li>
@@ -194,7 +211,7 @@
         </ol>
       </div>
     </figure>
-    <div class="sea-links">
+    <div class="project-links">
       <a href="assets/sea-mem-architecture.webp" target="_blank" rel="noopener">Full diagram <span aria-hidden="true">↗</span></a>
     </div>
   </div>
