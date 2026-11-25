@@ -624,7 +624,7 @@ body.is-revealed:after{opacity:0!important;visibility:hidden!important}
 .topbar-inner .wordmark { grid-area:1/1; justify-self:start; }
 #home .topbar nav {
   grid-area:1/2; justify-self:center; width:var(--portrait-size); position:relative;
-  left:calc(var(--portrait-offset) - clamp(4px, 3vw - 8px, 20px));
+  left:calc(var(--portrait-offset) - clamp(12px, 5vw - 8px, 48px));
   display:flex; justify-content:flex-end; align-items:center; gap:clamp(14px,2vw,30px); transform:none; pointer-events:none;
   color:#e2c586;
 }
@@ -678,7 +678,7 @@ body.is-revealed:after{opacity:0!important;visibility:hidden!important}
   .topbar-inner .wordmark img { width:54px; height:auto; }
   #home .topbar nav { gap:8px; }
 }
-@media(max-width:340px) {
+@media(max-width:380px) {
   #home .topbar nav { flex-direction:column; align-items:flex-end; gap:0; }
   #home .topbar nav a { margin-inline-end:10%; padding:.35rem 0; }
 }
