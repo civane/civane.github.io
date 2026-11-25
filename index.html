@@ -108,7 +108,7 @@
 @media(prefers-reduced-motion:reduce){#door-blackout.leaving,#static-hero-portrait .portrait-signal{transition:none}}
 </style>
 </head><body><main>
-<div id="door-blackout" aria-hidden="true"></div><section class="hero" id="home"><div class="grain"></div><header class="topbar"><a class="wordmark" href="#home" aria-label="Zhangxizi Qiu — Home"><img src="assets/zq-wordmark.svg?v=signature" width="56" height="28" alt="ZQ" style="display:block"></a><nav><a href="#profile">EXPERIENCE</a><a href="#work">SELECTED WORK</a></nav></header><div class="hero-layout"><div class="hero-copy"><p class="eyebrow"><span></span><b>HELLO, I’M</b></p><h1>Zhangxizi <br><em>QIU</em></h1><p class="intro"><span>AI Engineer · World Explorer</span> <span>Life Lover · Vibe Coding Aficionado</span></p><div class="hero-location"><span class="location-pin" aria-hidden="true"></span><span>SHENZHEN / HONG KONG</span></div><div class="hero-contact" aria-label="Contact links"><a href="mailto:civaneeeeee@gmail.com">E-MAIL ↗</a><a href="https://github.com/civane" target="_blank" rel="noreferrer">GITHUB ↗</a><a href="https://www.linkedin.com/in/%E8%A5%BF%E5%AD%90-%E9%82%B1%E5%BC%A0-b48540321/" target="_blank" rel="noreferrer">LINKEDIN ↗</a></div><a class="cta" href="#journey"><span>Start exploring</span><b>↓</b></a></div><div id="scene"></div><a id="static-hero-portrait" href="dream-drift.html?entry=portrait" aria-label="Enter My World Model — Dream Drift"><img src="assets/portrait-800.webp" srcset="assets/portrait-480.webp 480w, assets/portrait-800.webp 800w, assets/portrait-1254.webp 1254w" sizes="(max-width: 620px) min(80vw, 40svh, 350px, calc(100vw - 85px)), min(48vw, 77svh, 690px)" width="1254" height="1254" fetchpriority="high" alt="Zhangxizi QIU with playful companions"/></a></div><button type="button" id="door-answer" aria-label="Answer the call" title="Answer the call" hidden>
+<div id="door-blackout" aria-hidden="true"></div><section class="hero" id="home"><div class="grain"></div><header class="topbar"><div class="topbar-inner"><a class="wordmark" href="#home" aria-label="Zhangxizi Qiu — Home"><img src="assets/zq-wordmark.svg?v=signature" width="56" height="28" alt="ZQ" style="display:block"></a><nav aria-label="Main navigation"><a href="#profile">Experience</a><a href="#work">Selected Work</a></nav></div></header><div class="hero-layout"><div class="hero-copy"><p class="eyebrow"><span></span><b>HELLO, I’M</b></p><h1>Zhangxizi <br><em>QIU</em></h1><p class="intro"><span>AI Engineer · World Explorer</span> <span>Life Lover · Vibe Coding Aficionado</span></p><div class="hero-location"><span class="location-pin" aria-hidden="true"></span><span>SHENZHEN / HONG KONG</span></div><div class="hero-contact" aria-label="Contact links"><a href="mailto:civaneeeeee@gmail.com">E-MAIL ↗</a><a href="https://github.com/civane" target="_blank" rel="noreferrer">GITHUB ↗</a><a href="https://www.linkedin.com/in/%E8%A5%BF%E5%AD%90-%E9%82%B1%E5%BC%A0-b48540321/" target="_blank" rel="noreferrer">LINKEDIN ↗</a></div><a class="cta" href="#journey"><span>Start exploring</span><b>↓</b></a></div><div id="scene"></div><a id="static-hero-portrait" href="dream-drift.html?entry=portrait" aria-label="Enter My World Model — Dream Drift"><img src="assets/portrait-800.webp" srcset="assets/portrait-480.webp 480w, assets/portrait-800.webp 800w, assets/portrait-1254.webp 1254w" sizes="(max-width: 620px) min(80vw, 40svh, 350px, calc(100vw - 85px)), min(48vw, 77svh, 690px)" width="1254" height="1254" fetchpriority="high" alt="Zhangxizi QIU with playful companions"/></a></div><button type="button" id="door-answer" aria-label="Answer the call" title="Answer the call" hidden>
 <svg class="cord" viewBox="0 0 24 174" preserveAspectRatio="none" aria-hidden="true">
  <path fill="none" stroke="#d6b77e" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linecap="round" d="M12 -4 Q10 1 12 4 C25 7 21 16 11 15 C2 14 3 8 11 10 C23 13 23 28 11 28 C0 27 3 20 12 23 C26 27 22 42 11 42 C0 41 3 34 12 37 C26 41 22 56 11 55 C1 54 3 47 12 50 C26 54 21 69 11 69 C2 68 3 61 12 64 C25 68 22 83 12 83 C2 82 4 75 12 78 C25 83 22 98 11 97 C1 96 4 89 12 92 C25 96 22 112 11 112 C1 111 4 103 12 107 C25 112 21 126 12 126 C2 125 4 119 12 121 C25 126 22 140 12 140 C3 139 4 133 12 135 Q23 142 15 153 Q9 162 12 174"/>
 </svg>
@@ -614,11 +614,21 @@ body.is-revealed:after{opacity:0!important;visibility:hidden!important}
 </style>
 
 <style>
-#home { --gutter:clamp(24px,8vw,144px); display:flex; flex-direction:column; height:auto; min-height:100svh; }
-#home .topbar { position:relative; flex:none; padding:18px var(--gutter); }
-#home .topbar nav { position:static; display:flex; transform:none; align-items:center; gap:clamp(16px,2.4vw,38px); }
-#home .topbar nav a { padding:.5rem 0; }
-.hero-layout { flex:1; display:grid; grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr); align-items:center; gap:clamp(32px,5vw,88px); width:min(100%,1660px); padding:clamp(32px,6vh,76px) var(--gutter); margin-inline:auto; }
+#home { --gutter:clamp(24px,8vw,144px); --portrait-size:min(100%,48vw,77svh,690px); --portrait-offset:0px; --frame-inset:6%; display:flex; flex-direction:column; height:auto; min-height:100svh; }
+#home .topbar { position:relative; flex:none; padding:18px 0; }
+.topbar-inner, .hero-layout {
+  display:grid; grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr); align-items:center;
+  column-gap:clamp(32px,5vw,88px); width:min(100%,1660px); padding-inline:var(--gutter); margin-inline:auto;
+}
+.hero-layout { flex:1; padding-block:clamp(32px,6vh,76px); }
+.topbar-inner .wordmark { grid-area:1/1; justify-self:start; }
+#home .topbar nav {
+  grid-area:1/2; justify-self:center; width:var(--portrait-size); position:relative; left:var(--portrait-offset);
+  display:flex; justify-content:flex-end; align-items:center; gap:clamp(14px,2vw,30px); transform:none; pointer-events:none;
+  color:#e2c586; font:400 clamp(18px,1.6vw,24px)/1.2 "Kalam","Segoe Print","Bradley Hand",cursive; letter-spacing:normal;
+}
+#home .topbar nav a { padding:.5rem 0; white-space:nowrap; pointer-events:auto; }
+#home .topbar nav a:last-child { margin-inline-end:var(--frame-inset); }
 #home .hero-copy { position:relative; inset:auto; transform:none; width:100%; max-width:none; padding:0; }
 #home .eyebrow { margin:0 0 clamp(16px,2.6vh,24px); }
 #home h1 { margin:0; font-size:clamp(58px,6.8vw,104px); line-height:.96; letter-spacing:-.063em; }
@@ -628,29 +638,35 @@ body.is-revealed:after{opacity:0!important;visibility:hidden!important}
 #home .hero-location { margin:0; }
 #home .hero-contact { margin:12px 0 0; gap:10px 20px; }
 #home .cta { width:max-content; margin-top:clamp(22px,4vh,42px); padding:6px 0; gap:22px; }
-#home #static-hero-portrait { position:relative; inset:auto; place-self:center; width:min(100%,48vw,77svh,690px); aspect-ratio:1; height:auto; clip-path:circle(44% at 50% 50%); z-index:2; margin:0; }
+#home #static-hero-portrait { position:relative; inset:auto; place-self:center; left:var(--portrait-offset); width:var(--portrait-size); aspect-ratio:1; height:auto; clip-path:circle(calc(50% - var(--frame-inset)) at 50% 50%); z-index:2; margin:0; }
 #home .scroll-indicator { display:none; }
 @media (min-width:621px) and (max-width:900px) {
-  #home #static-hero-portrait { left:-32px; }
+  #home { --portrait-offset:-32px; }
 }
 @media(max-width:800px) {
   #home { --gutter:clamp(20px,5vw,36px); }
   #home .topbar { padding-block:12px; }
-  #home .topbar nav { margin-right:46px; }
 }
 @media(max-width:620px) {
-  .hero-layout { grid-template-columns:minmax(0,1fr); align-content:center; gap:0; padding-block:24px; }
+  #home { --portrait-size:min(80vw,40svh,350px,calc(100vw - 85px)); --portrait-offset:-12px; }
+  .topbar-inner, .hero-layout { grid-template-columns:minmax(0,1fr); }
+  #home .topbar nav { grid-area:1/1; }
+  .hero-layout { align-content:center; gap:0; padding-block:24px; }
   #home .hero-copy { display:contents; }
   #home .hero-copy > * { position:relative; z-index:5; }
   #home .eyebrow { grid-row:1; margin:0 0 10px; }
   #home h1 { grid-row:2; font-size:clamp(36px,9.7vw,58px); line-height:1.08; }
   #home h1 br { display:none; }
   #home .intro { grid-row:3; margin:12px 0 0; font-size:17px; }
-  #home #static-hero-portrait { grid-row:4; left:-12px; width:min(80vw,40svh,350px,calc(100vw - 85px)); margin:4px 0; }
+  #home #static-hero-portrait { grid-row:4; margin:4px 0; }
   #home .hero-location { grid-row:5; }
   #home .hero-contact { grid-row:6; }
   #home .cta { grid-row:7; margin-top:16px; }
-  #home .topbar nav { gap:12px; font-size:9px; }
+  #home .topbar nav { gap:12px; font-size:17px; }
+}
+@media(max-width:360px) {
+  .topbar-inner .wordmark img { width:42px; height:auto; }
+  #home .topbar nav { gap:9px; font-size:15px; }
 }
 </style>
 
