@@ -70,7 +70,7 @@
 @media(prefers-reduced-motion:reduce) { .portrait-signal { display:none; } }
 </style>
 <script defer src="assets/portrait-signal.js?v=hanging-call"></script>
-<link rel="stylesheet" href="assets/selected-work.css?v=hegzo-detail"><script defer src="assets/selected-work.js?v=sea-mem"></script>
+<link rel="stylesheet" href="assets/selected-work.css?v=mobile-imaging"><script defer src="assets/selected-work.js?v=sea-mem"></script>
 
 <style>
 .hero #static-hero-portrait { pointer-events:auto; cursor:pointer }
@@ -153,7 +153,7 @@
 <section class="work" id="work"><div class="work-index"><span class="section-kicker">02 / WORK</span><h2 class="work-title">Selected work</h2><ol class="work-list">
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-detail="sea-mem-detail"><span class="work-no" aria-hidden="true">01</span><span class="work-name">SEA-Mem</span><span class="work-kind">LLM Agents</span><span aria-hidden="true" class="work-plus">+</span></button></li>
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-detail="hegzo-detail"><span class="work-no" aria-hidden="true">02</span><span class="work-name">HeGZO</span><span class="work-kind">Diffusion Optimization</span><span aria-hidden="true" class="work-plus">+</span></button></li>
-<li><button class="work-row" type="button" aria-haspopup="dialog" data-image="assets/AIGC.png" data-summary-en="Compressed SD 1.5 with LoRA adaptation, adversarial detail recovery and on-device deployment."><span class="work-no" aria-hidden="true">03</span><span class="work-name">On-device AIGC</span><span class="work-kind">Mobile Imaging</span><span aria-hidden="true" class="work-plus">+</span></button></li>
+<li><button class="work-row" type="button" aria-haspopup="dialog" data-detail="aigc-detail"><span class="work-no" aria-hidden="true">03</span><span class="work-name">On-device AIGC</span><span class="work-kind">Mobile Imaging</span><span aria-hidden="true" class="work-plus">+</span></button></li>
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-image="assets/云相机.png" data-summary-en="Staggered HDR and RAW-domain diffusion for high-quality mobile imaging."><span class="work-no" aria-hidden="true">04</span><span class="work-name">RAW Reconstruction</span><span class="work-kind">Computational Photography</span><span aria-hidden="true" class="work-plus">+</span></button></li>
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-image="assets/微距deblur.png" data-summary-en="Hybrid U-Net and LSTM for real-time defocus and motion deblurring."><span class="work-no" aria-hidden="true">05</span><span class="work-name">Macro Deblurring</span><span class="work-kind">Mobile NPU</span><span aria-hidden="true" class="work-plus">+</span></button></li>
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-image="assets/正在施工2.png" data-summary-en="A place for curious work that is still taking shape."><span class="work-no" aria-hidden="true">06</span><span class="work-name">More in progress</span><span class="work-kind">Experiment</span><span aria-hidden="true" class="work-plus">+</span></button></li>
@@ -169,6 +169,23 @@
   </header>
   <div class="detail-body"></div>
 </dialog>
+<template id="aigc-detail">
+  <div class="project-detail">
+    <h3>Motivation</h3>
+    <p>On phones without optical zoom, zooming in means cropping the sensor image. Fewer pixels describe a distant subject, so fine details look soft. In low light, noise can obscure those details even at close range. We set out to improve clarity in both situations using a diffusion model that runs directly on the phone.</p>
+    <h3>Main contributions</h3>
+    <ul class="project-contributions">
+      <li>We deployed our team’s first diffusion model for photo enhancement on a smartphone, using a compressed Stable Diffusion 1.5 model with task-specific LoRA adapters.</li>
+      <li>The model improved the clarity of distant subjects in digitally zoomed shots and brought out fine detail in low-light photos.</li>
+      <li>We reduced on-device inference latency to <strong>600 ms per image patch</strong>, shortening the wait for an enhanced photo.</li>
+    </ul>
+    <h3 id="aigc-architecture-title">Architecture</h3>
+    <figure class="project-figure" aria-labelledby="aigc-architecture-title">
+      <img src="assets/AIGC.png" width="1774" height="887" alt="Mobile snapshots and task-specific LoRA adapters train a compressed Stable Diffusion 1.5 model for on-device image enhancement.">
+    </figure>
+    <div class="project-links"><a href="assets/AIGC.png" target="_blank" rel="noopener">Full diagram <span aria-hidden="true">↗</span></a></div>
+  </div>
+</template>
 <template id="hegzo-detail">
   <div class="project-detail">
     <h3>Motivation</h3>
@@ -177,10 +194,10 @@
     <ul class="project-contributions">
       <li>HeGZO guides zeroth-order updates with backpropagation. It scales perturbations according to the signal-to-noise ratio and uses activations to choose search directions.</li>
       <li>On Stable Diffusion 3 LoRA training, HeGZO reduced peak training memory overhead by <strong>27.4%</strong> compared with full backpropagation.</li>
-      <li>On the DreamBooth <i>dog6</i> subject, the DINO score for subject fidelity rose from <strong>0.5849 to 0.6274</strong>.</li>
+      <li>Across all evaluated DreamBooth subjects, the overall DINO subject-fidelity score rose from <strong>0.5849 to 0.6274</strong>.</li>
     </ul>
     <h3 id="hegzo-architecture-title">Architecture</h3>
-    <figure class="hegzo-flow" aria-labelledby="hegzo-architecture-title">
+    <figure class="project-figure" aria-labelledby="hegzo-architecture-title">
       <img src="assets/hegzo-architecture.webp" width="1450" height="540" alt="Deep-layer instability → Gated-CCI → LoSP → stable updates.">
     </figure>
     <div class="project-links"><a href="assets/HeGZO.png" target="_blank" rel="noopener">Full diagram <span aria-hidden="true">↗</span></a></div>

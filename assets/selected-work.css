@@ -25,8 +25,8 @@
 .project-contributions { margin:.3rem 0 0; padding-left:1.25rem; list-style:disc; }
 .project-contributions li + li { margin-top:.45rem; }
 .project-contributions li::marker { color:#cfaa67; }
-.hegzo-flow { margin:.55rem 0 .3rem; }
-.hegzo-flow img { display:block; width:100%; height:auto; }
+.project-figure { margin:.55rem 0 .3rem; }
+.project-figure img { display:block; width:100%; height:auto; }
 .sea-flow { display:grid; grid-template-columns:1fr 3.4fr; gap:1.3rem; margin:.55rem 0 .65rem; padding:.8rem 0; border-block:1px solid #514631; }
 .sea-flow h4 { margin:0 0 .6rem; color:#e4d7be; font:500 .94rem/1.3 Georgia,serif; }
 .sea-flow img { display:block; width:100%; height:clamp(90px,18vw,154px); object-fit:contain; object-position:left center; }
