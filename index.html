@@ -155,7 +155,7 @@
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-detail="hegzo-detail"><span class="work-no" aria-hidden="true">02</span><span class="work-name">HeGZO</span><span class="work-kind">Diffusion Optimization</span><span aria-hidden="true" class="work-plus">+</span></button></li>
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-detail="aigc-detail"><span class="work-no" aria-hidden="true">03</span><span class="work-name">On-device AIGC</span><span class="work-kind">Mobile Imaging</span><span aria-hidden="true" class="work-plus">+</span></button></li>
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-detail="raw-reconstruction-detail"><span class="work-no" aria-hidden="true">04</span><span class="work-name">RAW Reconstruction</span><span class="work-kind">Mobile Imaging</span><span aria-hidden="true" class="work-plus">+</span></button></li>
-<li><button class="work-row" type="button" aria-haspopup="dialog" data-image="assets/微距deblur.png" data-summary-en="Hybrid U-Net and LSTM for real-time defocus and motion deblurring."><span class="work-no" aria-hidden="true">05</span><span class="work-name">Macro Deblurring</span><span class="work-kind">Mobile NPU</span><span aria-hidden="true" class="work-plus">+</span></button></li>
+<li><button class="work-row" type="button" aria-haspopup="dialog" data-detail="macro-deblurring-detail"><span class="work-no" aria-hidden="true">05</span><span class="work-name">Macro Deblurring</span><span class="work-kind">Mobile NPU</span><span aria-hidden="true" class="work-plus">+</span></button></li>
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-image="assets/正在施工2.png" data-summary-en="A place for curious work that is still taking shape."><span class="work-no" aria-hidden="true">06</span><span class="work-name">More in progress</span><span class="work-kind">Experiment</span><span aria-hidden="true" class="work-plus">+</span></button></li>
 </ol></div></section><footer><p>Explore the world with curiosity.</p><a href="mailto:civaneeeeee@gmail.com">civaneeeeee@gmail.com ↗</a><div><a href="https://github.com/civane" target="_blank">GITHUB</a><a href="https://www.linkedin.com/in/%E8%A5%BF%E5%AD%90-%E9%82%B1%E5%BC%A0-b48540321/" target="_blank">LINKEDIN</a></div></footer></main>
 <dialog id="work-detail" aria-labelledby="detail-title">
@@ -169,6 +169,22 @@
   </header>
   <div class="detail-body"></div>
 </dialog>
+<template id="macro-deblurring-detail">
+  <div class="project-detail">
+    <h3>Motivation</h3>
+    <p>At macro distances, a slight shift can move the subject out of focus. Outdoors, a flower swaying in the wind can also blur during the exposure. We designed an RGB deblurring network to recover detail in both situations.</p>
+    <h3>Main contributions</h3>
+    <ul class="project-contributions">
+      <li>The network estimates the blur kernel from the RGB image, then uses that estimate to reverse the defocus blur and recover fine detail.</li>
+      <li>Adding motion-blurred images to training helped the same network handle moving subjects, increasing the proportion of usable macro shots.</li>
+      <li>Pruning and quantization brought on-device inference time to <strong>about 300 ms per photo</strong>, keeping the wait for a sharpened image short.</li>
+    </ul>
+    <h3 id="macro-architecture-title">Architecture</h3>
+    <figure class="project-figure" aria-labelledby="macro-architecture-title">
+      <img src="assets/macro-deblurring.webp" width="1300" height="331" alt="A blurred macro photo passes through blur-kernel estimation and a hybrid U-Net and LSTM to produce a sharper image.">
+    </figure>
+  </div>
+</template>
 <template id="raw-reconstruction-detail">
   <div class="project-detail">
     <h3>Motivation</h3>
