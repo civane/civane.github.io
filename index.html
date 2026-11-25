@@ -154,7 +154,7 @@
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-detail="sea-mem-detail"><span class="work-no" aria-hidden="true">01</span><span class="work-name">SEA-Mem</span><span class="work-kind">LLM Agents</span><span aria-hidden="true" class="work-plus">+</span></button></li>
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-detail="hegzo-detail"><span class="work-no" aria-hidden="true">02</span><span class="work-name">HeGZO</span><span class="work-kind">Diffusion Optimization</span><span aria-hidden="true" class="work-plus">+</span></button></li>
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-detail="aigc-detail"><span class="work-no" aria-hidden="true">03</span><span class="work-name">On-device AIGC</span><span class="work-kind">Mobile Imaging</span><span aria-hidden="true" class="work-plus">+</span></button></li>
-<li><button class="work-row" type="button" aria-haspopup="dialog" data-image="assets/云相机.png" data-summary-en="Staggered HDR and RAW-domain diffusion for high-quality mobile imaging."><span class="work-no" aria-hidden="true">04</span><span class="work-name">RAW Reconstruction</span><span class="work-kind">Computational Photography</span><span aria-hidden="true" class="work-plus">+</span></button></li>
+<li><button class="work-row" type="button" aria-haspopup="dialog" data-detail="raw-reconstruction-detail"><span class="work-no" aria-hidden="true">04</span><span class="work-name">RAW Reconstruction</span><span class="work-kind">Computational Photography</span><span aria-hidden="true" class="work-plus">+</span></button></li>
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-image="assets/微距deblur.png" data-summary-en="Hybrid U-Net and LSTM for real-time defocus and motion deblurring."><span class="work-no" aria-hidden="true">05</span><span class="work-name">Macro Deblurring</span><span class="work-kind">Mobile NPU</span><span aria-hidden="true" class="work-plus">+</span></button></li>
 <li><button class="work-row" type="button" aria-haspopup="dialog" data-image="assets/正在施工2.png" data-summary-en="A place for curious work that is still taking shape."><span class="work-no" aria-hidden="true">06</span><span class="work-name">More in progress</span><span class="work-kind">Experiment</span><span aria-hidden="true" class="work-plus">+</span></button></li>
 </ol></div></section><footer><p>Explore the world with curiosity.</p><a href="mailto:civaneeeeee@gmail.com">civaneeeeee@gmail.com ↗</a><div><a href="https://github.com/civane" target="_blank">GITHUB</a><a href="https://www.linkedin.com/in/%E8%A5%BF%E5%AD%90-%E9%82%B1%E5%BC%A0-b48540321/" target="_blank">LINKEDIN</a></div></footer></main>
@@ -169,6 +169,21 @@
   </header>
   <div class="detail-body"></div>
 </dialog>
+<template id="raw-reconstruction-detail">
+  <div class="project-detail">
+    <h3>Motivation</h3>
+    <p>In staggered capture mode, one shutter press produces two types of RAW frames, N and S. Fusing them helps preserve detail across the image. In snapshots of fast-moving people or objects, the subject can shift between frames. The challenge is to recover fine detail through super-resolution while keeping moving subjects sharp.</p>
+    <h3>Main contributions</h3>
+    <ul class="project-contributions">
+      <li>We developed a RAW reconstruction network that aligns and fuses the N and S frames. It preserves fine detail while reducing noise and motion blur in snapshots.</li>
+      <li>We used pruning, reparameterization and quantization to bring inference time for the <strong>entire RAW network to about 200 ms on a phone</strong>, keeping the wait for the reconstructed photo short.</li>
+    </ul>
+    <h3 id="raw-architecture-title">Architecture</h3>
+    <figure class="project-figure" aria-labelledby="raw-architecture-title">
+      <img src="assets/raw-reconstruction.webp" width="580" height="467" alt="The network aligns a multi-exposure RAW burst using optical flow and deformable alignment, fuses the aligned features with attention, and reconstructs a RAW image.">
+    </figure>
+  </div>
+</template>
 <template id="aigc-detail">
   <div class="project-detail">
     <h3>Motivation</h3>
