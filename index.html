@@ -623,7 +623,8 @@ body.is-revealed:after{opacity:0!important;visibility:hidden!important}
 .hero-layout { flex:1; padding-block:clamp(32px,6vh,76px); }
 .topbar-inner .wordmark { grid-area:1/1; justify-self:start; }
 #home .topbar nav {
-  grid-area:1/2; justify-self:center; width:var(--portrait-size); position:relative; left:var(--portrait-offset);
+  grid-area:1/2; justify-self:center; width:var(--portrait-size); position:relative;
+  left:calc(var(--portrait-offset) - clamp(4px, 3vw - 8px, 20px));
   display:flex; justify-content:flex-end; align-items:center; gap:clamp(14px,2vw,30px); transform:none; pointer-events:none;
   color:#e2c586;
 }
