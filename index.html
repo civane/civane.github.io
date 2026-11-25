@@ -355,8 +355,11 @@ function reveal(event) {
   if (root.classList.contains('is-revealed')) return;
   playIncomingCall(event);
   root.classList.add('is-revealed');
-  if (event) root.dataset.enteredPortrait='1';
+  root.dataset.enteredPortrait='1';
+  if (location.hash) history.replaceState(history.state, '', location.pathname + location.search);
+  window.scrollTo({top:0, left:0, behavior:'instant'});
   root.dispatchEvent(new Event('portrait-enter'));
+  document.getElementById('door-answer').focus({preventScroll:true});
   window.removeEventListener('pointermove', move);
   window.removeEventListener('touchmove', move);
 }
@@ -366,7 +369,7 @@ document.addEventListener('click', event => {
   event.stopPropagation();
   reveal(event);
 }, {once:true, capture:true});
-const profile=document.getElementById('profile');if(profile){const entered=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting && e.intersectionRect.height>0)){reveal();entered.disconnect()}});entered.observe(profile)};document.addEventListener('keydown',e=>{if(!root.classList.contains('is-revealed') && (e.key==='Enter'||e.key===' ')){e.preventDefault();reveal(e)}})})();
+document.addEventListener('keydown',e=>{if(!root.classList.contains('is-revealed') && (e.key==='Enter'||e.key===' ')){e.preventDefault();reveal(e)}})})();
 </script>
 
 <!-- FIX: SINGLE CLEAN GOLDEN SPOTLIGHT -->
